@@ -53,7 +53,7 @@ python scripts/run_topology_challenge.py \
 python scripts/run_executable_perturbations.py \
   --output results/reproduced-operators --repeats 10 --workers 2
 python scripts/run_speaches_holdout.py \
-  --output results/reproduced-speaches --repeats 10 --workers 2
+  --output results/reproduced-speaches --repeats 10
 python scripts/run_uipath_holdout.py \
   --output results/reproduced-uipath --repeats 10 --workers 2
 ```

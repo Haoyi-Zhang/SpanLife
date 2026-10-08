@@ -9,7 +9,7 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import Any
 
-from .contracts import normalize_policy
+from .contracts import is_legacy_policy, normalize_policy, validate_run
 
 
 def _qualify_legacy(run: dict[str, Any]) -> dict[str, Any]:
@@ -252,8 +252,10 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
                                 finding(oid, segment_id, "PARENT_MISMATCH", "fail",
                                         observed=span["parent_id"], expected=segment["expected_parent"])
             local_segment = findings[segment_start:]
+            # An empty local finding slice is not evidence of success when the
+            # operation prerequisite prevented (or limited) segment evaluation.
             segment_verdict = ("fail" if any(row["verdict"] == "fail" for row in local_segment) else
-                               "inconclusive" if local_segment else "pass")
+                               "inconclusive" if local_segment or not execution_valid else "pass")
             segment_rows.append({"segment_id": segment_id, "verdict": segment_verdict})
 
         # Relations are evaluated only when both endpoints are uniquely available.
@@ -316,6 +318,7 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
 
 
 def qualify(run: dict[str, Any]) -> dict[str, Any]:
-    if all("segments" not in policy and not policy.get("relations") for policy in run["policies"]):
+    validate_run(run)
+    if all(is_legacy_policy(policy) for policy in run["policies"]):
         return _qualify_legacy(run)
     return _qualify_topology(run)

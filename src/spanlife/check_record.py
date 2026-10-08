@@ -15,8 +15,11 @@ def main() -> int:
     parser.add_argument("--format", choices=("text", "json"), default="text")
     parser.add_argument("--fail-on-inconclusive", action="store_true")
     args = parser.parse_args()
-    run = json.loads(args.record.read_text())
-    report = build_ci_report(run)
+    try:
+        run = json.loads(args.record.read_text())
+        report = build_ci_report(run)
+    except (OSError, ValueError) as exc:
+        parser.error(f"INVALID_RECORD: {exc}")
     if args.format == "json":
         print(json.dumps(report, indent=2))
     else:

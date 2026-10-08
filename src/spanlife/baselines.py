@@ -7,7 +7,7 @@ segment relations, timing, status, parentage, and context.
 """
 from __future__ import annotations
 
-from .contracts import normalize_policy
+from .contracts import is_legacy_policy, normalize_policy, validate_run
 
 
 def _legacy_existence_and_name(run: dict) -> dict:
@@ -27,7 +27,8 @@ def _legacy_existence_and_name(run: dict) -> dict:
 
 
 def existence_and_name(run: dict) -> dict:
-    if all("segments" not in policy and not policy.get("relations") for policy in run["policies"]):
+    validate_run(run)
+    if all(is_legacy_policy(policy) for policy in run["policies"]):
         return _legacy_existence_and_name(run)
     if not run.get("drained"):
         return {"verdict": "inconclusive", "reason": "collection pending"}
@@ -274,6 +275,7 @@ def _topology_direct_assertions(run: dict) -> dict:
 
 
 def direct_assertions(run: dict) -> dict:
-    if all("segments" not in policy and not policy.get("relations") for policy in run["policies"]):
+    validate_run(run)
+    if all(is_legacy_policy(policy) for policy in run["policies"]):
         return _legacy_direct_assertions(run)
     return _topology_direct_assertions(run)

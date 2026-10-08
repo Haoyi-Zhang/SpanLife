@@ -14,6 +14,52 @@ ALLOWED_ROLES = {"execution", "submission", "both", "context-only", "unknown"}
 ALLOWED_RELATIONS = {"link", "parent", "parent-or-link", "same-trace"}
 
 
+def is_legacy_policy(policy: dict[str, Any]) -> bool:
+    """Keep the old evaluator only for the original, explicitly declared shape.
+
+    Amended flat policies have the same semantics as one explicit segment,
+    including when an added obligation is present but disabled.  An omitted
+    role must use normalization's ``unknown`` default rather than the legacy
+    evaluator's required role lookup.
+    """
+    amended_fields = {"association", "exclude_submission", "must_end_before_operation_entry"}
+    return ("role" in policy and "segments" not in policy
+            and not policy.get("relations") and not amended_fields.intersection(policy))
+
+
+def validate_run(run: dict[str, Any]) -> None:
+    """Admit a nonempty contract and basic evidence containers before dispatch.
+
+    Empty observations remain legitimate evidence of an incomplete operation
+    or missing span.  Empty contracts are not a successful qualification.
+    Detailed evidence prerequisites remain the evaluators' responsibility.
+    """
+    if not isinstance(run, dict):
+        raise ValueError("run must be an object")
+    policies = run.get("policies")
+    if not isinstance(policies, list) or not policies:
+        raise ValueError("run.policies must be a non-empty list")
+    for policy in policies:
+        normalize_policy(policy)
+    for field in ("ledger", "spans"):
+        rows = run.get(field)
+        if not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows):
+            raise ValueError(f"run.{field} must be a list of objects")
+    if "contexts" in run and not isinstance(run["contexts"], dict):
+        raise ValueError("run.contexts must be an object")
+    clock = run.get("clock")
+    if not isinstance(clock, dict):
+        raise ValueError("run.clock must be an object")
+    epsilon = clock.get("epsilon_ns")
+    if type(epsilon) is not int or epsilon < 0:
+        raise ValueError("clock.epsilon_ns must be a non-negative integer")
+    if not isinstance(clock.get("timing_eligible"), bool):
+        raise ValueError("clock.timing_eligible must be a boolean")
+    for field in ("drained", "always_on"):
+        if field in run and not isinstance(run[field], bool):
+            raise ValueError(f"run.{field} must be a boolean")
+
+
 def normalize_policy(policy: dict[str, Any]) -> dict[str, Any]:
     """Return a validated policy with an explicit ``segments`` list.
 
@@ -22,6 +68,13 @@ def normalize_policy(policy: dict[str, Any]) -> dict[str, Any]:
     may add ``relations`` between them.  Unknown keys are preserved so raw
     evidence remains forwards compatible.
     """
+    if not isinstance(policy, dict):
+        raise ValueError("each policy must be an object")
+    if not isinstance(policy.get("operation_id"), str) or not policy["operation_id"]:
+        raise ValueError("policy.operation_id must be a non-empty string")
+    if "role" in policy and (not isinstance(policy["role"], str)
+                             or policy["role"] not in ALLOWED_ROLES):
+        raise ValueError(f"unsupported segment role: {policy['role']}")
     result = deepcopy(policy)
     if "segments" not in result:
         segment_keys = {
@@ -50,7 +103,7 @@ def normalize_policy(policy: dict[str, Any]) -> dict[str, Any]:
         seen.add(segment_id)
         segment["segment_id"] = segment_id
         role = segment.get("role", "unknown")
-        if role not in ALLOWED_ROLES:
+        if not isinstance(role, str) or role not in ALLOWED_ROLES:
             raise ValueError(f"unsupported segment role: {role}")
         segment["role"] = role
         segment.setdefault("span_name", "")

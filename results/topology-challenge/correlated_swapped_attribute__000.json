@@ -1,0 +1,337 @@
+{
+  "schema": 3,
+  "case": "correlated_swapped_attribute",
+  "revision": "topology-contract",
+  "repeat": 0,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1791441337224257550,
+      "monotonic_ns": 723630079990,
+      "thread_id": 139839789713280,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "submit_exit",
+      "wall_ns": 1791441337224264522,
+      "monotonic_ns": 723630086715,
+      "thread_id": 139839789713280,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "queue_release",
+      "wall_ns": 1791441337224268842,
+      "monotonic_ns": 723630090882,
+      "thread_id": 139839789713280,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791441337224381095,
+      "monotonic_ns": 723630203226,
+      "thread_id": 139839789713280,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791441337228507892,
+      "monotonic_ns": 723634330172,
+      "thread_id": 139839789713280,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-1",
+      "kind": "submit_enter",
+      "wall_ns": 1791441337230682896,
+      "monotonic_ns": 723636505109,
+      "thread_id": 139839789713280,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-1",
+      "kind": "submit_exit",
+      "wall_ns": 1791441337230686879,
+      "monotonic_ns": 723636508904,
+      "thread_id": 139839789713280,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-1",
+      "kind": "queue_release",
+      "wall_ns": 1791441337230688433,
+      "monotonic_ns": 723636510451,
+      "thread_id": 139839789713280,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-1",
+      "kind": "enter",
+      "wall_ns": 1791441337230777716,
+      "monotonic_ns": 723636599746,
+      "thread_id": 139839789713280,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-1",
+      "kind": "exit",
+      "wall_ns": 1791441337234863643,
+      "monotonic_ns": 723640685744,
+      "thread_id": 139839789713280,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": {
+      "execute": "3946645662607221727"
+    },
+    "op-1": {
+      "execute": "1896474023506225195"
+    }
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "segments": [
+        {
+          "segment_id": "execute",
+          "role": "execution",
+          "span_name": "operation.execute",
+          "association": {
+            "kind": "attributes",
+            "match": {
+              "spanlife.operation_id": "op-0",
+              "spanlife.segment": "execute"
+            }
+          },
+          "ended_witness": 0,
+          "error_on_escape": true,
+          "exception_event": true,
+          "non_error_types": [
+            "CancelledError",
+            "GeneratorExit"
+          ],
+          "exclude_queue": true,
+          "exclude_submission": true
+        }
+      ],
+      "relations": [],
+      "source": "explicit attribute correlation for same-name operations"
+    },
+    {
+      "operation_id": "op-1",
+      "segments": [
+        {
+          "segment_id": "execute",
+          "role": "execution",
+          "span_name": "operation.execute",
+          "association": {
+            "kind": "attributes",
+            "match": {
+              "spanlife.operation_id": "op-1",
+              "spanlife.segment": "execute"
+            }
+          },
+          "ended_witness": 0,
+          "error_on_escape": true,
+          "exception_event": true,
+          "non_error_types": [
+            "CancelledError",
+            "GeneratorExit"
+          ],
+          "exclude_queue": true,
+          "exclude_submission": true
+        }
+      ],
+      "relations": [],
+      "source": "explicit attribute correlation for same-name operations"
+    }
+  ],
+  "spans": [
+    {
+      "name": "operation.execute",
+      "span_id": "3946645662607221727",
+      "trace_id": "193421867665320269057345916515631463033",
+      "parent_id": "0",
+      "start_ns": 1791441337224361112,
+      "end_ns": 1791441337228522733,
+      "status": "UNSET",
+      "events": [],
+      "links": [],
+      "scope": "spanlife.application",
+      "attributes": {
+        "spanlife.operation_id": "op-1",
+        "spanlife.segment": "execute"
+      }
+    },
+    {
+      "name": "operation.execute",
+      "span_id": "1896474023506225195",
+      "trace_id": "243033494008091249681165670547838038583",
+      "parent_id": "0",
+      "start_ns": 1791441337230766174,
+      "end_ns": 1791441337234871178,
+      "status": "UNSET",
+      "events": [],
+      "links": [],
+      "scope": "spanlife.application",
+      "attributes": {
+        "spanlife.operation_id": "op-0",
+        "spanlife.segment": "execute"
+      }
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "operation.execute",
+      "3946645662607221727"
+    ],
+    [
+      "operation.execute",
+      "1896474023506225195"
+    ]
+  ],
+  "ended": [
+    [
+      "operation.execute",
+      "3946645662607221727"
+    ],
+    [
+      "operation.execute",
+      "1896474023506225195"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 872,
+    "median_offset_ns": 1791440613594178064,
+    "min_offset_ns": 1791440613594178050,
+    "max_offset_ns": 1791440613594178267
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 380,
+    "median_offset_ns": 1791440613594178064,
+    "min_offset_ns": 1791440613594177923,
+    "max_offset_ns": 1791440613594178081
+  },
+  "clock": {
+    "epsilon_ns": 1744,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "classification": "same-name correlation challenge",
+    "operation_count": 2,
+    "matching": "declared attributes; never time overlap"
+  },
+  "execution": {
+    "status": "completed"
+  },
+  "ledger_check": {
+    "verdict": "fail",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "fail",
+        "segments": [
+          {
+            "segment_id": "execute",
+            "verdict": "fail"
+          }
+        ]
+      },
+      {
+        "operation_id": "op-1",
+        "verdict": "fail",
+        "segments": [
+          {
+            "segment_id": "execute",
+            "verdict": "fail"
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "operation_id": "op-0",
+        "code": "STARTS_AFTER_ENTRY",
+        "verdict": "fail",
+        "segment_id": "execute",
+        "gap_ns": 6385079
+      },
+      {
+        "operation_id": "op-1",
+        "code": "ENDS_BEFORE_EXIT",
+        "verdict": "fail",
+        "segment_id": "execute",
+        "gap_ns": 6340910
+      },
+      {
+        "operation_id": "op-1",
+        "code": "INCLUDES_QUEUE_WAIT",
+        "verdict": "fail",
+        "segment_id": "execute"
+      },
+      {
+        "operation_id": "op-1",
+        "code": "INCLUDES_SUBMISSION",
+        "verdict": "fail",
+        "segment_id": "execute"
+      }
+    ]
+  },
+  "direct_check": {
+    "verdict": "fail",
+    "failures": [
+      "op-0:execute",
+      "op-1:execute"
+    ],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "fail",
+    "failures": [
+      "op-0:execute",
+      "op-1:execute"
+    ]
+  },
+  "expected": {
+    "verdict": "fail",
+    "codes": [
+      "STARTS_AFTER_ENTRY",
+      "ENDS_BEFORE_EXIT"
+    ]
+  }
+}

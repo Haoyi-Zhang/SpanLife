@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "case": "mutation:both_missing_submission",
+  "revision": "fixed",
+  "repeat": 8,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1790738073170929422,
+      "monotonic_ns": 1304198717391,
+      "thread_id": 140296943347584,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "queue_release",
+      "wall_ns": 1790738073174081761,
+      "monotonic_ns": 1304201869470,
+      "thread_id": 140296943347584,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1790738073174166688,
+      "monotonic_ns": 1304201956169,
+      "thread_id": 140296550172352,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1790738073178350325,
+      "monotonic_ns": 1304206138765,
+      "thread_id": 140296550172352,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {},
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "both",
+      "span_name": "operation",
+      "span_ids": [
+        "17035612229184390887"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError"
+      ],
+      "source": "explicit application lifetime convention",
+      "exclude_queue": false
+    }
+  ],
+  "spans": [
+    {
+      "name": "operation",
+      "span_id": "17035612229184390887",
+      "trace_id": "188586959047969290657261792148272294161",
+      "parent_id": "0",
+      "start_ns": 1790738073170913429,
+      "end_ns": 1790738073178504380,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "operation",
+      "17035612229184390887"
+    ]
+  ],
+  "ended": [
+    [
+      "operation",
+      "17035612229184390887"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 2123,
+    "median_offset_ns": 1790736768972212542,
+    "min_offset_ns": 1790736768972212517,
+    "max_offset_ns": 1790736768972213534
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 9214,
+    "median_offset_ns": 1790736768972212542,
+    "min_offset_ns": 1790736768972207975,
+    "max_offset_ns": 1790736768972212643
+  },
+  "clock": {
+    "epsilon_ns": 18428,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {},
+  "ledger_check": {
+    "verdict": "inconclusive",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "inconclusive"
+      }
+    ],
+    "findings": [
+      {
+        "operation_id": "op-0",
+        "code": "MISSING_SUBMISSION_BOUNDARY",
+        "verdict": "inconclusive"
+      }
+    ]
+  },
+  "direct_check": {
+    "verdict": "inconclusive",
+    "failures": [],
+    "inconclusive": [
+      "op-0"
+    ]
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  },
+  "execution": {
+    "status": "completed",
+    "python": "3.13.5",
+    "pid": 6413
+  },
+  "mutation": {
+    "name": "both_missing_submission",
+    "source": "results/evaluation/both_lifetimes__fixed__008.json",
+    "expected_verdict": "inconclusive",
+    "expected_code": "MISSING_SUBMISSION_BOUNDARY",
+    "classification": "deliberate checker challenge; not an upstream defect"
+  }
+}

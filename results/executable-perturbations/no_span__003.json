@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "case": "success",
+  "revision": "perturbation-no_span",
+  "repeat": 3,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1791117135973573229,
+      "monotonic_ns": 729587260649,
+      "thread_id": 140651784030080,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "submit_exit",
+      "wall_ns": 1791117135973584236,
+      "monotonic_ns": 729587271095,
+      "thread_id": 140651784030080,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791117135994397612,
+      "monotonic_ns": 729608085253,
+      "thread_id": 140651390863040,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791117136002354325,
+      "monotonic_ns": 729616041665,
+      "thread_id": 140651390863040,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": "15597349115785862429"
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "execution",
+      "span_name": "asyncio to_thread-work",
+      "span_ids": [],
+      "ended_witness": 0,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError"
+      ],
+      "source": "documented execution semantics",
+      "exclude_queue": false,
+      "expected_parent": "15597349115785862429",
+      "expected_context": "15597349115785862429"
+    }
+  ],
+  "spans": [
+    {
+      "name": "request-0",
+      "span_id": "15597349115785862429",
+      "trace_id": "276467273461504350926729854881501358130",
+      "parent_id": "0",
+      "start_ns": 1791117135973554040,
+      "end_ns": 1791117136002733616,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [
+    {
+      "name": "asyncio.process.duration",
+      "attributes": {
+        "type": "coroutine",
+        "name": "to_thread",
+        "state": "finished"
+      },
+      "count": 1,
+      "sum": 0.02883643799998481,
+      "value": null
+    },
+    {
+      "name": "asyncio.process.created",
+      "attributes": {
+        "type": "coroutine",
+        "name": "to_thread",
+        "state": "finished"
+      },
+      "count": null,
+      "sum": null,
+      "value": 1
+    }
+  ],
+  "started": [
+    [
+      "request-0",
+      "15597349115785862429"
+    ]
+  ],
+  "ended": [
+    [
+      "request-0",
+      "15597349115785862429"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true,
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 1252,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386313301,
+    "max_offset_ns": 1791116406386313887
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 2794,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386311964,
+    "max_offset_ns": 1791116406386313447
+  },
+  "clock": {
+    "epsilon_ns": 5588,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "requested_gate_hold_s": 0.002
+  },
+  "ledger_check": {
+    "verdict": "fail",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "fail"
+      }
+    ],
+    "findings": [
+      {
+        "operation_id": "op-0",
+        "code": "MISSING_SPAN",
+        "verdict": "fail"
+      }
+    ]
+  },
+  "direct_check": {
+    "verdict": "fail",
+    "failures": [
+      "op-0"
+    ],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "fail",
+    "failures": [
+      "op-0"
+    ]
+  },
+  "execution": {
+    "status": "completed",
+    "python": "3.13.5",
+    "pid": 8671
+  }
+}

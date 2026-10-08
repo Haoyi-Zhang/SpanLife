@@ -1,0 +1,240 @@
+{
+  "schema": 1,
+  "case": "queue",
+  "revision": "affected",
+  "repeat": 16,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1791035894927564330,
+      "monotonic_ns": 675858433669,
+      "thread_id": 140102825502592,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "submit_exit",
+      "wall_ns": 1791035894927775949,
+      "monotonic_ns": 675858644747,
+      "thread_id": 140102825502592,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "queue_release",
+      "wall_ns": 1791035894934064342,
+      "monotonic_ns": 675864933621,
+      "thread_id": 140102825502592,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791035894934176010,
+      "monotonic_ns": 675865046351,
+      "thread_id": 140102432306880,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791035894940358674,
+      "monotonic_ns": 675871228043,
+      "thread_id": 140102432306880,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": "9382789118189882398"
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "execution",
+      "span_name": "asyncio to_thread-work",
+      "span_ids": [
+        "15723910165230590465"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError"
+      ],
+      "source": "documented execution semantics",
+      "exclude_queue": true,
+      "expected_parent": "9382789118189882398",
+      "expected_context": "9382789118189882398"
+    }
+  ],
+  "spans": [
+    {
+      "name": "asyncio to_thread-work",
+      "span_id": "15723910165230590465",
+      "trace_id": "303583940224729457767966920141984718422",
+      "parent_id": "9382789118189882398",
+      "start_ns": 1791035894927605372,
+      "end_ns": 1791035894927752794,
+      "status": "UNSET",
+      "events": [],
+      "scope": "opentelemetry.instrumentation.asyncio",
+      "attributes": {}
+    },
+    {
+      "name": "request-0",
+      "span_id": "9382789118189882398",
+      "trace_id": "303583940224729457767966920141984718422",
+      "parent_id": "0",
+      "start_ns": 1791035894927546222,
+      "end_ns": 1791035894940614179,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [
+    {
+      "name": "asyncio.process.duration",
+      "attributes": {
+        "type": "to_thread",
+        "name": "work",
+        "state": "finished"
+      },
+      "count": 1,
+      "sum": 3.29189999774826e-05,
+      "value": null
+    },
+    {
+      "name": "asyncio.process.duration",
+      "attributes": {
+        "type": "coroutine",
+        "name": "to_thread",
+        "state": "finished"
+      },
+      "count": 1,
+      "sum": 0.012690767999970376,
+      "value": null
+    },
+    {
+      "name": "asyncio.process.created",
+      "attributes": {
+        "type": "to_thread",
+        "name": "work",
+        "state": "finished"
+      },
+      "count": null,
+      "sum": null,
+      "value": 1
+    },
+    {
+      "name": "asyncio.process.created",
+      "attributes": {
+        "type": "coroutine",
+        "name": "to_thread",
+        "state": "finished"
+      },
+      "count": null,
+      "sum": null,
+      "value": 1
+    }
+  ],
+  "started": [
+    [
+      "request-0",
+      "9382789118189882398"
+    ],
+    [
+      "asyncio to_thread-work",
+      "15723910165230590465"
+    ]
+  ],
+  "ended": [
+    [
+      "asyncio to_thread-work",
+      "15723910165230590465"
+    ],
+    [
+      "request-0",
+      "9382789118189882398"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true,
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 581,
+    "median_offset_ns": 1791035219069131362,
+    "min_offset_ns": 1791035219069131347,
+    "max_offset_ns": 1791035219069131473
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 2955,
+    "median_offset_ns": 1791035219069131362,
+    "min_offset_ns": 1791035219069129925,
+    "max_offset_ns": 1791035219069131882
+  },
+  "clock": {
+    "epsilon_ns": 5910,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "requested_gate_hold_s": 0.005
+  },
+  "ledger_check": {
+    "verdict": "fail",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "fail"
+      }
+    ],
+    "findings": [
+      {
+        "operation_id": "op-0",
+        "code": "ENDS_BEFORE_EXIT",
+        "verdict": "fail",
+        "gap_ns": 12605880
+      },
+      {
+        "operation_id": "op-0",
+        "code": "INCLUDES_QUEUE_WAIT",
+        "verdict": "fail"
+      }
+    ]
+  },
+  "direct_check": {
+    "verdict": "fail",
+    "failures": [
+      "op-0"
+    ],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  },
+  "execution": {
+    "status": "completed",
+    "python": "3.13.5",
+    "pid": 11013
+  }
+}

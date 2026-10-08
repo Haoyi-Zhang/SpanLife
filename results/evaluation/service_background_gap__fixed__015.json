@@ -1,0 +1,11 @@
+{
+  "case": "service_background_gap",
+  "revision": "fixed",
+  "repeat": 15,
+  "execution": {
+    "status": "failed",
+    "error": "",
+    "type": "AssertionError",
+    "traceback": "Traceback (most recent call last):\n  File \"/mnt/data/work/spanlife/artifact/src/spanlife/cli.py\", line 20, in main\n    data = run_case(args.case, args.revision, args.repeat)\n  File \"/mnt/data/work/spanlife/artifact/src/spanlife/scenarios.py\", line 444, in run_case\n    asyncio.run(service_adapter(t))\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/asyncio/runners.py\", line 195, in run\n    return runner.run(main)\n           ~~~~~~~~~~^^^^^^\n  File \"/usr/lib/python3.13/asyncio/runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/usr/lib/python3.13/asyncio/base_events.py\", line 725, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File \"/mnt/data/work/spanlife/artifact/src/spanlife/scenarios.py\", line 408, in service_adapter\n    assert response.status_code == (202 if case.startswith(\"service_background\") else 200)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  }
+}

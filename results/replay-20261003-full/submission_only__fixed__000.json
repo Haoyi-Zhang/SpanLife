@@ -1,0 +1,154 @@
+{
+  "schema": 1,
+  "case": "submission_only",
+  "revision": "fixed",
+  "repeat": 0,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1791035639021960019,
+      "monotonic_ns": 419952829619,
+      "thread_id": 139701069088640,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "submit_exit",
+      "wall_ns": 1791035639021977385,
+      "monotonic_ns": 419952846244,
+      "thread_id": 139701069088640,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "queue_release",
+      "wall_ns": 1791035639025198782,
+      "monotonic_ns": 419956067931,
+      "thread_id": 139701069088640,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791035639025281853,
+      "monotonic_ns": 419956150791,
+      "thread_id": 139700675917504,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791035639029543409,
+      "monotonic_ns": 419960412698,
+      "thread_id": 139700675917504,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {},
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "submission",
+      "span_name": "operation",
+      "span_ids": [
+        "9386330866314330737"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError"
+      ],
+      "source": "explicit application lifetime convention",
+      "exclude_queue": false
+    }
+  ],
+  "spans": [
+    {
+      "name": "operation",
+      "span_id": "9386330866314330737",
+      "trace_id": "331573092188243381613081761781846222118",
+      "parent_id": "0",
+      "start_ns": 1791035639021926839,
+      "end_ns": 1791035639021986639,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "operation",
+      "9386330866314330737"
+    ]
+  ],
+  "ended": [
+    [
+      "operation",
+      "9386330866314330737"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 1081,
+    "median_offset_ns": 1791035219069131362,
+    "min_offset_ns": 1791035219069131342,
+    "max_offset_ns": 1791035219069131763
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 7181,
+    "median_offset_ns": 1791035219069131362,
+    "min_offset_ns": 1791035219069127812,
+    "max_offset_ns": 1791035219069131738
+  },
+  "clock": {
+    "epsilon_ns": 14362,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {},
+  "ledger_check": {
+    "verdict": "pass",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "pass"
+      }
+    ],
+    "findings": []
+  },
+  "direct_check": {
+    "verdict": "pass",
+    "failures": [],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  },
+  "execution": {
+    "status": "completed",
+    "python": "3.13.5",
+    "pid": 2450
+  }
+}

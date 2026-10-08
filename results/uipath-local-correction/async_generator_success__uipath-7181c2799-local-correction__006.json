@@ -1,0 +1,168 @@
+{
+  "schema": 2,
+  "case": "async_generator_success",
+  "revision": "uipath-7181c2799-local-correction",
+  "repeat": 6,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791117298419074589,
+      "monotonic_ns": 892032761599,
+      "thread_id": 140536316774272,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791117298419129822,
+      "monotonic_ns": 892032816652,
+      "thread_id": 140536316774272,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": "14615448450953631454"
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "execution",
+      "span_name": "uipath.async-generator-success",
+      "span_ids": [
+        "14615448450953631454"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError",
+        "GeneratorExit"
+      ],
+      "source": "pinned public UiPath decorator; local execution convention",
+      "exclude_queue": false,
+      "expected_parent": "2920258608829788045",
+      "expected_context": "14615448450953631454"
+    }
+  ],
+  "spans": [
+    {
+      "name": "uipath.async-generator-success",
+      "span_id": "14615448450953631454",
+      "trace_id": "259541844349428245829767190760646934816",
+      "parent_id": "2920258608829788045",
+      "start_ns": 1791117298419060408,
+      "end_ns": 1791117298419142952,
+      "status": "UNSET",
+      "events": [
+        "Yielded: 9180",
+        "Yielded: 4095"
+      ],
+      "scope": "spanlife_uipath_decorator_local_correction",
+      "attributes": {}
+    },
+    {
+      "name": "uipath-holdout-parent",
+      "span_id": "2920258608829788045",
+      "trace_id": "259541844349428245829767190760646934816",
+      "parent_id": "0",
+      "start_ns": 1791117298418767045,
+      "end_ns": 1791117298419266829,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "uipath-holdout-parent",
+      "2920258608829788045"
+    ],
+    [
+      "uipath.async-generator-success",
+      "14615448450953631454"
+    ]
+  ],
+  "ended": [
+    [
+      "uipath.async-generator-success",
+      "14615448450953631454"
+    ],
+    [
+      "uipath-holdout-parent",
+      "2920258608829788045"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 3074,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386313306,
+    "max_offset_ns": 1791116406386314808
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 123877,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386251453,
+    "max_offset_ns": 1791116406386314098
+  },
+  "clock": {
+    "epsilon_ns": 247754,
+    "offset_drift_ns": 0,
+    "timing_eligible": false,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "public_source": "UiPath/uipath-python@7181c279993fbca453b948cf767781282e1e6017:packages/uipath-core/src/uipath/core/tracing/decorators.py",
+    "source_blob": "b7204271a784b7fccce420c11c8c6a9db1d48837",
+    "variant": "local-correction",
+    "complete_package_executed": false,
+    "dependency_seams": [
+      "UiPathSpanUtils.get_parent_context",
+      "input/output attribute helpers"
+    ],
+    "mechanism": "async_generator"
+  },
+  "execution": {
+    "status": "completed"
+  },
+  "ledger_check": {
+    "verdict": "inconclusive",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "inconclusive"
+      }
+    ],
+    "findings": [
+      {
+        "operation_id": "op-0",
+        "code": "CLOCK_UNQUALIFIED",
+        "verdict": "inconclusive"
+      }
+    ]
+  },
+  "direct_check": {
+    "verdict": "inconclusive",
+    "failures": [],
+    "inconclusive": [
+      "op-0"
+    ]
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  }
+}

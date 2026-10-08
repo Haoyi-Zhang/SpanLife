@@ -1,0 +1,159 @@
+{
+  "schema": 2,
+  "case": "decorated_generator",
+  "revision": "speaches-993994f",
+  "repeat": 8,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1790785390695820883,
+      "monotonic_ns": 630214637798,
+      "thread_id": 140507306305408,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1790785390695842595,
+      "monotonic_ns": 630214659088,
+      "thread_id": 140507306305408,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": "4096721575937891815"
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "execution",
+      "span_name": "speaches.generator",
+      "span_ids": [
+        "6267488432424276577"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError",
+        "GeneratorExit"
+      ],
+      "source": "pinned public Speaches decorator source; local operation convention",
+      "exclude_queue": false,
+      "expected_parent": "4096721575937891815",
+      "expected_context": "4096721575937891815"
+    }
+  ],
+  "spans": [
+    {
+      "name": "speaches.generator",
+      "span_id": "6267488432424276577",
+      "trace_id": "274609871143430575180929519107973714831",
+      "parent_id": "4096721575937891815",
+      "start_ns": 1790785390695806759,
+      "end_ns": 1790785390695854801,
+      "status": "UNSET",
+      "events": [],
+      "scope": "__main__",
+      "attributes": {}
+    },
+    {
+      "name": "holdout-parent",
+      "span_id": "4096721575937891815",
+      "trace_id": "274609871143430575180929519107973714831",
+      "parent_id": "0",
+      "start_ns": 1790785390695588805,
+      "end_ns": 1790785390695899707,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "holdout-parent",
+      "4096721575937891815"
+    ],
+    [
+      "speaches.generator",
+      "6267488432424276577"
+    ]
+  ],
+  "ended": [
+    [
+      "speaches.generator",
+      "6267488432424276577"
+    ],
+    [
+      "holdout-parent",
+      "4096721575937891815"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 1277784,
+    "median_offset_ns": 1790784760481183865,
+    "min_offset_ns": 1790784760481183729,
+    "max_offset_ns": 1790784760481822032
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 349,
+    "median_offset_ns": 1790784760481183863,
+    "min_offset_ns": 1790784760481183761,
+    "max_offset_ns": 1790784760481183895
+  },
+  "clock": {
+    "epsilon_ns": 2555568,
+    "offset_drift_ns": 2,
+    "timing_eligible": false,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "public_source": "speaches-ai/speaches@993994f:src/speaches/tracing.py",
+    "complete_application_executed": false,
+    "mechanism": "lazy generator decorator"
+  },
+  "execution": {
+    "status": "completed"
+  },
+  "ledger_check": {
+    "verdict": "inconclusive",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "inconclusive"
+      }
+    ],
+    "findings": [
+      {
+        "operation_id": "op-0",
+        "code": "CLOCK_UNQUALIFIED",
+        "verdict": "inconclusive"
+      }
+    ]
+  },
+  "direct_check": {
+    "verdict": "inconclusive",
+    "failures": [],
+    "inconclusive": [
+      "op-0"
+    ]
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  }
+}

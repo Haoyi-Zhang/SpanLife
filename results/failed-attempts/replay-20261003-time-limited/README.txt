@@ -1,0 +1,1 @@
+Interrupted first replay attempt. It was externally time-limited before the driver wrote an execution manifest and is excluded from every reported count. The completed replacement is results/replay-20261003-full (800/800 processes, zero runner failures).

@@ -1,0 +1,160 @@
+{
+  "schema": 2,
+  "case": "async_generator_exception",
+  "revision": "uipath-7181c2799-local-correction",
+  "repeat": 2,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791117302215652792,
+      "monotonic_ns": 895829340162,
+      "thread_id": 140400981784448,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791117302215717810,
+      "monotonic_ns": 895829404689,
+      "thread_id": 140400981784448,
+      "outcome": "raised",
+      "exception_type": "ValueError",
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": "1562284998892862290"
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "execution",
+      "span_name": "uipath.async-generator-exception",
+      "span_ids": [
+        "1562284998892862290"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError",
+        "GeneratorExit"
+      ],
+      "source": "pinned public UiPath decorator; local execution convention",
+      "exclude_queue": false,
+      "expected_parent": "6860620321427879870",
+      "expected_context": "1562284998892862290"
+    }
+  ],
+  "spans": [
+    {
+      "name": "uipath.async-generator-exception",
+      "span_id": "1562284998892862290",
+      "trace_id": "338630770016133690349225796680973936066",
+      "parent_id": "6860620321427879870",
+      "start_ns": 1791117302215603418,
+      "end_ns": 1791117302216250824,
+      "status": "ERROR",
+      "events": [
+        "Yielded: 8646",
+        "exception"
+      ],
+      "scope": "spanlife_uipath_decorator_local_correction",
+      "attributes": {}
+    },
+    {
+      "name": "uipath-holdout-parent",
+      "span_id": "6860620321427879870",
+      "trace_id": "338630770016133690349225796680973936066",
+      "parent_id": "0",
+      "start_ns": 1791117302215185687,
+      "end_ns": 1791117302216477496,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "uipath-holdout-parent",
+      "6860620321427879870"
+    ],
+    [
+      "uipath.async-generator-exception",
+      "1562284998892862290"
+    ]
+  ],
+  "ended": [
+    [
+      "uipath.async-generator-exception",
+      "1562284998892862290"
+    ],
+    [
+      "uipath-holdout-parent",
+      "6860620321427879870"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 1833,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386313301,
+    "max_offset_ns": 1791116406386314178
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 591,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386313176,
+    "max_offset_ns": 1791116406386313477
+  },
+  "clock": {
+    "epsilon_ns": 3666,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "public_source": "UiPath/uipath-python@7181c279993fbca453b948cf767781282e1e6017:packages/uipath-core/src/uipath/core/tracing/decorators.py",
+    "source_blob": "b7204271a784b7fccce420c11c8c6a9db1d48837",
+    "variant": "local-correction",
+    "complete_package_executed": false,
+    "dependency_seams": [
+      "UiPathSpanUtils.get_parent_context",
+      "input/output attribute helpers"
+    ],
+    "mechanism": "async_generator"
+  },
+  "execution": {
+    "status": "completed"
+  },
+  "ledger_check": {
+    "verdict": "pass",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "pass"
+      }
+    ],
+    "findings": []
+  },
+  "direct_check": {
+    "verdict": "pass",
+    "failures": [],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  }
+}

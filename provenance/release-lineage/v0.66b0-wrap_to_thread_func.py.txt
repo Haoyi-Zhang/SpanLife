@@ -1,0 +1,33 @@
+# Verbatim functional excerpt from release tag v0.66b0.
+# Full-file Git blob: c753bcaca3ba27711ee33860a1af52c8b763047e
+    def trace_to_thread(self, func: Callable[P, R]) -> Callable[P, R]:
+        return self.wrap_to_thread_func(func)
+
+    def wrap_to_thread_func(self, func: Callable[P, R]) -> Callable[P, R]:
+        """Wrap a function so that worker execution is measured and traced."""
+        func_name = _get_func_name(func)
+
+        @functools.wraps(func)
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+            start = default_timer()
+            span = (
+                self._tracer.start_span(f"{ASYNCIO_PREFIX} to_thread-{func_name}")
+                if func_name in self._to_thread_name_to_trace
+                else None
+            )
+            attr = {"type": "to_thread", "name": func_name}
+            exception = None
+            try:
+                result = func(*args, **kwargs)
+                attr["state"] = "finished"
+                return result
+            except asyncio.CancelledError:
+                attr["state"] = "cancelled"
+                raise
+            except BaseException as exc:
+                exception = exc
+                attr["state"] = determine_state(exc)
+                raise
+            finally:
+                self.record_process(start, attr, span, exception)
+        return wrapper

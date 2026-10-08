@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "case": "parent_ends_first",
+  "revision": "fixed",
+  "repeat": 1,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1790737960067282181,
+      "monotonic_ns": 1191095070560,
+      "thread_id": 140429294004096,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "submit_exit",
+      "wall_ns": 1790737960067307198,
+      "monotonic_ns": 1191095094867,
+      "thread_id": 140429294004096,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "queue_release",
+      "wall_ns": 1790737960070478596,
+      "monotonic_ns": 1191098266565,
+      "thread_id": 140429294004096,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1790737960070571795,
+      "monotonic_ns": 1191098360885,
+      "thread_id": 140428900837056,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1790737960074869798,
+      "monotonic_ns": 1191102658048,
+      "thread_id": 140428900837056,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {},
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "both",
+      "span_name": "operation",
+      "span_ids": [
+        "6630848404623122624"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError"
+      ],
+      "source": "explicit application lifetime convention",
+      "exclude_queue": false
+    }
+  ],
+  "spans": [
+    {
+      "name": "already-finished-parent",
+      "span_id": "11061852768357286867",
+      "trace_id": "214531520771164603277636913786090099504",
+      "parent_id": "0",
+      "start_ns": 1790737960067166229,
+      "end_ns": 1790737960067177986,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    },
+    {
+      "name": "operation",
+      "span_id": "6630848404623122624",
+      "trace_id": "214531520771164603277636913786090099504",
+      "parent_id": "11061852768357286867",
+      "start_ns": 1790737960067266858,
+      "end_ns": 1790737960075051759,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "already-finished-parent",
+      "11061852768357286867"
+    ],
+    [
+      "operation",
+      "6630848404623122624"
+    ]
+  ],
+  "ended": [
+    [
+      "already-finished-parent",
+      "11061852768357286867"
+    ],
+    [
+      "operation",
+      "6630848404623122624"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 2704,
+    "median_offset_ns": 1790736768972212542,
+    "min_offset_ns": 1790736768972212532,
+    "max_offset_ns": 1790736768972213854
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 2123,
+    "median_offset_ns": 1790736768972212542,
+    "min_offset_ns": 1790736768972211651,
+    "max_offset_ns": 1790736768972212612
+  },
+  "clock": {
+    "epsilon_ns": 5408,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {},
+  "ledger_check": {
+    "verdict": "pass",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "pass"
+      }
+    ],
+    "findings": []
+  },
+  "direct_check": {
+    "verdict": "pass",
+    "failures": [],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  },
+  "execution": {
+    "status": "completed",
+    "python": "3.13.5",
+    "pid": 2634
+  }
+}

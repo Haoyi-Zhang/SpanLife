@@ -1,0 +1,255 @@
+{
+  "schema": 1,
+  "base_revision": "fixed OpenTelemetry source e008b0e315b7d0a219c43e7ded1dc02e5abbeb69",
+  "test_sources": {
+    "legacy": "unchanged upstream pre-fix methods (2)",
+    "updated": "unchanged upstream post-fix methods (7)"
+  },
+  "perturbations": [
+    "early_end",
+    "late_start",
+    "queue_inclusive",
+    "no_span",
+    "duplicate_span",
+    "wrong_parent",
+    "missing_error_status",
+    "missing_exception_event",
+    "first_call_only",
+    "empty_context_execution"
+  ],
+  "fresh_process_methods": 90,
+  "infrastructure_errors": 0,
+  "by_suite": {
+    "legacy": {
+      "methods": [
+        "test_to_thread",
+        "test_to_thread_partial_func"
+      ],
+      "detected_perturbations": 2,
+      "matrix": {
+        "early_end": {
+          "methods": 2,
+          "passed_methods": 2,
+          "failing_methods": [],
+          "detected": false,
+          "failures": 0,
+          "errors": 0
+        },
+        "late_start": {
+          "methods": 2,
+          "passed_methods": 2,
+          "failing_methods": [],
+          "detected": false,
+          "failures": 0,
+          "errors": 0
+        },
+        "queue_inclusive": {
+          "methods": 2,
+          "passed_methods": 2,
+          "failing_methods": [],
+          "detected": false,
+          "failures": 0,
+          "errors": 0
+        },
+        "no_span": {
+          "methods": 2,
+          "passed_methods": 0,
+          "failing_methods": [
+            "test_to_thread",
+            "test_to_thread_partial_func"
+          ],
+          "detected": true,
+          "failures": 2,
+          "errors": 0
+        },
+        "duplicate_span": {
+          "methods": 2,
+          "passed_methods": 0,
+          "failing_methods": [
+            "test_to_thread",
+            "test_to_thread_partial_func"
+          ],
+          "detected": true,
+          "failures": 2,
+          "errors": 0
+        },
+        "wrong_parent": {
+          "methods": 2,
+          "passed_methods": 2,
+          "failing_methods": [],
+          "detected": false,
+          "failures": 0,
+          "errors": 0
+        },
+        "missing_error_status": {
+          "methods": 2,
+          "passed_methods": 2,
+          "failing_methods": [],
+          "detected": false,
+          "failures": 0,
+          "errors": 0
+        },
+        "missing_exception_event": {
+          "methods": 2,
+          "passed_methods": 2,
+          "failing_methods": [],
+          "detected": false,
+          "failures": 0,
+          "errors": 0
+        },
+        "first_call_only": {
+          "methods": 2,
+          "passed_methods": 2,
+          "failing_methods": [],
+          "detected": false,
+          "failures": 0,
+          "errors": 0
+        },
+        "empty_context_execution": {
+          "methods": 2,
+          "passed_methods": 2,
+          "failing_methods": [],
+          "detected": false,
+          "failures": 0,
+          "errors": 0
+        }
+      }
+    },
+    "updated": {
+      "methods": [
+        "test_to_thread",
+        "test_to_thread_duration_covers_execution",
+        "test_to_thread_exception",
+        "test_to_thread_timeout_state",
+        "test_to_thread_cancelled_state",
+        "test_to_thread_repeated_calls",
+        "test_to_thread_partial_func"
+      ],
+      "detected_perturbations": 10,
+      "matrix": {
+        "early_end": {
+          "methods": 7,
+          "passed_methods": 3,
+          "failing_methods": [
+            "test_to_thread_duration_covers_execution",
+            "test_to_thread_exception",
+            "test_to_thread_timeout_state",
+            "test_to_thread_cancelled_state"
+          ],
+          "detected": true,
+          "failures": 4,
+          "errors": 0
+        },
+        "late_start": {
+          "methods": 7,
+          "passed_methods": 3,
+          "failing_methods": [
+            "test_to_thread_duration_covers_execution",
+            "test_to_thread_exception",
+            "test_to_thread_timeout_state",
+            "test_to_thread_cancelled_state"
+          ],
+          "detected": true,
+          "failures": 4,
+          "errors": 0
+        },
+        "queue_inclusive": {
+          "methods": 7,
+          "passed_methods": 6,
+          "failing_methods": [
+            "test_to_thread_cancelled_state"
+          ],
+          "detected": true,
+          "failures": 1,
+          "errors": 0
+        },
+        "no_span": {
+          "methods": 7,
+          "passed_methods": 0,
+          "failing_methods": [
+            "test_to_thread",
+            "test_to_thread_duration_covers_execution",
+            "test_to_thread_exception",
+            "test_to_thread_timeout_state",
+            "test_to_thread_cancelled_state",
+            "test_to_thread_repeated_calls",
+            "test_to_thread_partial_func"
+          ],
+          "detected": true,
+          "failures": 7,
+          "errors": 0
+        },
+        "duplicate_span": {
+          "methods": 7,
+          "passed_methods": 0,
+          "failing_methods": [
+            "test_to_thread",
+            "test_to_thread_duration_covers_execution",
+            "test_to_thread_exception",
+            "test_to_thread_timeout_state",
+            "test_to_thread_cancelled_state",
+            "test_to_thread_repeated_calls",
+            "test_to_thread_partial_func"
+          ],
+          "detected": true,
+          "failures": 7,
+          "errors": 0
+        },
+        "wrong_parent": {
+          "methods": 7,
+          "passed_methods": 6,
+          "failing_methods": [
+            "test_to_thread_cancelled_state"
+          ],
+          "detected": true,
+          "failures": 1,
+          "errors": 0
+        },
+        "missing_error_status": {
+          "methods": 7,
+          "passed_methods": 4,
+          "failing_methods": [
+            "test_to_thread_exception",
+            "test_to_thread_timeout_state",
+            "test_to_thread_cancelled_state"
+          ],
+          "detected": true,
+          "failures": 3,
+          "errors": 0
+        },
+        "missing_exception_event": {
+          "methods": 7,
+          "passed_methods": 5,
+          "failing_methods": [
+            "test_to_thread_exception",
+            "test_to_thread_timeout_state"
+          ],
+          "detected": true,
+          "failures": 2,
+          "errors": 0
+        },
+        "first_call_only": {
+          "methods": 7,
+          "passed_methods": 6,
+          "failing_methods": [
+            "test_to_thread_repeated_calls"
+          ],
+          "detected": true,
+          "failures": 1,
+          "errors": 0
+        },
+        "empty_context_execution": {
+          "methods": 7,
+          "passed_methods": 6,
+          "failing_methods": [
+            "test_to_thread_cancelled_state"
+          ],
+          "detected": true,
+          "failures": 1,
+          "errors": 0
+        }
+      }
+    }
+  },
+  "classification": "Bounded test-sensitivity matrix over synthetic executable operators; not repository-wide mutation testing or defect prevalence."
+}

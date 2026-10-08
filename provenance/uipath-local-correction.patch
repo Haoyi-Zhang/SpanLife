@@ -1,0 +1,35 @@
+--- UiPath-public/decorators.py
++++ SpanLife-local-correction/decorators.py
+@@ -227,17 +227,21 @@
+ 
+                 # Execute the generator and collect outputs
+                 outputs = []
+-                async for item in func(*args, **kwargs):
+-                    outputs.append(item)
+-                    span.add_event(f"Yielded: {item}")
+-                    yield item
+-
+-                # Set output attributes AFTER execution
+-                set_span_output_attributes(
+-                    span,
+-                    result=outputs,
+-                    output_processor=output_processor,
+-                )
++                inner_generator = func(*args, **kwargs)
++                try:
++                    async for item in inner_generator:
++                        outputs.append(item)
++                        span.add_event(f"Yielded: {item}")
++                        yield item
++
++                    # Set output attributes AFTER execution
++                    set_span_output_attributes(
++                        span,
++                        result=outputs,
++                        output_processor=output_processor,
++                    )
++                finally:
++                    await inner_generator.aclose()
+             except Exception as e:
+                 span.record_exception(e)
+                 span.set_status(StatusCode.ERROR, str(e))

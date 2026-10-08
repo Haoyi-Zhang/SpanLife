@@ -1,0 +1,819 @@
+{
+  "completed_trials": 800,
+  "configurations": 40,
+  "initial_failed_attempts": 0,
+  "counts": {
+    "fail": 278,
+    "pass": 458,
+    "inconclusive": 64
+  },
+  "name_counts": {
+    "fail": 180,
+    "pass": 580,
+    "inconclusive": 40
+  },
+  "direct_disagreements": 0,
+  "clock_ineligible": 6,
+  "epsilon_us": {
+    "n": 800,
+    "minimum": 1.422,
+    "q1": 2.7190000000000003,
+    "median": 4.676,
+    "q3": 6.05,
+    "maximum": 553.054
+  },
+  "declared_valid_controls": {
+    "pass": 458,
+    "inconclusive": 2
+  },
+  "declared_discrepancies": {
+    "fail": 278,
+    "inconclusive": 2
+  },
+  "name_misses_with_ledger_fail": 118,
+  "sensitivity": [
+    {
+      "multiplier": 0.5,
+      "changed": 0,
+      "pass": 458,
+      "fail": 278,
+      "inconclusive": 64
+    },
+    {
+      "multiplier": 1,
+      "changed": 0,
+      "pass": 458,
+      "fail": 278,
+      "inconclusive": 64
+    },
+    {
+      "multiplier": 2,
+      "changed": 10,
+      "pass": 451,
+      "fail": 275,
+      "inconclusive": 74
+    },
+    {
+      "multiplier": 4,
+      "changed": 26,
+      "pass": 437,
+      "fail": 273,
+      "inconclusive": 90
+    }
+  ],
+  "failed_attempts": [],
+  "costs_us": [
+    {
+      "workload": "direct",
+      "mode": "hook",
+      "n": 15,
+      "minimum": 3.2052669999999996,
+      "q1": 3.2999535,
+      "median": 3.3572640000000002,
+      "q3": 3.512299,
+      "maximum": 8.648273
+    },
+    {
+      "workload": "direct",
+      "mode": "hook_sdk",
+      "n": 15,
+      "minimum": 59.733357000000005,
+      "q1": 65.13510600000001,
+      "median": 68.82639900000001,
+      "q3": 74.9607535,
+      "maximum": 97.387089
+    },
+    {
+      "workload": "direct",
+      "mode": "none",
+      "n": 15,
+      "minimum": 0.184244,
+      "q1": 0.186197,
+      "median": 0.187508,
+      "q3": 0.198745,
+      "maximum": 0.259175
+    },
+    {
+      "workload": "to_thread",
+      "mode": "hook",
+      "n": 15,
+      "minimum": 37.649019,
+      "q1": 40.55839,
+      "median": 54.062286,
+      "q3": 56.523540999999994,
+      "maximum": 68.664203
+    },
+    {
+      "workload": "to_thread",
+      "mode": "hook_sdk",
+      "n": 15,
+      "minimum": 109.275071,
+      "q1": 115.507804,
+      "median": 141.159216,
+      "q3": 156.3189925,
+      "maximum": 186.513999
+    },
+    {
+      "workload": "to_thread",
+      "mode": "none",
+      "n": 15,
+      "minimum": 30.957199,
+      "q1": 32.588041000000004,
+      "median": 38.055668,
+      "q3": 52.253091,
+      "maximum": 58.654302
+    }
+  ],
+  "paired_cost_differences_us": {
+    "direct": {
+      "hook": {
+        "n": 15,
+        "minimum": 2.9917089999999997,
+        "q1": 3.063182,
+        "median": 3.1706670000000003,
+        "q3": 3.3260170000000002,
+        "maximum": 8.462337
+      },
+      "hook_sdk": {
+        "n": 15,
+        "minimum": 59.545168000000004,
+        "q1": 64.9236765,
+        "median": 68.639982,
+        "q3": 74.774011,
+        "maximum": 97.199821
+      }
+    },
+    "to_thread": {
+      "hook": {
+        "n": 15,
+        "minimum": -13.308304,
+        "q1": 3.125250999999995,
+        "median": 7.051617000000007,
+        "q3": 11.723158,
+        "maximum": 25.308446
+      },
+      "hook_sdk": {
+        "n": 15,
+        "minimum": 57.588306999999986,
+        "q1": 80.9903685,
+        "median": 100.56775700000001,
+        "q3": 107.242245,
+        "maximum": 133.96470900000003
+      }
+    }
+  },
+  "extensions": {
+    "speaches_holdout": {
+      "schema": 1,
+      "source": "speaches-ai/speaches@993994f7984bf3fe9655b267448328cf66fccb42",
+      "source_blob": "709e44eb95a292e0b8074cd2efd0fff34d39afa7",
+      "cases": 4,
+      "trials": 40,
+      "repeats": 10,
+      "by_case": {
+        "decorated_sync": {
+          "verdicts": {
+            "inconclusive": 3,
+            "pass": 7
+          },
+          "finding_codes": {
+            "CLOCK_UNQUALIFIED": 3
+          }
+        },
+        "decorated_generator": {
+          "verdicts": {
+            "pass": 8,
+            "inconclusive": 2
+          },
+          "finding_codes": {
+            "CLOCK_UNQUALIFIED": 2
+          }
+        },
+        "generator_misuse": {
+          "verdicts": {
+            "fail": 7,
+            "inconclusive": 3
+          },
+          "finding_codes": {
+            "ENDS_BEFORE_EXIT": 7,
+            "CLOCK_UNQUALIFIED": 3
+          }
+        },
+        "generator_exception": {
+          "verdicts": {
+            "pass": 9,
+            "inconclusive": 1
+          },
+          "finding_codes": {
+            "CLOCK_UNQUALIFIED": 1
+          }
+        }
+      },
+      "direct_disagreements": 0,
+      "name_misses_with_ledger_fail": 7,
+      "scope_limit": "Pinned public decorators plus local operations; not the complete Speaches service or a deployment.",
+      "processes": [
+        {
+          "case": "decorated_sync",
+          "repeat": 0,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_sync",
+          "repeat": 1,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_sync",
+          "repeat": 2,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_sync",
+          "repeat": 3,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_sync",
+          "repeat": 4,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_sync",
+          "repeat": 5,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_sync",
+          "repeat": 6,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_sync",
+          "repeat": 7,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_sync",
+          "repeat": 8,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_sync",
+          "repeat": 9,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_generator",
+          "repeat": 0,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_generator",
+          "repeat": 1,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_generator",
+          "repeat": 2,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_generator",
+          "repeat": 3,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_generator",
+          "repeat": 4,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_generator",
+          "repeat": 5,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_generator",
+          "repeat": 6,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_generator",
+          "repeat": 7,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_generator",
+          "repeat": 8,
+          "returncode": 0
+        },
+        {
+          "case": "decorated_generator",
+          "repeat": 9,
+          "returncode": 0
+        },
+        {
+          "case": "generator_misuse",
+          "repeat": 0,
+          "returncode": 0
+        },
+        {
+          "case": "generator_misuse",
+          "repeat": 1,
+          "returncode": 0
+        },
+        {
+          "case": "generator_misuse",
+          "repeat": 2,
+          "returncode": 0
+        },
+        {
+          "case": "generator_misuse",
+          "repeat": 3,
+          "returncode": 0
+        },
+        {
+          "case": "generator_misuse",
+          "repeat": 4,
+          "returncode": 0
+        },
+        {
+          "case": "generator_misuse",
+          "repeat": 5,
+          "returncode": 0
+        },
+        {
+          "case": "generator_misuse",
+          "repeat": 6,
+          "returncode": 0
+        },
+        {
+          "case": "generator_misuse",
+          "repeat": 7,
+          "returncode": 0
+        },
+        {
+          "case": "generator_misuse",
+          "repeat": 8,
+          "returncode": 0
+        },
+        {
+          "case": "generator_misuse",
+          "repeat": 9,
+          "returncode": 0
+        },
+        {
+          "case": "generator_exception",
+          "repeat": 0,
+          "returncode": 0
+        },
+        {
+          "case": "generator_exception",
+          "repeat": 1,
+          "returncode": 0
+        },
+        {
+          "case": "generator_exception",
+          "repeat": 2,
+          "returncode": 0
+        },
+        {
+          "case": "generator_exception",
+          "repeat": 3,
+          "returncode": 0
+        },
+        {
+          "case": "generator_exception",
+          "repeat": 4,
+          "returncode": 0
+        },
+        {
+          "case": "generator_exception",
+          "repeat": 5,
+          "returncode": 0
+        },
+        {
+          "case": "generator_exception",
+          "repeat": 6,
+          "returncode": 0
+        },
+        {
+          "case": "generator_exception",
+          "repeat": 7,
+          "returncode": 0
+        },
+        {
+          "case": "generator_exception",
+          "repeat": 8,
+          "returncode": 0
+        },
+        {
+          "case": "generator_exception",
+          "repeat": 9,
+          "returncode": 0
+        }
+      ]
+    },
+    "mutation_challenge": {
+      "schema": 1,
+      "mutations": 18,
+      "derived_trials": 360,
+      "source_trials": 120,
+      "exact_expected_verdicts": 360,
+      "exact_expected_diagnostics": 360,
+      "direct_disagreements": 0,
+      "name_misses_with_ledger_fail": 160,
+      "by_mutation": {
+        "control_execution": {
+          "base_case": "success",
+          "expected": "pass",
+          "expected_code": null,
+          "ledger": {
+            "pass": 20
+          },
+          "direct": {
+            "pass": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        },
+        "starts_after_entry": {
+          "base_case": "success",
+          "expected": "fail",
+          "expected_code": "STARTS_AFTER_ENTRY",
+          "ledger": {
+            "fail": 20
+          },
+          "direct": {
+            "fail": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        },
+        "ends_before_exit": {
+          "base_case": "success",
+          "expected": "fail",
+          "expected_code": "ENDS_BEFORE_EXIT",
+          "ledger": {
+            "fail": 20
+          },
+          "direct": {
+            "fail": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        },
+        "missing_error_status": {
+          "base_case": "escaped",
+          "expected": "fail",
+          "expected_code": "MISSING_ERROR_STATUS",
+          "ledger": {
+            "fail": 20
+          },
+          "direct": {
+            "fail": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        },
+        "missing_exception_event": {
+          "base_case": "escaped",
+          "expected": "fail",
+          "expected_code": "MISSING_EXCEPTION_EVENT",
+          "ledger": {
+            "fail": 20
+          },
+          "direct": {
+            "fail": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        },
+        "parent_mismatch": {
+          "base_case": "success",
+          "expected": "fail",
+          "expected_code": "PARENT_MISMATCH",
+          "ledger": {
+            "fail": 20
+          },
+          "direct": {
+            "fail": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        },
+        "context_mismatch": {
+          "base_case": "success",
+          "expected": "fail",
+          "expected_code": "CONTEXT_MISMATCH",
+          "ledger": {
+            "fail": 20
+          },
+          "direct": {
+            "fail": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        },
+        "missing_span": {
+          "base_case": "success",
+          "expected": "fail",
+          "expected_code": "MISSING_SPAN",
+          "ledger": {
+            "fail": 20
+          },
+          "direct": {
+            "fail": 20
+          },
+          "name": {
+            "fail": 20
+          }
+        },
+        "export_loss": {
+          "base_case": "success",
+          "expected": "inconclusive",
+          "expected_code": "EXPORT_LOSS",
+          "ledger": {
+            "inconclusive": 20
+          },
+          "direct": {
+            "inconclusive": 20
+          },
+          "name": {
+            "fail": 20
+          }
+        },
+        "collection_unqualified": {
+          "base_case": "success",
+          "expected": "inconclusive",
+          "expected_code": "COLLECTION_NOT_QUALIFIED",
+          "ledger": {
+            "inconclusive": 20
+          },
+          "direct": {
+            "inconclusive": 20
+          },
+          "name": {
+            "inconclusive": 20
+          }
+        },
+        "duplicate_association": {
+          "base_case": "success",
+          "expected": "inconclusive",
+          "expected_code": "AMBIGUOUS_ASSOCIATION",
+          "ledger": {
+            "inconclusive": 20
+          },
+          "direct": {
+            "inconclusive": 20
+          },
+          "name": {
+            "fail": 20
+          }
+        },
+        "includes_queue_wait": {
+          "base_case": "queue",
+          "expected": "fail",
+          "expected_code": "INCLUDES_QUEUE_WAIT",
+          "ledger": {
+            "fail": 20
+          },
+          "direct": {
+            "fail": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        },
+        "unknown_intent": {
+          "base_case": "success",
+          "expected": "inconclusive",
+          "expected_code": "UNDECLARED_INTENT",
+          "ledger": {
+            "inconclusive": 20
+          },
+          "direct": {
+            "inconclusive": 20
+          },
+          "name": {
+            "inconclusive": 20
+          }
+        },
+        "clock_unqualified": {
+          "base_case": "success",
+          "expected": "inconclusive",
+          "expected_code": "CLOCK_UNQUALIFIED",
+          "ledger": {
+            "inconclusive": 20
+          },
+          "direct": {
+            "inconclusive": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        },
+        "control_submission": {
+          "base_case": "submission_only",
+          "expected": "pass",
+          "expected_code": null,
+          "ledger": {
+            "pass": 20
+          },
+          "direct": {
+            "pass": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        },
+        "submission_as_execution": {
+          "base_case": "submission_only",
+          "expected": "fail",
+          "expected_code": "ENDS_BEFORE_EXIT",
+          "ledger": {
+            "fail": 20
+          },
+          "direct": {
+            "fail": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        },
+        "both_missing_submission": {
+          "base_case": "both_lifetimes",
+          "expected": "inconclusive",
+          "expected_code": "MISSING_SUBMISSION_BOUNDARY",
+          "ledger": {
+            "inconclusive": 20
+          },
+          "direct": {
+            "inconclusive": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        },
+        "control_parent_ends_first": {
+          "base_case": "parent_ends_first",
+          "expected": "pass",
+          "expected_code": null,
+          "ledger": {
+            "pass": 20
+          },
+          "direct": {
+            "pass": 20
+          },
+          "name": {
+            "pass": 20
+          }
+        }
+      },
+      "interpretation": "Oracle mutation analysis over retained real SDK traces; not additional software defects or independent application runs."
+    },
+    "policy_counterfactual": {
+      "schema": 1,
+      "source_observations": 60,
+      "policy_evaluations": 300,
+      "roles": [
+        "execution",
+        "submission",
+        "both",
+        "context-only",
+        "unknown"
+      ],
+      "matrix": [
+        {
+          "observation": "execution_span",
+          "declared_role": "execution",
+          "pass": 20,
+          "fail": 0,
+          "inconclusive": 0,
+          "dominant_codes": ""
+        },
+        {
+          "observation": "execution_span",
+          "declared_role": "submission",
+          "pass": 0,
+          "fail": 20,
+          "inconclusive": 0,
+          "dominant_codes": "MISSES_SUBMISSION_START:20"
+        },
+        {
+          "observation": "execution_span",
+          "declared_role": "both",
+          "pass": 0,
+          "fail": 20,
+          "inconclusive": 0,
+          "dominant_codes": "MISSES_SUBMISSION_START:20"
+        },
+        {
+          "observation": "execution_span",
+          "declared_role": "context-only",
+          "pass": 20,
+          "fail": 0,
+          "inconclusive": 0,
+          "dominant_codes": ""
+        },
+        {
+          "observation": "execution_span",
+          "declared_role": "unknown",
+          "pass": 0,
+          "fail": 0,
+          "inconclusive": 20,
+          "dominant_codes": "UNDECLARED_INTENT:20"
+        },
+        {
+          "observation": "submission_span",
+          "declared_role": "execution",
+          "pass": 0,
+          "fail": 20,
+          "inconclusive": 0,
+          "dominant_codes": "ENDS_BEFORE_EXIT:20"
+        },
+        {
+          "observation": "submission_span",
+          "declared_role": "submission",
+          "pass": 20,
+          "fail": 0,
+          "inconclusive": 0,
+          "dominant_codes": ""
+        },
+        {
+          "observation": "submission_span",
+          "declared_role": "both",
+          "pass": 0,
+          "fail": 20,
+          "inconclusive": 0,
+          "dominant_codes": "ENDS_BEFORE_EXIT:20"
+        },
+        {
+          "observation": "submission_span",
+          "declared_role": "context-only",
+          "pass": 20,
+          "fail": 0,
+          "inconclusive": 0,
+          "dominant_codes": ""
+        },
+        {
+          "observation": "submission_span",
+          "declared_role": "unknown",
+          "pass": 0,
+          "fail": 0,
+          "inconclusive": 20,
+          "dominant_codes": "UNDECLARED_INTENT:20"
+        },
+        {
+          "observation": "combined_span",
+          "declared_role": "execution",
+          "pass": 20,
+          "fail": 0,
+          "inconclusive": 0,
+          "dominant_codes": ""
+        },
+        {
+          "observation": "combined_span",
+          "declared_role": "submission",
+          "pass": 20,
+          "fail": 0,
+          "inconclusive": 0,
+          "dominant_codes": ""
+        },
+        {
+          "observation": "combined_span",
+          "declared_role": "both",
+          "pass": 20,
+          "fail": 0,
+          "inconclusive": 0,
+          "dominant_codes": ""
+        },
+        {
+          "observation": "combined_span",
+          "declared_role": "context-only",
+          "pass": 20,
+          "fail": 0,
+          "inconclusive": 0,
+          "dominant_codes": ""
+        },
+        {
+          "observation": "combined_span",
+          "declared_role": "unknown",
+          "pass": 0,
+          "fail": 0,
+          "inconclusive": 20,
+          "dominant_codes": "UNDECLARED_INTENT:20"
+        }
+      ],
+      "interpretation": "The same trace evidence can be valid for one declared role and invalid or undecidable for another; this does not rank the roles."
+    }
+  }
+}

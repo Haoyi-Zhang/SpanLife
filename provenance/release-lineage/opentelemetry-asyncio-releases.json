@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "verified_on": "2026-10-03",
+  "package": "opentelemetry-instrumentation-asyncio",
+  "repository": "https://github.com/open-telemetry/opentelemetry-python-contrib",
+  "finding": {
+    "first_release_with_to_thread_surface": "0.44b0",
+    "last_verified_affected_release": "0.65b0",
+    "first_verified_fixed_release": "0.66b0",
+    "scope": "Release-tag source and official release metadata. The wheel bytes are identified by PyPI SHA-256 but were not downloaded in this execution environment."
+  },
+  "releases": [
+    {
+      "version": "0.44b0",
+      "released": "2024-02-23",
+      "tag": "v0.44b0",
+      "tag_commit": "6bc5f7dae4d3f4e917914422c443c8f080ce977e",
+      "source_blob": "68e3d0839f78b53c7ab9c9829edbb2e793409cda",
+      "version_blob": "c829305fbb64a89818bc3338bdf1a033d46c6f4f",
+      "wheel": "opentelemetry_instrumentation_asyncio-0.44b0-py3-none-any.whl",
+      "wheel_sha256": "9d8084fd03ec848dee3905152f8e2764f9e67fb8da18b93c8d8dadb683a2b216",
+      "classification": "affected",
+      "basis": [
+        "PyPI page documents the to_thread tracing surface and release date.",
+        "Release-tag source starts the timer/span in trace_to_thread and returns func without invoking it."
+      ]
+    },
+    {
+      "version": "0.65b0",
+      "released": "2026-07-16",
+      "tag": "v0.65b0",
+      "tag_commit": "a5470c666947acddc24fd4064ec7c1b169dfe8b6",
+      "source_blob": "4acf4222425bc353ab1de08ac0904fa73a2550b0",
+      "version_blob": "ead22d1bee905d87db84aa0aa2f1752bd61c9f77",
+      "wheel": "opentelemetry_instrumentation_asyncio-0.65b0-py3-none-any.whl",
+      "wheel_sha256": "de3e543eb12304be34cebae6df3ec6b0240ffd7b01d177f6a27081585a46878c",
+      "classification": "affected",
+      "basis": [
+        "Release-tag source still returns the callable from trace_to_thread and records immediately.",
+        "The v0.65b0 release notes do not contain the later #4901 repair."
+      ]
+    },
+    {
+      "version": "0.66b0",
+      "released": "2026-09-25",
+      "tag": "v0.66b0",
+      "tag_commit": "b808042e3457d83fe4e977a0b4f1fed416313d96",
+      "source_blob": "c753bcaca3ba27711ee33860a1af52c8b763047e",
+      "version_blob": "d3741ff3c96ee0a079759b3bca54928c35c4a4f6",
+      "wheel": "opentelemetry_instrumentation_asyncio-0.66b0-py3-none-any.whl",
+      "wheel_sha256": "ddaf4e6b4e9be21c9b428f27b04ca67758fc637cba2069821313796f1ccf722b",
+      "classification": "fixed",
+      "basis": [
+        "Release notes explicitly list #4901 as the to_thread lifetime/error/repeated-call repair.",
+        "Release-tag source returns a functools.wraps wrapper and records around func(*args, **kwargs)."
+      ]
+    }
+  ],
+  "official_sources": [
+    "https://pypi.org/project/opentelemetry-instrumentation-asyncio/0.44b0/",
+    "https://pypi.org/project/opentelemetry-instrumentation-asyncio/0.65b0/",
+    "https://pypi.org/project/opentelemetry-instrumentation-asyncio/0.66b0/",
+    "https://github.com/open-telemetry/opentelemetry-python-contrib/releases/tag/v0.44b0",
+    "https://github.com/open-telemetry/opentelemetry-python-contrib/releases/tag/v0.65b0",
+    "https://github.com/open-telemetry/opentelemetry-python-contrib/releases/tag/v0.66b0"
+  ],
+  "limitations": [
+    "The exact published wheel bytes could not be downloaded because the execution container has no external DNS path.",
+    "Runtime replay uses byte-verified source files from the affected parent and merged-fix commits with compatible installed SDK dependencies; it is not described as whole-wheel execution.",
+    "The release boundary is therefore a source-and-release-metadata conclusion, not a claim that every intervening wheel was dynamically exercised."
+  ]
+}

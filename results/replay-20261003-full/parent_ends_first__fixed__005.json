@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "case": "parent_ends_first",
+  "revision": "fixed",
+  "repeat": 5,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1791035724124856570,
+      "monotonic_ns": 505055726030,
+      "thread_id": 140157561907072,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "submit_exit",
+      "wall_ns": 1791035724124873225,
+      "monotonic_ns": 505055742044,
+      "thread_id": 140157561907072,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "queue_release",
+      "wall_ns": 1791035724128006881,
+      "monotonic_ns": 505058875789,
+      "thread_id": 140157561907072,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791035724128055459,
+      "monotonic_ns": 505058924478,
+      "thread_id": 140157168744128,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791035724132302013,
+      "monotonic_ns": 505063170912,
+      "thread_id": 140157168744128,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {},
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "both",
+      "span_name": "operation",
+      "span_ids": [
+        "5317806378218747911"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError"
+      ],
+      "source": "explicit application lifetime convention",
+      "exclude_queue": false
+    }
+  ],
+  "spans": [
+    {
+      "name": "already-finished-parent",
+      "span_id": "5847796953470398279",
+      "trace_id": "13846689970223236708968442074096834127",
+      "parent_id": "0",
+      "start_ns": 1791035724124768508,
+      "end_ns": 1791035724124777631,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    },
+    {
+      "name": "operation",
+      "span_id": "5317806378218747911",
+      "trace_id": "13846689970223236708968442074096834127",
+      "parent_id": "5847796953470398279",
+      "start_ns": 1791035724124845133,
+      "end_ns": 1791035724132407958,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "already-finished-parent",
+      "5847796953470398279"
+    ],
+    [
+      "operation",
+      "5317806378218747911"
+    ]
+  ],
+  "ended": [
+    [
+      "already-finished-parent",
+      "5847796953470398279"
+    ],
+    [
+      "operation",
+      "5317806378218747911"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 561,
+    "median_offset_ns": 1791035219069131362,
+    "min_offset_ns": 1791035219069131347,
+    "max_offset_ns": 1791035219069131463
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 8412,
+    "median_offset_ns": 1791035219069131362,
+    "min_offset_ns": 1791035219069129810,
+    "max_offset_ns": 1791035219069135498
+  },
+  "clock": {
+    "epsilon_ns": 16824,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {},
+  "ledger_check": {
+    "verdict": "pass",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "pass"
+      }
+    ],
+    "findings": []
+  },
+  "direct_check": {
+    "verdict": "pass",
+    "failures": [],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  },
+  "execution": {
+    "status": "completed",
+    "python": "3.13.5",
+    "pid": 5231
+  }
+}

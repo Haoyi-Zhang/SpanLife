@@ -1,0 +1,194 @@
+{
+  "schema": 1,
+  "case": "batch_pending",
+  "revision": "fixed",
+  "repeat": 14,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1790738163622229469,
+      "monotonic_ns": 1394650017738,
+      "thread_id": 139982034896768,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "submit_exit",
+      "wall_ns": 1790738163622250630,
+      "monotonic_ns": 1394650038258,
+      "thread_id": 139982034896768,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1790738163622496085,
+      "monotonic_ns": 1394650283793,
+      "thread_id": 139981633312448,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1790738163632775424,
+      "monotonic_ns": 1394660563233,
+      "thread_id": 139981633312448,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": "6422434650859457051"
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "execution",
+      "span_name": "asyncio to_thread-work",
+      "span_ids": [],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError"
+      ],
+      "source": "documented execution semantics",
+      "exclude_queue": false,
+      "expected_parent": "6422434650859457051",
+      "expected_context": "6422434650859457051"
+    }
+  ],
+  "spans": [],
+  "metrics": [
+    {
+      "name": "asyncio.process.duration",
+      "attributes": {
+        "type": "to_thread",
+        "name": "work",
+        "state": "finished"
+      },
+      "count": 1,
+      "sum": 0.010343225000042366,
+      "value": null
+    },
+    {
+      "name": "asyncio.process.duration",
+      "attributes": {
+        "type": "coroutine",
+        "name": "to_thread",
+        "state": "finished"
+      },
+      "count": 1,
+      "sum": 0.010829068000020925,
+      "value": null
+    },
+    {
+      "name": "asyncio.process.created",
+      "attributes": {
+        "type": "to_thread",
+        "name": "work",
+        "state": "finished"
+      },
+      "count": null,
+      "sum": null,
+      "value": 1
+    },
+    {
+      "name": "asyncio.process.created",
+      "attributes": {
+        "type": "coroutine",
+        "name": "to_thread",
+        "state": "finished"
+      },
+      "count": null,
+      "sum": null,
+      "value": 1
+    }
+  ],
+  "started": [
+    [
+      "request-0",
+      "6422434650859457051"
+    ],
+    [
+      "asyncio to_thread-work",
+      "11743309926789817377"
+    ]
+  ],
+  "ended": [
+    [
+      "asyncio to_thread-work",
+      "11743309926789817377"
+    ],
+    [
+      "request-0",
+      "6422434650859457051"
+    ]
+  ],
+  "drained": false,
+  "always_on": true,
+  "flushes": [],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 2094,
+    "median_offset_ns": 1790736768972212542,
+    "min_offset_ns": 1790736768972212527,
+    "max_offset_ns": 1790736768972213528
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 2754,
+    "median_offset_ns": 1790736768972212542,
+    "min_offset_ns": 1790736768972211205,
+    "max_offset_ns": 1790736768972213057
+  },
+  "clock": {
+    "epsilon_ns": 5508,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "requested_gate_hold_s": 0.009
+  },
+  "ledger_check": {
+    "verdict": "inconclusive",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "inconclusive"
+      }
+    ],
+    "findings": [
+      {
+        "operation_id": "op-0",
+        "code": "COLLECTION_NOT_QUALIFIED",
+        "verdict": "inconclusive"
+      }
+    ]
+  },
+  "direct_check": {
+    "verdict": "inconclusive",
+    "failures": [],
+    "inconclusive": [
+      "op-0"
+    ]
+  },
+  "name_check": {
+    "verdict": "inconclusive",
+    "reason": "collection pending"
+  },
+  "execution": {
+    "status": "completed",
+    "python": "3.13.5",
+    "pid": 9498
+  }
+}

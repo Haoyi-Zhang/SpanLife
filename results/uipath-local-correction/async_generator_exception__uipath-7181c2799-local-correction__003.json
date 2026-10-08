@@ -1,0 +1,160 @@
+{
+  "schema": 2,
+  "case": "async_generator_exception",
+  "revision": "uipath-7181c2799-local-correction",
+  "repeat": 3,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791117302043197194,
+      "monotonic_ns": 895656884454,
+      "thread_id": 139904442410880,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791117302043244996,
+      "monotonic_ns": 895656931835,
+      "thread_id": 139904442410880,
+      "outcome": "raised",
+      "exception_type": "ValueError",
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": "4966984190694881912"
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "execution",
+      "span_name": "uipath.async-generator-exception",
+      "span_ids": [
+        "4966984190694881912"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError",
+        "GeneratorExit"
+      ],
+      "source": "pinned public UiPath decorator; local execution convention",
+      "exclude_queue": false,
+      "expected_parent": "11223352950934597132",
+      "expected_context": "4966984190694881912"
+    }
+  ],
+  "spans": [
+    {
+      "name": "uipath.async-generator-exception",
+      "span_id": "4966984190694881912",
+      "trace_id": "302704794015660042731291067806210150644",
+      "parent_id": "11223352950934597132",
+      "start_ns": 1791117302043182752,
+      "end_ns": 1791117302043669326,
+      "status": "ERROR",
+      "events": [
+        "Yielded: 8778",
+        "exception"
+      ],
+      "scope": "spanlife_uipath_decorator_local_correction",
+      "attributes": {}
+    },
+    {
+      "name": "uipath-holdout-parent",
+      "span_id": "11223352950934597132",
+      "trace_id": "302704794015660042731291067806210150644",
+      "parent_id": "0",
+      "start_ns": 1791117302042878233,
+      "end_ns": 1791117302043864571,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "uipath-holdout-parent",
+      "11223352950934597132"
+    ],
+    [
+      "uipath.async-generator-exception",
+      "4966984190694881912"
+    ]
+  ],
+  "ended": [
+    [
+      "uipath.async-generator-exception",
+      "4966984190694881912"
+    ],
+    [
+      "uipath-holdout-parent",
+      "11223352950934597132"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 1292,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386313311,
+    "max_offset_ns": 1791116406386313927
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 411,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386313166,
+    "max_offset_ns": 1791116406386313386
+  },
+  "clock": {
+    "epsilon_ns": 2584,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "public_source": "UiPath/uipath-python@7181c279993fbca453b948cf767781282e1e6017:packages/uipath-core/src/uipath/core/tracing/decorators.py",
+    "source_blob": "b7204271a784b7fccce420c11c8c6a9db1d48837",
+    "variant": "local-correction",
+    "complete_package_executed": false,
+    "dependency_seams": [
+      "UiPathSpanUtils.get_parent_context",
+      "input/output attribute helpers"
+    ],
+    "mechanism": "async_generator"
+  },
+  "execution": {
+    "status": "completed"
+  },
+  "ledger_check": {
+    "verdict": "pass",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "pass"
+      }
+    ],
+    "findings": []
+  },
+  "direct_check": {
+    "verdict": "pass",
+    "failures": [],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  }
+}

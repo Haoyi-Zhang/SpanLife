@@ -1,0 +1,265 @@
+{
+  "schema": 1,
+  "mutations": 18,
+  "derived_trials": 360,
+  "source_trials": 120,
+  "exact_expected_verdicts": 360,
+  "exact_expected_diagnostics": 360,
+  "direct_disagreements": 0,
+  "name_misses_with_ledger_fail": 160,
+  "by_mutation": {
+    "control_execution": {
+      "base_case": "success",
+      "expected": "pass",
+      "expected_code": null,
+      "ledger": {
+        "pass": 20
+      },
+      "direct": {
+        "pass": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    },
+    "starts_after_entry": {
+      "base_case": "success",
+      "expected": "fail",
+      "expected_code": "STARTS_AFTER_ENTRY",
+      "ledger": {
+        "fail": 20
+      },
+      "direct": {
+        "fail": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    },
+    "ends_before_exit": {
+      "base_case": "success",
+      "expected": "fail",
+      "expected_code": "ENDS_BEFORE_EXIT",
+      "ledger": {
+        "fail": 20
+      },
+      "direct": {
+        "fail": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    },
+    "missing_error_status": {
+      "base_case": "escaped",
+      "expected": "fail",
+      "expected_code": "MISSING_ERROR_STATUS",
+      "ledger": {
+        "fail": 20
+      },
+      "direct": {
+        "fail": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    },
+    "missing_exception_event": {
+      "base_case": "escaped",
+      "expected": "fail",
+      "expected_code": "MISSING_EXCEPTION_EVENT",
+      "ledger": {
+        "fail": 20
+      },
+      "direct": {
+        "fail": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    },
+    "parent_mismatch": {
+      "base_case": "success",
+      "expected": "fail",
+      "expected_code": "PARENT_MISMATCH",
+      "ledger": {
+        "fail": 20
+      },
+      "direct": {
+        "fail": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    },
+    "context_mismatch": {
+      "base_case": "success",
+      "expected": "fail",
+      "expected_code": "CONTEXT_MISMATCH",
+      "ledger": {
+        "fail": 20
+      },
+      "direct": {
+        "fail": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    },
+    "missing_span": {
+      "base_case": "success",
+      "expected": "fail",
+      "expected_code": "MISSING_SPAN",
+      "ledger": {
+        "fail": 20
+      },
+      "direct": {
+        "fail": 20
+      },
+      "name": {
+        "fail": 20
+      }
+    },
+    "export_loss": {
+      "base_case": "success",
+      "expected": "inconclusive",
+      "expected_code": "EXPORT_LOSS",
+      "ledger": {
+        "inconclusive": 20
+      },
+      "direct": {
+        "inconclusive": 20
+      },
+      "name": {
+        "fail": 20
+      }
+    },
+    "collection_unqualified": {
+      "base_case": "success",
+      "expected": "inconclusive",
+      "expected_code": "COLLECTION_NOT_QUALIFIED",
+      "ledger": {
+        "inconclusive": 20
+      },
+      "direct": {
+        "inconclusive": 20
+      },
+      "name": {
+        "inconclusive": 20
+      }
+    },
+    "duplicate_association": {
+      "base_case": "success",
+      "expected": "inconclusive",
+      "expected_code": "AMBIGUOUS_ASSOCIATION",
+      "ledger": {
+        "inconclusive": 20
+      },
+      "direct": {
+        "inconclusive": 20
+      },
+      "name": {
+        "fail": 20
+      }
+    },
+    "includes_queue_wait": {
+      "base_case": "queue",
+      "expected": "fail",
+      "expected_code": "INCLUDES_QUEUE_WAIT",
+      "ledger": {
+        "fail": 20
+      },
+      "direct": {
+        "fail": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    },
+    "unknown_intent": {
+      "base_case": "success",
+      "expected": "inconclusive",
+      "expected_code": "UNDECLARED_INTENT",
+      "ledger": {
+        "inconclusive": 20
+      },
+      "direct": {
+        "inconclusive": 20
+      },
+      "name": {
+        "inconclusive": 20
+      }
+    },
+    "clock_unqualified": {
+      "base_case": "success",
+      "expected": "inconclusive",
+      "expected_code": "CLOCK_UNQUALIFIED",
+      "ledger": {
+        "inconclusive": 20
+      },
+      "direct": {
+        "inconclusive": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    },
+    "control_submission": {
+      "base_case": "submission_only",
+      "expected": "pass",
+      "expected_code": null,
+      "ledger": {
+        "pass": 20
+      },
+      "direct": {
+        "pass": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    },
+    "submission_as_execution": {
+      "base_case": "submission_only",
+      "expected": "fail",
+      "expected_code": "ENDS_BEFORE_EXIT",
+      "ledger": {
+        "fail": 20
+      },
+      "direct": {
+        "fail": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    },
+    "both_missing_submission": {
+      "base_case": "both_lifetimes",
+      "expected": "inconclusive",
+      "expected_code": "MISSING_SUBMISSION_BOUNDARY",
+      "ledger": {
+        "inconclusive": 20
+      },
+      "direct": {
+        "inconclusive": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    },
+    "control_parent_ends_first": {
+      "base_case": "parent_ends_first",
+      "expected": "pass",
+      "expected_code": null,
+      "ledger": {
+        "pass": 20
+      },
+      "direct": {
+        "pass": 20
+      },
+      "name": {
+        "pass": 20
+      }
+    }
+  },
+  "interpretation": "Oracle mutation analysis over retained real SDK traces; not additional software defects or independent application runs."
+}

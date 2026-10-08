@@ -1,0 +1,145 @@
+{
+  "schema": 1,
+  "perturbations": 10,
+  "fresh_process_trials": 100,
+  "runner_failures": 0,
+  "exact_expected_verdicts": 99,
+  "expected_diagnostic_present": 99,
+  "direct_disagreements": 0,
+  "name_misses_with_ledger_fail": 69,
+  "wall_s": 26.534778356552124,
+  "by_perturbation": {
+    "early_end": {
+      "case": "success",
+      "expected_verdict": "fail",
+      "expected_code": "ENDS_BEFORE_EXIT",
+      "trials": 10,
+      "verdicts": {
+        "fail": 10
+      },
+      "exact_verdicts": 10,
+      "expected_code_present": 10,
+      "direct_disagreements": 0,
+      "clock_ineligible": 0
+    },
+    "late_start": {
+      "case": "success",
+      "expected_verdict": "fail",
+      "expected_code": "STARTS_AFTER_ENTRY",
+      "trials": 10,
+      "verdicts": {
+        "fail": 9,
+        "inconclusive": 1
+      },
+      "exact_verdicts": 9,
+      "expected_code_present": 9,
+      "direct_disagreements": 0,
+      "clock_ineligible": 1
+    },
+    "queue_inclusive": {
+      "case": "queue",
+      "expected_verdict": "fail",
+      "expected_code": "INCLUDES_QUEUE_WAIT",
+      "trials": 10,
+      "verdicts": {
+        "fail": 10
+      },
+      "exact_verdicts": 10,
+      "expected_code_present": 10,
+      "direct_disagreements": 0,
+      "clock_ineligible": 0
+    },
+    "no_span": {
+      "case": "success",
+      "expected_verdict": "fail",
+      "expected_code": "MISSING_SPAN",
+      "trials": 10,
+      "verdicts": {
+        "fail": 10
+      },
+      "exact_verdicts": 10,
+      "expected_code_present": 10,
+      "direct_disagreements": 0,
+      "clock_ineligible": 0
+    },
+    "duplicate_span": {
+      "case": "success",
+      "expected_verdict": "inconclusive",
+      "expected_code": "AMBIGUOUS_ASSOCIATION",
+      "trials": 10,
+      "verdicts": {
+        "inconclusive": 10
+      },
+      "exact_verdicts": 10,
+      "expected_code_present": 10,
+      "direct_disagreements": 0,
+      "clock_ineligible": 0
+    },
+    "wrong_parent": {
+      "case": "success",
+      "expected_verdict": "fail",
+      "expected_code": "PARENT_MISMATCH",
+      "trials": 10,
+      "verdicts": {
+        "fail": 10
+      },
+      "exact_verdicts": 10,
+      "expected_code_present": 10,
+      "direct_disagreements": 0,
+      "clock_ineligible": 1
+    },
+    "missing_error_status": {
+      "case": "escaped",
+      "expected_verdict": "fail",
+      "expected_code": "MISSING_ERROR_STATUS",
+      "trials": 10,
+      "verdicts": {
+        "fail": 10
+      },
+      "exact_verdicts": 10,
+      "expected_code_present": 10,
+      "direct_disagreements": 0,
+      "clock_ineligible": 0
+    },
+    "missing_exception_event": {
+      "case": "escaped",
+      "expected_verdict": "fail",
+      "expected_code": "MISSING_EXCEPTION_EVENT",
+      "trials": 10,
+      "verdicts": {
+        "fail": 10
+      },
+      "exact_verdicts": 10,
+      "expected_code_present": 10,
+      "direct_disagreements": 0,
+      "clock_ineligible": 0
+    },
+    "first_call_only": {
+      "case": "repeat",
+      "expected_verdict": "fail",
+      "expected_code": "MISSING_SPAN",
+      "trials": 10,
+      "verdicts": {
+        "fail": 10
+      },
+      "exact_verdicts": 10,
+      "expected_code_present": 10,
+      "direct_disagreements": 0,
+      "clock_ineligible": 0
+    },
+    "empty_context_execution": {
+      "case": "success",
+      "expected_verdict": "fail",
+      "expected_code": "CONTEXT_MISMATCH",
+      "trials": 10,
+      "verdicts": {
+        "fail": 10
+      },
+      "exact_verdicts": 10,
+      "expected_code_present": 10,
+      "direct_disagreements": 0,
+      "clock_ineligible": 0
+    }
+  },
+  "classification": "Synthetic executable challenge operators; not upstream defects or application bug prevalence."
+}

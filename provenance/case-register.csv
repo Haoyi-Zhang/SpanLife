@@ -1,0 +1,49 @@
+case,revision,evidence_category,mechanism,origin,role,principal_repetitions
+success,affected,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+success,fixed,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+queue,affected,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+queue,fixed,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+handled_inside,affected,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+handled_inside,fixed,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+escaped,affected,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+escaped,fixed,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+repeat,affected,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+repeat,fixed,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+capture_epoch,affected,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+capture_epoch,fixed,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+lifecycle,affected,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+lifecycle,fixed,historical confirmed defect / actual fixed source,wrap-time measurement and callable-level suppression,#4900/#4901,execution,20
+batch_pending,fixed,collection control / deliberate exporter loss,collection qualification,local experiment control,execution,20
+batch_drained,fixed,collection control / deliberate exporter loss,collection qualification,local experiment control,execution,20
+export_drop,fixed,collection control / deliberate exporter loss,collection qualification,local experiment control,execution,20
+as_completed_list,fixed,reported open behavior; keyword case local unconfirmed,argument-shape wrapper coverage,#5085 and local source inspection,execution,20
+as_completed_tuple,fixed,reported open behavior; keyword case local unconfirmed,argument-shape wrapper coverage,#5085 and local source inspection,execution,20
+as_completed_generator,fixed,reported open behavior; keyword case local unconfirmed,argument-shape wrapper coverage,#5085 and local source inspection,execution,20
+task_keyword,fixed,reported open behavior; keyword case local unconfirmed,argument-shape wrapper coverage,#5085 and local source inspection,execution,20
+thread_context,fixed,documented control or explicit application transition convention,worker context propagation and live-pool lifecycle,ThreadingInstrumentor pinned source,context-only,20
+thread_uninstrument_live,fixed,documented control or explicit application transition convention,worker context propagation and live-pool lifecycle,ThreadingInstrumentor pinned source,context-only,20
+thread_recreate,fixed,documented control or explicit application transition convention,worker context propagation and live-pool lifecycle,ThreadingInstrumentor pinned source,context-only,20
+submission_only,fixed,legitimate intent / semantic control,scope of declared observation,explicit application convention,submission,20
+both_lifetimes,fixed,legitimate intent / semantic control,scope of declared observation,explicit application convention,both,20
+parent_ends_first,fixed,legitimate intent / semantic control,scope of declared observation,explicit application convention,execution,20
+unknown_intent,fixed,legitimate intent / semantic control,scope of declared observation,explicit application convention,unknown,20
+as_completed_list,local-shape-fix,reported open behavior; keyword case local unconfirmed,argument-shape wrapper coverage,#5085 and local source inspection,execution,20
+as_completed_tuple,local-shape-fix,reported open behavior; keyword case local unconfirmed,argument-shape wrapper coverage,#5085 and local source inspection,execution,20
+as_completed_generator,local-shape-fix,reported open behavior; keyword case local unconfirmed,argument-shape wrapper coverage,#5085 and local source inspection,execution,20
+task_keyword,local-shape-fix,reported open behavior; keyword case local unconfirmed,argument-shape wrapper coverage,#5085 and local source inspection,execution,20
+service_default,fixed,public configuration slice with local framework integration,selected asyncio versus framework worker dispatch,public adapter and local routes,context-only,20
+service_async,fixed,public configuration slice with local framework integration,selected asyncio versus framework worker dispatch,public adapter and local routes,execution,20
+service_caller_handles,fixed,public configuration slice with local framework integration,selected asyncio versus framework worker dispatch,public adapter and local routes,execution,20
+service_sync_gap,fixed,public configuration slice with local framework integration,selected asyncio versus framework worker dispatch,public adapter and local routes,execution,20
+service_sync_corrected,fixed,public configuration slice with local framework integration,selected asyncio versus framework worker dispatch,public adapter and local routes,execution,20
+service_async,affected,public configuration slice with local framework integration,selected asyncio versus framework worker dispatch,public adapter and local routes,execution,20
+service_background_gap,fixed,public configuration slice with local framework integration,selected asyncio versus framework worker dispatch,public adapter and local routes,execution,20
+service_background_corrected,fixed,public configuration slice with local framework integration,selected asyncio versus framework worker dispatch,public adapter and local routes,execution,20
+speaches_decorated_sync,pinned-speaches,independent public-source control,synchronous decorator covers synchronous call,speaches tracing.py,execution,10
+speaches_decorated_generator,pinned-speaches,independent public-source control,generator decorator covers iteration,speaches tracing.py,execution,10
+speaches_generator_misuse,pinned-speaches,deliberate transfer challenge,synchronous decorator covers construction rather than iteration,researcher-created use of pinned speaches decorator,execution,10
+speaches_generator_exception,pinned-speaches,independent public-source control,generator decorator covers escaped iteration exception,speaches tracing.py,execution,10
+uipath_sync_and_async_controls,uipath-7181c2799,independent public-source control,dedicated sync/coroutine/generator wrappers cover normal and escaping-error paths,UiPath decorators.py pinned source,execution,80
+uipath_async_generator_partial_close,uipath-7181c2799,confirmed local source-level observation,outer async-generator wrapper ends before inner generator finalization on explicit aclose,exploratory discovery plus independent confirmation,execution,10
+uipath_async_generator_partial_close,uipath-7181c2799-local-correction,executed local correction,await inner aclose before ending outer span,local patch; no maintainer adoption claim,execution,10
+uipath_other_regression_cases,uipath-7181c2799-local-correction,local correction regression controls,unchanged sync/async/generator success and failure behavior,unchanged ten-case matrix,execution,90

@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "case": "mutation:control_parent_ends_first",
+  "revision": "fixed",
+  "repeat": 6,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1790738042056441053,
+      "monotonic_ns": 1273084228922,
+      "thread_id": 139947626473344,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "submit_exit",
+      "wall_ns": 1790738042056460202,
+      "monotonic_ns": 1273084247850,
+      "thread_id": 139947626473344,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "queue_release",
+      "wall_ns": 1790738042059607793,
+      "monotonic_ns": 1273087395642,
+      "thread_id": 139947626473344,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1790738042059710852,
+      "monotonic_ns": 1273087499521,
+      "thread_id": 139947233285824,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1790738042063929401,
+      "monotonic_ns": 1273091718091,
+      "thread_id": 139947233285824,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {},
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "both",
+      "span_name": "operation",
+      "span_ids": [
+        "10039944562715355476"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError"
+      ],
+      "source": "explicit application lifetime convention",
+      "exclude_queue": false
+    }
+  ],
+  "spans": [
+    {
+      "name": "already-finished-parent",
+      "span_id": "17217802492646881798",
+      "trace_id": "172217419879126655453184955370239840312",
+      "parent_id": "0",
+      "start_ns": 1790738042056349637,
+      "end_ns": 1790738042056357279,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    },
+    {
+      "name": "operation",
+      "span_id": "10039944562715355476",
+      "trace_id": "172217419879126655453184955370239840312",
+      "parent_id": "17217802492646881798",
+      "start_ns": 1790738042056429296,
+      "end_ns": 1790738042064094767,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "already-finished-parent",
+      "17217802492646881798"
+    ],
+    [
+      "operation",
+      "10039944562715355476"
+    ]
+  ],
+  "ended": [
+    [
+      "already-finished-parent",
+      "17217802492646881798"
+    ],
+    [
+      "operation",
+      "10039944562715355476"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 2103,
+    "median_offset_ns": 1790736768972212547,
+    "min_offset_ns": 1790736768972212482,
+    "max_offset_ns": 1790736768972213544
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 1181,
+    "median_offset_ns": 1790736768972212542,
+    "min_offset_ns": 1790736768972211992,
+    "max_offset_ns": 1790736768972212733
+  },
+  "clock": {
+    "epsilon_ns": 4206,
+    "offset_drift_ns": 5,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {},
+  "ledger_check": {
+    "verdict": "pass",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "pass"
+      }
+    ],
+    "findings": []
+  },
+  "direct_check": {
+    "verdict": "pass",
+    "failures": [],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  },
+  "execution": {
+    "status": "completed",
+    "python": "3.13.5",
+    "pid": 5370
+  },
+  "mutation": {
+    "name": "control_parent_ends_first",
+    "source": "results/evaluation/parent_ends_first__fixed__006.json",
+    "expected_verdict": "pass",
+    "expected_code": null,
+    "classification": "deliberate checker challenge; not an upstream defect"
+  }
+}

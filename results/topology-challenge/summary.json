@@ -1,0 +1,193 @@
+{
+  "schema": 1,
+  "cases": 12,
+  "fresh_process_trials": 12,
+  "runner_failures": 0,
+  "exact_expected_verdicts": 12,
+  "expected_diagnostics_present": 12,
+  "direct_disagreements": 0,
+  "name_disagreements": 6,
+  "name_false_alarms_on_valid_correlation": 1,
+  "relation_faults_missed_by_name": 2,
+  "wall_s": 12.043115377426147,
+  "by_case": {
+    "split_link_valid": {
+      "trials": 1,
+      "expected_verdict": "pass",
+      "expected_codes": [],
+      "verdicts": {
+        "pass": 1
+      },
+      "exact_verdicts": 1,
+      "expected_codes_present": 1,
+      "direct_disagreements": 0,
+      "name_disagreements": 0,
+      "clock_ineligible": 0
+    },
+    "split_parent_valid": {
+      "trials": 1,
+      "expected_verdict": "pass",
+      "expected_codes": [],
+      "verdicts": {
+        "pass": 1
+      },
+      "exact_verdicts": 1,
+      "expected_codes_present": 1,
+      "direct_disagreements": 0,
+      "name_disagreements": 0,
+      "clock_ineligible": 0
+    },
+    "split_missing_relation": {
+      "trials": 1,
+      "expected_verdict": "fail",
+      "expected_codes": [
+        "MISSING_HANDOFF_RELATION"
+      ],
+      "verdicts": {
+        "fail": 1
+      },
+      "exact_verdicts": 1,
+      "expected_codes_present": 1,
+      "direct_disagreements": 0,
+      "name_disagreements": 1,
+      "clock_ineligible": 0
+    },
+    "split_wrong_relation": {
+      "trials": 1,
+      "expected_verdict": "fail",
+      "expected_codes": [
+        "MISSING_HANDOFF_RELATION"
+      ],
+      "verdicts": {
+        "fail": 1
+      },
+      "exact_verdicts": 1,
+      "expected_codes_present": 1,
+      "direct_disagreements": 0,
+      "name_disagreements": 1,
+      "clock_ineligible": 0
+    },
+    "split_submission_overlap": {
+      "trials": 1,
+      "expected_verdict": "fail",
+      "expected_codes": [
+        "SUBMISSION_OVERLAPS_EXECUTION"
+      ],
+      "verdicts": {
+        "fail": 1
+      },
+      "exact_verdicts": 1,
+      "expected_codes_present": 1,
+      "direct_disagreements": 0,
+      "name_disagreements": 1,
+      "clock_ineligible": 0
+    },
+    "split_execution_early_end": {
+      "trials": 1,
+      "expected_verdict": "fail",
+      "expected_codes": [
+        "ENDS_BEFORE_EXIT"
+      ],
+      "verdicts": {
+        "fail": 1
+      },
+      "exact_verdicts": 1,
+      "expected_codes_present": 1,
+      "direct_disagreements": 0,
+      "name_disagreements": 1,
+      "clock_ineligible": 0
+    },
+    "split_execution_missing": {
+      "trials": 1,
+      "expected_verdict": "fail",
+      "expected_codes": [
+        "MISSING_SPAN"
+      ],
+      "verdicts": {
+        "fail": 1
+      },
+      "exact_verdicts": 1,
+      "expected_codes_present": 1,
+      "direct_disagreements": 0,
+      "name_disagreements": 0,
+      "clock_ineligible": 0
+    },
+    "split_submission_missing": {
+      "trials": 1,
+      "expected_verdict": "fail",
+      "expected_codes": [
+        "MISSING_SPAN"
+      ],
+      "verdicts": {
+        "fail": 1
+      },
+      "exact_verdicts": 1,
+      "expected_codes_present": 1,
+      "direct_disagreements": 0,
+      "name_disagreements": 0,
+      "clock_ineligible": 0
+    },
+    "correlated_concurrent_valid": {
+      "trials": 1,
+      "expected_verdict": "pass",
+      "expected_codes": [],
+      "verdicts": {
+        "pass": 1
+      },
+      "exact_verdicts": 1,
+      "expected_codes_present": 1,
+      "direct_disagreements": 0,
+      "name_disagreements": 1,
+      "clock_ineligible": 0
+    },
+    "correlated_missing_attribute": {
+      "trials": 1,
+      "expected_verdict": "fail",
+      "expected_codes": [
+        "MISSING_SPAN"
+      ],
+      "verdicts": {
+        "fail": 1
+      },
+      "exact_verdicts": 1,
+      "expected_codes_present": 1,
+      "direct_disagreements": 0,
+      "name_disagreements": 0,
+      "clock_ineligible": 0
+    },
+    "correlated_duplicate_attribute": {
+      "trials": 1,
+      "expected_verdict": "inconclusive",
+      "expected_codes": [
+        "AMBIGUOUS_ASSOCIATION"
+      ],
+      "verdicts": {
+        "inconclusive": 1
+      },
+      "exact_verdicts": 1,
+      "expected_codes_present": 1,
+      "direct_disagreements": 0,
+      "name_disagreements": 1,
+      "clock_ineligible": 0
+    },
+    "correlated_swapped_attribute": {
+      "trials": 1,
+      "expected_verdict": "fail",
+      "expected_codes": [
+        "STARTS_AFTER_ENTRY",
+        "ENDS_BEFORE_EXIT"
+      ],
+      "verdicts": {
+        "fail": 1
+      },
+      "exact_verdicts": 1,
+      "expected_codes_present": 1,
+      "direct_disagreements": 0,
+      "name_disagreements": 0,
+      "clock_ineligible": 0
+    }
+  },
+  "classification": "Executable contract-topology and correlation challenge. Fault cases are controlled operators, not upstream defect or prevalence claims.",
+  "operation_contracts": 20,
+  "segment_contracts": 28
+}

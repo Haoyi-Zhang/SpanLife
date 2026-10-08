@@ -1,0 +1,134 @@
+{
+  "schema": 1,
+  "retained_trials": 800,
+  "replay_trials": 800,
+  "retained_counts": {
+    "fail": 279,
+    "pass": 458,
+    "inconclusive": 63
+  },
+  "replay_counts": {
+    "fail": 278,
+    "pass": 458,
+    "inconclusive": 64
+  },
+  "verdict_agreement": 793,
+  "verdict_changes": 7,
+  "clock_qualification_changes": 7,
+  "pass_fail_flips": 0,
+  "direct_disagreements_retained": 0,
+  "direct_disagreements_replay": 0,
+  "runtime_failures": 0,
+  "changes": [
+    {
+      "case": "as_completed_tuple",
+      "revision": "local-shape-fix",
+      "repeat": 4,
+      "retained": "inconclusive",
+      "replay": "pass",
+      "changed": true,
+      "clock_only_change": true,
+      "pass_fail_flip": false,
+      "retained_codes": [
+        "CLOCK_UNQUALIFIED",
+        "CLOCK_UNQUALIFIED",
+        "CLOCK_UNQUALIFIED"
+      ],
+      "replay_codes": []
+    },
+    {
+      "case": "batch_drained",
+      "revision": "fixed",
+      "repeat": 18,
+      "retained": "pass",
+      "replay": "inconclusive",
+      "changed": true,
+      "clock_only_change": true,
+      "pass_fail_flip": false,
+      "retained_codes": [],
+      "replay_codes": [
+        "CLOCK_UNQUALIFIED"
+      ]
+    },
+    {
+      "case": "handled_inside",
+      "revision": "affected",
+      "repeat": 8,
+      "retained": "fail",
+      "replay": "inconclusive",
+      "changed": true,
+      "clock_only_change": true,
+      "pass_fail_flip": false,
+      "retained_codes": [
+        "ENDS_BEFORE_EXIT"
+      ],
+      "replay_codes": [
+        "CLOCK_UNQUALIFIED"
+      ]
+    },
+    {
+      "case": "handled_inside",
+      "revision": "affected",
+      "repeat": 18,
+      "retained": "fail",
+      "replay": "inconclusive",
+      "changed": true,
+      "clock_only_change": true,
+      "pass_fail_flip": false,
+      "retained_codes": [
+        "ENDS_BEFORE_EXIT"
+      ],
+      "replay_codes": [
+        "CLOCK_UNQUALIFIED"
+      ]
+    },
+    {
+      "case": "handled_inside",
+      "revision": "fixed",
+      "repeat": 7,
+      "retained": "pass",
+      "replay": "inconclusive",
+      "changed": true,
+      "clock_only_change": true,
+      "pass_fail_flip": false,
+      "retained_codes": [],
+      "replay_codes": [
+        "CLOCK_UNQUALIFIED"
+      ]
+    },
+    {
+      "case": "queue",
+      "revision": "affected",
+      "repeat": 7,
+      "retained": "inconclusive",
+      "replay": "fail",
+      "changed": true,
+      "clock_only_change": true,
+      "pass_fail_flip": false,
+      "retained_codes": [
+        "CLOCK_UNQUALIFIED"
+      ],
+      "replay_codes": [
+        "ENDS_BEFORE_EXIT",
+        "INCLUDES_QUEUE_WAIT"
+      ]
+    },
+    {
+      "case": "repeat",
+      "revision": "fixed",
+      "repeat": 19,
+      "retained": "inconclusive",
+      "replay": "pass",
+      "changed": true,
+      "clock_only_change": true,
+      "pass_fail_flip": false,
+      "retained_codes": [
+        "CLOCK_UNQUALIFIED",
+        "CLOCK_UNQUALIFIED",
+        "CLOCK_UNQUALIFIED"
+      ],
+      "replay_codes": []
+    }
+  ],
+  "interpretation": "The seven verdict changes are pass/fail-to-inconclusive or the reverse and all involve clock qualification; no pass/fail reversal occurred."
+}

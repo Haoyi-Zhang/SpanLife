@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "source_observations": 60,
+  "policy_evaluations": 300,
+  "roles": [
+    "execution",
+    "submission",
+    "both",
+    "context-only",
+    "unknown"
+  ],
+  "matrix": [
+    {
+      "observation": "execution_span",
+      "declared_role": "execution",
+      "pass": 20,
+      "fail": 0,
+      "inconclusive": 0,
+      "dominant_codes": ""
+    },
+    {
+      "observation": "execution_span",
+      "declared_role": "submission",
+      "pass": 0,
+      "fail": 20,
+      "inconclusive": 0,
+      "dominant_codes": "MISSES_SUBMISSION_START:20"
+    },
+    {
+      "observation": "execution_span",
+      "declared_role": "both",
+      "pass": 0,
+      "fail": 20,
+      "inconclusive": 0,
+      "dominant_codes": "MISSES_SUBMISSION_START:20"
+    },
+    {
+      "observation": "execution_span",
+      "declared_role": "context-only",
+      "pass": 20,
+      "fail": 0,
+      "inconclusive": 0,
+      "dominant_codes": ""
+    },
+    {
+      "observation": "execution_span",
+      "declared_role": "unknown",
+      "pass": 0,
+      "fail": 0,
+      "inconclusive": 20,
+      "dominant_codes": "UNDECLARED_INTENT:20"
+    },
+    {
+      "observation": "submission_span",
+      "declared_role": "execution",
+      "pass": 0,
+      "fail": 20,
+      "inconclusive": 0,
+      "dominant_codes": "ENDS_BEFORE_EXIT:20"
+    },
+    {
+      "observation": "submission_span",
+      "declared_role": "submission",
+      "pass": 20,
+      "fail": 0,
+      "inconclusive": 0,
+      "dominant_codes": ""
+    },
+    {
+      "observation": "submission_span",
+      "declared_role": "both",
+      "pass": 0,
+      "fail": 20,
+      "inconclusive": 0,
+      "dominant_codes": "ENDS_BEFORE_EXIT:20"
+    },
+    {
+      "observation": "submission_span",
+      "declared_role": "context-only",
+      "pass": 20,
+      "fail": 0,
+      "inconclusive": 0,
+      "dominant_codes": ""
+    },
+    {
+      "observation": "submission_span",
+      "declared_role": "unknown",
+      "pass": 0,
+      "fail": 0,
+      "inconclusive": 20,
+      "dominant_codes": "UNDECLARED_INTENT:20"
+    },
+    {
+      "observation": "combined_span",
+      "declared_role": "execution",
+      "pass": 20,
+      "fail": 0,
+      "inconclusive": 0,
+      "dominant_codes": ""
+    },
+    {
+      "observation": "combined_span",
+      "declared_role": "submission",
+      "pass": 20,
+      "fail": 0,
+      "inconclusive": 0,
+      "dominant_codes": ""
+    },
+    {
+      "observation": "combined_span",
+      "declared_role": "both",
+      "pass": 20,
+      "fail": 0,
+      "inconclusive": 0,
+      "dominant_codes": ""
+    },
+    {
+      "observation": "combined_span",
+      "declared_role": "context-only",
+      "pass": 20,
+      "fail": 0,
+      "inconclusive": 0,
+      "dominant_codes": ""
+    },
+    {
+      "observation": "combined_span",
+      "declared_role": "unknown",
+      "pass": 0,
+      "fail": 0,
+      "inconclusive": 20,
+      "dominant_codes": "UNDECLARED_INTENT:20"
+    }
+  ],
+  "interpretation": "The same trace evidence can be valid for one declared role and invalid or undecidable for another; this does not rank the roles."
+}

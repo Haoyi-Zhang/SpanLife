@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "case": "parent_ends_first",
+  "revision": "fixed",
+  "repeat": 15,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1791035888019427382,
+      "monotonic_ns": 668950296511,
+      "thread_id": 139737373562752,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "submit_exit",
+      "wall_ns": 1791035888019442875,
+      "monotonic_ns": 668950311674,
+      "thread_id": 139737373562752,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "queue_release",
+      "wall_ns": 1791035888022576361,
+      "monotonic_ns": 668953445169,
+      "thread_id": 139737373562752,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791035888022629627,
+      "monotonic_ns": 668953498625,
+      "thread_id": 139736980371136,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791035888026855029,
+      "monotonic_ns": 668957723897,
+      "thread_id": 139736980371136,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {},
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "both",
+      "span_name": "operation",
+      "span_ids": [
+        "4604908149528090892"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError"
+      ],
+      "source": "explicit application lifetime convention",
+      "exclude_queue": false
+    }
+  ],
+  "spans": [
+    {
+      "name": "already-finished-parent",
+      "span_id": "17398472430164363093",
+      "trace_id": "188175536554199589609527571856329956170",
+      "parent_id": "0",
+      "start_ns": 1791035888019329975,
+      "end_ns": 1791035888019336735,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    },
+    {
+      "name": "operation",
+      "span_id": "4604908149528090892",
+      "trace_id": "188175536554199589609527571856329956170",
+      "parent_id": "17398472430164363093",
+      "start_ns": 1791035888019397137,
+      "end_ns": 1791035888026962105,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "already-finished-parent",
+      "17398472430164363093"
+    ],
+    [
+      "operation",
+      "4604908149528090892"
+    ]
+  ],
+  "ended": [
+    [
+      "already-finished-parent",
+      "17398472430164363093"
+    ],
+    [
+      "operation",
+      "4604908149528090892"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 571,
+    "median_offset_ns": 1791035219069131362,
+    "min_offset_ns": 1791035219069131347,
+    "max_offset_ns": 1791035219069131468
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 5949,
+    "median_offset_ns": 1791035219069131362,
+    "min_offset_ns": 1791035219069128428,
+    "max_offset_ns": 1791035219069131848
+  },
+  "clock": {
+    "epsilon_ns": 11898,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {},
+  "ledger_check": {
+    "verdict": "pass",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "pass"
+      }
+    ],
+    "findings": []
+  },
+  "direct_check": {
+    "verdict": "pass",
+    "failures": [],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  },
+  "execution": {
+    "status": "completed",
+    "python": "3.13.5",
+    "pid": 10798
+  }
+}

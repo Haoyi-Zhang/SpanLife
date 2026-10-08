@@ -1,0 +1,958 @@
+[
+  {
+    "suite": "legacy",
+    "perturbation": "early_end",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "early_end",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "late_start",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "late_start",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "queue_inclusive",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "queue_inclusive",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "no_span",
+    "method": "test_to_thread",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_legacy.py\", line 44, in test_to_thread\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "no_span",
+    "method": "test_to_thread_partial_func",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_legacy.py\", line 70, in test_to_thread_partial_func\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "duplicate_span",
+    "method": "test_to_thread",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_legacy.py\", line 44, in test_to_thread\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "duplicate_span",
+    "method": "test_to_thread_partial_func",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_legacy.py\", line 70, in test_to_thread_partial_func\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "wrong_parent",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "wrong_parent",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "missing_error_status",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "missing_error_status",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "missing_exception_event",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "missing_exception_event",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "first_call_only",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "first_call_only",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "empty_context_execution",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "legacy",
+    "perturbation": "empty_context_execution",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "early_end",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "early_end",
+    "method": "test_to_thread_duration_covers_execution",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 76, in test_to_thread_duration_covers_execution\n    self.assertGreaterEqual(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        (span.end_time - span.start_time) / 10**9,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        SLEEP_SECONDS * 0.9,\n        ^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: 0.00019907 not greater than or equal to 0.045000000000000005\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "early_end",
+    "method": "test_to_thread_exception",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 99, in test_to_thread_exception\n    self.assertEqual(span.status.status_code, StatusCode.ERROR)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.UNSET: 0> != <StatusCode.ERROR: 2>\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "early_end",
+    "method": "test_to_thread_timeout_state",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 118, in test_to_thread_timeout_state\n    self.assertEqual(span.status.status_code, StatusCode.ERROR)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.UNSET: 0> != <StatusCode.ERROR: 2>\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "early_end",
+    "method": "test_to_thread_cancelled_state",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 144, in test_to_thread_cancelled_state\n    self.assertEqual(metric.data.data_points[0].attributes[\"state\"], \"cancelled\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'finished' != 'cancelled'\n- finished\n+ cancelled\n\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "early_end",
+    "method": "test_to_thread_repeated_calls",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "early_end",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "late_start",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "late_start",
+    "method": "test_to_thread_duration_covers_execution",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 76, in test_to_thread_duration_covers_execution\n    self.assertGreaterEqual(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        (span.end_time - span.start_time) / 10**9,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        SLEEP_SECONDS * 0.9,\n        ^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: 0.000437901 not greater than or equal to 0.045000000000000005\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "late_start",
+    "method": "test_to_thread_exception",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "late_start",
+    "method": "test_to_thread_timeout_state",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "late_start",
+    "method": "test_to_thread_cancelled_state",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "late_start",
+    "method": "test_to_thread_repeated_calls",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "late_start",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "queue_inclusive",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "queue_inclusive",
+    "method": "test_to_thread_duration_covers_execution",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "queue_inclusive",
+    "method": "test_to_thread_exception",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "queue_inclusive",
+    "method": "test_to_thread_timeout_state",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "queue_inclusive",
+    "method": "test_to_thread_cancelled_state",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "queue_inclusive",
+    "method": "test_to_thread_repeated_calls",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "queue_inclusive",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "no_span",
+    "method": "test_to_thread",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 53, in test_to_thread\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "no_span",
+    "method": "test_to_thread_duration_covers_execution",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 71, in test_to_thread_duration_covers_execution\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "no_span",
+    "method": "test_to_thread_exception",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 96, in test_to_thread_exception\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "no_span",
+    "method": "test_to_thread_timeout_state",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 116, in test_to_thread_timeout_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "no_span",
+    "method": "test_to_thread_cancelled_state",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 135, in test_to_thread_cancelled_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "no_span",
+    "method": "test_to_thread_repeated_calls",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 157, in test_to_thread_repeated_calls\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 2\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "no_span",
+    "method": "test_to_thread_partial_func",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 177, in test_to_thread_partial_func\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "duplicate_span",
+    "method": "test_to_thread",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 53, in test_to_thread\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "duplicate_span",
+    "method": "test_to_thread_duration_covers_execution",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 71, in test_to_thread_duration_covers_execution\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "duplicate_span",
+    "method": "test_to_thread_exception",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 96, in test_to_thread_exception\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "duplicate_span",
+    "method": "test_to_thread_timeout_state",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 116, in test_to_thread_timeout_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "duplicate_span",
+    "method": "test_to_thread_cancelled_state",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 135, in test_to_thread_cancelled_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "duplicate_span",
+    "method": "test_to_thread_repeated_calls",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 157, in test_to_thread_repeated_calls\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 4 != 2\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "duplicate_span",
+    "method": "test_to_thread_partial_func",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 177, in test_to_thread_partial_func\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "wrong_parent",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "wrong_parent",
+    "method": "test_to_thread_duration_covers_execution",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "wrong_parent",
+    "method": "test_to_thread_exception",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "wrong_parent",
+    "method": "test_to_thread_timeout_state",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "wrong_parent",
+    "method": "test_to_thread_cancelled_state",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "wrong_parent",
+    "method": "test_to_thread_repeated_calls",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "wrong_parent",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_error_status",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_error_status",
+    "method": "test_to_thread_duration_covers_execution",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_error_status",
+    "method": "test_to_thread_exception",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 99, in test_to_thread_exception\n    self.assertEqual(span.status.status_code, StatusCode.ERROR)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.UNSET: 0> != <StatusCode.ERROR: 2>\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_error_status",
+    "method": "test_to_thread_timeout_state",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 118, in test_to_thread_timeout_state\n    self.assertEqual(span.status.status_code, StatusCode.ERROR)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.UNSET: 0> != <StatusCode.ERROR: 2>\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_error_status",
+    "method": "test_to_thread_cancelled_state",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_error_status",
+    "method": "test_to_thread_repeated_calls",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_error_status",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_exception_event",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_exception_event",
+    "method": "test_to_thread_duration_covers_execution",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_exception_event",
+    "method": "test_to_thread_exception",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 100, in test_to_thread_exception\n    self.assertEqual(len(span.events), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_exception_event",
+    "method": "test_to_thread_timeout_state",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 119, in test_to_thread_timeout_state\n    self.assertEqual(len(span.events), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_exception_event",
+    "method": "test_to_thread_cancelled_state",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_exception_event",
+    "method": "test_to_thread_repeated_calls",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "missing_exception_event",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "first_call_only",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "first_call_only",
+    "method": "test_to_thread_duration_covers_execution",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "first_call_only",
+    "method": "test_to_thread_exception",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "first_call_only",
+    "method": "test_to_thread_timeout_state",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "first_call_only",
+    "method": "test_to_thread_cancelled_state",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "first_call_only",
+    "method": "test_to_thread_repeated_calls",
+    "passed": false,
+    "tests_run": 1,
+    "failures": [
+      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 157, in test_to_thread_repeated_calls\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
+    ],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "first_call_only",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "empty_context_execution",
+    "method": "test_to_thread",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "empty_context_execution",
+    "method": "test_to_thread_duration_covers_execution",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "empty_context_execution",
+    "method": "test_to_thread_exception",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "empty_context_execution",
+    "method": "test_to_thread_timeout_state",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "empty_context_execution",
+    "method": "test_to_thread_cancelled_state",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "empty_context_execution",
+    "method": "test_to_thread_repeated_calls",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  {
+    "suite": "updated",
+    "perturbation": "empty_context_execution",
+    "method": "test_to_thread_partial_func",
+    "passed": true,
+    "tests_run": 1,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  }
+]

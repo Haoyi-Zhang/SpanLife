@@ -1,0 +1,22 @@
+# Verbatim functional excerpt from release tag v0.44b0.
+# Full-file Git blob: 68e3d0839f78b53c7ab9c9829edbb2e793409cda
+    def trace_to_thread(self, func: callable):
+        """Trace a function."""
+        start = default_timer()
+        span = (
+            self._tracer.start_span(
+                f"{ASYNCIO_PREFIX} to_thread-" + func.__name__
+            )
+            if func.__name__ in self._to_thread_name_to_trace
+            else None
+        )
+        attr = {"type": "to_thread", "name": func.__name__}
+        exception = None
+        try:
+            attr["state"] = "finished"
+            return func
+        except Exception:
+            attr["state"] = "exception"
+            raise
+        finally:
+            self.record_process(start, attr, span, exception)

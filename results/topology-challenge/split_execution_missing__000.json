@@ -1,0 +1,224 @@
+{
+  "schema": 3,
+  "case": "split_execution_missing",
+  "revision": "topology-contract",
+  "repeat": 0,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1791441332573316909,
+      "monotonic_ns": 718979139336,
+      "thread_id": 140130030589824,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "submit_exit",
+      "wall_ns": 1791441332573410819,
+      "monotonic_ns": 718979233060,
+      "thread_id": 140130030589824,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "queue_release",
+      "wall_ns": 1791441332575527313,
+      "monotonic_ns": 718981349552,
+      "thread_id": 140130030589824,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791441332575595980,
+      "monotonic_ns": 718981418246,
+      "thread_id": 140129635370688,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791441332578754242,
+      "monotonic_ns": 718984576605,
+      "thread_id": 140129635370688,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": {
+      "execute": "0"
+    }
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "segments": [
+        {
+          "segment_id": "submit",
+          "role": "submission",
+          "span_name": "operation.submit",
+          "association": {
+            "kind": "attributes",
+            "match": {
+              "spanlife.operation_id": "op-0",
+              "spanlife.segment": "submit"
+            }
+          },
+          "ended_witness": 0,
+          "error_on_escape": true,
+          "exception_event": true,
+          "non_error_types": [
+            "CancelledError",
+            "GeneratorExit"
+          ],
+          "must_end_before_operation_entry": true
+        },
+        {
+          "segment_id": "execute",
+          "role": "execution",
+          "span_name": "operation.execute",
+          "association": {
+            "kind": "attributes",
+            "match": {
+              "spanlife.operation_id": "op-0",
+              "spanlife.segment": "execute"
+            }
+          },
+          "ended_witness": 0,
+          "error_on_escape": true,
+          "exception_event": true,
+          "non_error_types": [
+            "CancelledError",
+            "GeneratorExit"
+          ],
+          "exclude_queue": true,
+          "exclude_submission": true
+        }
+      ],
+      "relations": [],
+      "source": "explicit split-lifetime topology contract"
+    }
+  ],
+  "spans": [
+    {
+      "name": "operation.submit",
+      "span_id": "9943535513520426517",
+      "trace_id": "304242763662406404352056921533845075374",
+      "parent_id": "0",
+      "start_ns": 1791441332573306427,
+      "end_ns": 1791441332573416927,
+      "status": "UNSET",
+      "events": [],
+      "links": [],
+      "scope": "spanlife.application",
+      "attributes": {
+        "spanlife.operation_id": "op-0",
+        "spanlife.segment": "submit"
+      }
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "operation.submit",
+      "9943535513520426517"
+    ]
+  ],
+  "ended": [
+    [
+      "operation.submit",
+      "9943535513520426517"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 907,
+    "median_offset_ns": 1791440613594178064,
+    "min_offset_ns": 1791440613594177985,
+    "max_offset_ns": 1791440613594178285
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 339,
+    "median_offset_ns": 1791440613594178064,
+    "min_offset_ns": 1791440613594177941,
+    "max_offset_ns": 1791440613594178148
+  },
+  "clock": {
+    "epsilon_ns": 1814,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "classification": "executable topology challenge",
+    "relation": "not-evaluable",
+    "submission_span_present": true,
+    "execution_span_present": false
+  },
+  "execution": {
+    "status": "completed"
+  },
+  "ledger_check": {
+    "verdict": "fail",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "fail",
+        "segments": [
+          {
+            "segment_id": "submit",
+            "verdict": "pass"
+          },
+          {
+            "segment_id": "execute",
+            "verdict": "fail"
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "operation_id": "op-0",
+        "code": "MISSING_SPAN",
+        "verdict": "fail",
+        "segment_id": "execute"
+      }
+    ]
+  },
+  "direct_check": {
+    "verdict": "fail",
+    "failures": [
+      "op-0:execute"
+    ],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "fail",
+    "failures": [
+      "op-0:execute"
+    ]
+  },
+  "expected": {
+    "verdict": "fail",
+    "codes": [
+      "MISSING_SPAN"
+    ]
+  }
+}

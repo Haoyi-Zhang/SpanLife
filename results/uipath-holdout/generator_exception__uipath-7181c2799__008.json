@@ -1,0 +1,159 @@
+{
+  "schema": 2,
+  "case": "generator_exception",
+  "revision": "uipath-7181c2799",
+  "repeat": 8,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791116993735068779,
+      "monotonic_ns": 587348756440,
+      "thread_id": 140593513748352,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791116993735104753,
+      "monotonic_ns": 587348791573,
+      "thread_id": 140593513748352,
+      "outcome": "raised",
+      "exception_type": "ValueError",
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": "1227979180480167470"
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "execution",
+      "span_name": "uipath.generator-exception",
+      "span_ids": [
+        "1227979180480167470"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError",
+        "GeneratorExit"
+      ],
+      "source": "pinned public UiPath decorator; local execution convention",
+      "exclude_queue": false,
+      "expected_parent": "2404560302493102725",
+      "expected_context": "1227979180480167470"
+    }
+  ],
+  "spans": [
+    {
+      "name": "uipath.generator-exception",
+      "span_id": "1227979180480167470",
+      "trace_id": "126718390307543201426129108959317647811",
+      "parent_id": "2404560302493102725",
+      "start_ns": 1791116993735053105,
+      "end_ns": 1791116993735705430,
+      "status": "ERROR",
+      "events": [
+        "Yielded: 8515",
+        "exception"
+      ],
+      "scope": "spanlife_uipath_decorator",
+      "attributes": {}
+    },
+    {
+      "name": "uipath-holdout-parent",
+      "span_id": "2404560302493102725",
+      "trace_id": "126718390307543201426129108959317647811",
+      "parent_id": "0",
+      "start_ns": 1791116993734967516,
+      "end_ns": 1791116993735735736,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "uipath-holdout-parent",
+      "2404560302493102725"
+    ],
+    [
+      "uipath.generator-exception",
+      "1227979180480167470"
+    ]
+  ],
+  "ended": [
+    [
+      "uipath.generator-exception",
+      "1227979180480167470"
+    ],
+    [
+      "uipath-holdout-parent",
+      "2404560302493102725"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 891,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386313186,
+    "max_offset_ns": 1791116406386313597
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 321,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386313262,
+    "max_offset_ns": 1791116406386313392
+  },
+  "clock": {
+    "epsilon_ns": 1782,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "public_source": "UiPath/uipath-python@7181c279993fbca453b948cf767781282e1e6017:packages/uipath-core/src/uipath/core/tracing/decorators.py",
+    "source_blob": "b7204271a784b7fccce420c11c8c6a9db1d48837",
+    "complete_package_executed": false,
+    "dependency_seams": [
+      "UiPathSpanUtils.get_parent_context",
+      "input/output attribute helpers"
+    ],
+    "mechanism": "generator"
+  },
+  "execution": {
+    "status": "completed"
+  },
+  "ledger_check": {
+    "verdict": "pass",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "pass"
+      }
+    ],
+    "findings": []
+  },
+  "direct_check": {
+    "verdict": "pass",
+    "failures": [],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  }
+}

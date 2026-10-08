@@ -1,0 +1,259 @@
+{
+  "schema": 3,
+  "case": "split_execution_early_end",
+  "revision": "topology-contract",
+  "repeat": 0,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1791441331660703337,
+      "monotonic_ns": 718066525743,
+      "thread_id": 140370252380032,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "submit_exit",
+      "wall_ns": 1791441331660722723,
+      "monotonic_ns": 718066544858,
+      "thread_id": 140370252380032,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "queue_release",
+      "wall_ns": 1791441331662827617,
+      "monotonic_ns": 718068649802,
+      "thread_id": 140370252380032,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791441331663023773,
+      "monotonic_ns": 718068846466,
+      "thread_id": 140369857169088,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791441331666230984,
+      "monotonic_ns": 718072053441,
+      "thread_id": 140369857169088,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": {
+      "execute": "0"
+    }
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "segments": [
+        {
+          "segment_id": "submit",
+          "role": "submission",
+          "span_name": "operation.submit",
+          "association": {
+            "kind": "attributes",
+            "match": {
+              "spanlife.operation_id": "op-0",
+              "spanlife.segment": "submit"
+            }
+          },
+          "ended_witness": 0,
+          "error_on_escape": true,
+          "exception_event": true,
+          "non_error_types": [
+            "CancelledError",
+            "GeneratorExit"
+          ],
+          "must_end_before_operation_entry": true
+        },
+        {
+          "segment_id": "execute",
+          "role": "execution",
+          "span_name": "operation.execute",
+          "association": {
+            "kind": "attributes",
+            "match": {
+              "spanlife.operation_id": "op-0",
+              "spanlife.segment": "execute"
+            }
+          },
+          "ended_witness": 0,
+          "error_on_escape": true,
+          "exception_event": true,
+          "non_error_types": [
+            "CancelledError",
+            "GeneratorExit"
+          ],
+          "exclude_queue": true,
+          "exclude_submission": true
+        }
+      ],
+      "relations": [
+        {
+          "from": "execute",
+          "to": "submit",
+          "kind": "link"
+        }
+      ],
+      "source": "explicit split-lifetime topology contract"
+    }
+  ],
+  "spans": [
+    {
+      "name": "operation.submit",
+      "span_id": "9651932083400386549",
+      "trace_id": "215919336542042376652561908513356781548",
+      "parent_id": "0",
+      "start_ns": 1791441331660694756,
+      "end_ns": 1791441331660727413,
+      "status": "UNSET",
+      "events": [],
+      "links": [],
+      "scope": "spanlife.application",
+      "attributes": {
+        "spanlife.operation_id": "op-0",
+        "spanlife.segment": "submit"
+      }
+    },
+    {
+      "name": "operation.execute",
+      "span_id": "4636458312168144079",
+      "trace_id": "102977701764125031735650527770895728202",
+      "parent_id": "0",
+      "start_ns": 1791441331662981873,
+      "end_ns": 1791441331662989823,
+      "status": "UNSET",
+      "events": [],
+      "links": [
+        {
+          "span_id": "9651932083400386549",
+          "trace_id": "215919336542042376652561908513356781548",
+          "attributes": {}
+        }
+      ],
+      "scope": "spanlife.application",
+      "attributes": {
+        "spanlife.operation_id": "op-0",
+        "spanlife.segment": "execute"
+      }
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "operation.submit",
+      "9651932083400386549"
+    ],
+    [
+      "operation.execute",
+      "4636458312168144079"
+    ]
+  ],
+  "ended": [
+    [
+      "operation.submit",
+      "9651932083400386549"
+    ],
+    [
+      "operation.execute",
+      "4636458312168144079"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 1595,
+    "median_offset_ns": 1791440613594178064,
+    "min_offset_ns": 1791440613594177318,
+    "max_offset_ns": 1791440613594178252
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 998,
+    "median_offset_ns": 1791440613594178064,
+    "min_offset_ns": 1791440613594177996,
+    "max_offset_ns": 1791440613594178125
+  },
+  "clock": {
+    "epsilon_ns": 3190,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "classification": "executable topology challenge",
+    "relation": "link",
+    "submission_span_present": true,
+    "execution_span_present": true
+  },
+  "execution": {
+    "status": "completed"
+  },
+  "ledger_check": {
+    "verdict": "fail",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "fail",
+        "segments": [
+          {
+            "segment_id": "submit",
+            "verdict": "pass"
+          },
+          {
+            "segment_id": "execute",
+            "verdict": "fail"
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "operation_id": "op-0",
+        "code": "ENDS_BEFORE_EXIT",
+        "verdict": "fail",
+        "segment_id": "execute",
+        "gap_ns": 3241161
+      }
+    ]
+  },
+  "direct_check": {
+    "verdict": "fail",
+    "failures": [
+      "op-0:execute"
+    ],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  },
+  "expected": {
+    "verdict": "fail",
+    "codes": [
+      "ENDS_BEFORE_EXIT"
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "case": "split_missing_relation",
+  "revision": "topology-contract",
+  "verdict": "fail",
+  "finding_count": 1,
+  "owners": {
+    "propagation": 1
+  },
+  "findings": [
+    {
+      "operation_id": "op-0",
+      "code": "MISSING_HANDOFF_RELATION",
+      "verdict": "fail",
+      "segment_id": "execute",
+      "relation_kind": "link",
+      "target_segment": "submit",
+      "observed_parent": "0",
+      "observed_links": [],
+      "owner": "propagation",
+      "action": "preserve the declared parent or link across the asynchronous handoff"
+    }
+  ],
+  "record_consistent": true,
+  "ci_exit_code": 1
+}

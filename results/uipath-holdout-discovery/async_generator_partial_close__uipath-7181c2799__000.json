@@ -1,0 +1,167 @@
+{
+  "schema": 2,
+  "case": "async_generator_partial_close",
+  "revision": "uipath-7181c2799",
+  "repeat": 0,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791116887476784082,
+      "monotonic_ns": 481090471021,
+      "thread_id": 140701917976448,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791116887476995601,
+      "monotonic_ns": 481090682550,
+      "thread_id": 140701917976448,
+      "outcome": "raised",
+      "exception_type": "CancelledError",
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": "8699444889055261854"
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "execution",
+      "span_name": "uipath.async-generator-partial-close",
+      "span_ids": [
+        "8699444889055261854"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError",
+        "GeneratorExit"
+      ],
+      "source": "pinned public UiPath decorator; local execution convention",
+      "exclude_queue": false,
+      "expected_parent": "3221682189478997487",
+      "expected_context": "8699444889055261854"
+    }
+  ],
+  "spans": [
+    {
+      "name": "uipath.async-generator-partial-close",
+      "span_id": "8699444889055261854",
+      "trace_id": "25201955503831214357667771674514858176",
+      "parent_id": "3221682189478997487",
+      "start_ns": 1791116887476769630,
+      "end_ns": 1791116887476848129,
+      "status": "UNSET",
+      "events": [
+        "Yielded: 8385"
+      ],
+      "scope": "spanlife_uipath_decorator",
+      "attributes": {}
+    },
+    {
+      "name": "uipath-holdout-parent",
+      "span_id": "3221682189478997487",
+      "trace_id": "25201955503831214357667771674514858176",
+      "parent_id": "0",
+      "start_ns": 1791116887476470309,
+      "end_ns": 1791116887477077574,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "uipath-holdout-parent",
+      "3221682189478997487"
+    ],
+    [
+      "uipath.async-generator-partial-close",
+      "8699444889055261854"
+    ]
+  ],
+  "ended": [
+    [
+      "uipath.async-generator-partial-close",
+      "8699444889055261854"
+    ],
+    [
+      "uipath-holdout-parent",
+      "3221682189478997487"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 631,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386313311,
+    "max_offset_ns": 1791116406386313497
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 550,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386313196,
+    "max_offset_ns": 1791116406386313382
+  },
+  "clock": {
+    "epsilon_ns": 1262,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "public_source": "UiPath/uipath-python@7181c279993fbca453b948cf767781282e1e6017:packages/uipath-core/src/uipath/core/tracing/decorators.py",
+    "source_blob": "b7204271a784b7fccce420c11c8c6a9db1d48837",
+    "complete_package_executed": false,
+    "dependency_seams": [
+      "UiPathSpanUtils.get_parent_context",
+      "input/output attribute helpers"
+    ],
+    "mechanism": "async_generator_partial"
+  },
+  "execution": {
+    "status": "completed"
+  },
+  "ledger_check": {
+    "verdict": "fail",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "fail"
+      }
+    ],
+    "findings": [
+      {
+        "operation_id": "op-0",
+        "code": "ENDS_BEFORE_EXIT",
+        "verdict": "fail",
+        "gap_ns": 147472
+      }
+    ]
+  },
+  "direct_check": {
+    "verdict": "fail",
+    "failures": [
+      "op-0"
+    ],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  }
+}

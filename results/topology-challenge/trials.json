@@ -1,0 +1,210 @@
+[
+  {
+    "case": "split_link_valid",
+    "repeat": 0,
+    "expected_verdict": "pass",
+    "expected_codes": [],
+    "actual": "pass",
+    "codes": [],
+    "direct": "pass",
+    "name": "pass",
+    "clock_eligible": true,
+    "raw": "results/topology-challenge/split_link_valid__000.json",
+    "operation_contracts": 1,
+    "segment_contracts": 2
+  },
+  {
+    "case": "split_parent_valid",
+    "repeat": 0,
+    "expected_verdict": "pass",
+    "expected_codes": [],
+    "actual": "pass",
+    "codes": [],
+    "direct": "pass",
+    "name": "pass",
+    "clock_eligible": true,
+    "raw": "results/topology-challenge/split_parent_valid__000.json",
+    "operation_contracts": 1,
+    "segment_contracts": 2
+  },
+  {
+    "case": "split_missing_relation",
+    "repeat": 0,
+    "expected_verdict": "fail",
+    "expected_codes": [
+      "MISSING_HANDOFF_RELATION"
+    ],
+    "actual": "fail",
+    "codes": [
+      "MISSING_HANDOFF_RELATION"
+    ],
+    "direct": "fail",
+    "name": "pass",
+    "clock_eligible": true,
+    "raw": "results/topology-challenge/split_missing_relation__000.json",
+    "operation_contracts": 1,
+    "segment_contracts": 2
+  },
+  {
+    "case": "split_wrong_relation",
+    "repeat": 0,
+    "expected_verdict": "fail",
+    "expected_codes": [
+      "MISSING_HANDOFF_RELATION"
+    ],
+    "actual": "fail",
+    "codes": [
+      "MISSING_HANDOFF_RELATION"
+    ],
+    "direct": "fail",
+    "name": "pass",
+    "clock_eligible": true,
+    "raw": "results/topology-challenge/split_wrong_relation__000.json",
+    "operation_contracts": 1,
+    "segment_contracts": 2
+  },
+  {
+    "case": "split_submission_overlap",
+    "repeat": 0,
+    "expected_verdict": "fail",
+    "expected_codes": [
+      "SUBMISSION_OVERLAPS_EXECUTION"
+    ],
+    "actual": "fail",
+    "codes": [
+      "SUBMISSION_OVERLAPS_EXECUTION"
+    ],
+    "direct": "fail",
+    "name": "pass",
+    "clock_eligible": true,
+    "raw": "results/topology-challenge/split_submission_overlap__000.json",
+    "operation_contracts": 1,
+    "segment_contracts": 2
+  },
+  {
+    "case": "split_execution_early_end",
+    "repeat": 0,
+    "expected_verdict": "fail",
+    "expected_codes": [
+      "ENDS_BEFORE_EXIT"
+    ],
+    "actual": "fail",
+    "codes": [
+      "ENDS_BEFORE_EXIT"
+    ],
+    "direct": "fail",
+    "name": "pass",
+    "clock_eligible": true,
+    "raw": "results/topology-challenge/split_execution_early_end__000.json",
+    "operation_contracts": 1,
+    "segment_contracts": 2
+  },
+  {
+    "case": "split_execution_missing",
+    "repeat": 0,
+    "expected_verdict": "fail",
+    "expected_codes": [
+      "MISSING_SPAN"
+    ],
+    "actual": "fail",
+    "codes": [
+      "MISSING_SPAN"
+    ],
+    "direct": "fail",
+    "name": "fail",
+    "clock_eligible": true,
+    "raw": "results/topology-challenge/split_execution_missing__000.json",
+    "operation_contracts": 1,
+    "segment_contracts": 2
+  },
+  {
+    "case": "split_submission_missing",
+    "repeat": 0,
+    "expected_verdict": "fail",
+    "expected_codes": [
+      "MISSING_SPAN"
+    ],
+    "actual": "fail",
+    "codes": [
+      "MISSING_SPAN"
+    ],
+    "direct": "fail",
+    "name": "fail",
+    "clock_eligible": true,
+    "raw": "results/topology-challenge/split_submission_missing__000.json",
+    "operation_contracts": 1,
+    "segment_contracts": 2
+  },
+  {
+    "case": "correlated_concurrent_valid",
+    "repeat": 0,
+    "expected_verdict": "pass",
+    "expected_codes": [],
+    "actual": "pass",
+    "codes": [],
+    "direct": "pass",
+    "name": "fail",
+    "clock_eligible": true,
+    "raw": "results/topology-challenge/correlated_concurrent_valid__000.json",
+    "operation_contracts": 4,
+    "segment_contracts": 4
+  },
+  {
+    "case": "correlated_missing_attribute",
+    "repeat": 0,
+    "expected_verdict": "fail",
+    "expected_codes": [
+      "MISSING_SPAN"
+    ],
+    "actual": "fail",
+    "codes": [
+      "MISSING_SPAN"
+    ],
+    "direct": "fail",
+    "name": "fail",
+    "clock_eligible": true,
+    "raw": "results/topology-challenge/correlated_missing_attribute__000.json",
+    "operation_contracts": 4,
+    "segment_contracts": 4
+  },
+  {
+    "case": "correlated_duplicate_attribute",
+    "repeat": 0,
+    "expected_verdict": "inconclusive",
+    "expected_codes": [
+      "AMBIGUOUS_ASSOCIATION"
+    ],
+    "actual": "inconclusive",
+    "codes": [
+      "AMBIGUOUS_ASSOCIATION"
+    ],
+    "direct": "inconclusive",
+    "name": "fail",
+    "clock_eligible": true,
+    "raw": "results/topology-challenge/correlated_duplicate_attribute__000.json",
+    "operation_contracts": 2,
+    "segment_contracts": 2
+  },
+  {
+    "case": "correlated_swapped_attribute",
+    "repeat": 0,
+    "expected_verdict": "fail",
+    "expected_codes": [
+      "STARTS_AFTER_ENTRY",
+      "ENDS_BEFORE_EXIT"
+    ],
+    "actual": "fail",
+    "codes": [
+      "ENDS_BEFORE_EXIT",
+      "INCLUDES_QUEUE_WAIT",
+      "INCLUDES_SUBMISSION",
+      "STARTS_AFTER_ENTRY"
+    ],
+    "direct": "fail",
+    "name": "fail",
+    "clock_eligible": true,
+    "raw": "results/topology-challenge/correlated_swapped_attribute__000.json",
+    "operation_contracts": 2,
+    "segment_contracts": 2
+  }
+]

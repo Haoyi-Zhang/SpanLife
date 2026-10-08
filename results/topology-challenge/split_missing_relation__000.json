@@ -1,0 +1,256 @@
+{
+  "schema": 3,
+  "case": "split_missing_relation",
+  "revision": "topology-contract",
+  "repeat": 0,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "submit_enter",
+      "wall_ns": 1791441328872493221,
+      "monotonic_ns": 715278315642,
+      "thread_id": 140394247612288,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "submit_exit",
+      "wall_ns": 1791441328872511799,
+      "monotonic_ns": 715278333909,
+      "thread_id": 140394247612288,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "queue_release",
+      "wall_ns": 1791441328874787675,
+      "monotonic_ns": 715280610087,
+      "thread_id": 140394247612288,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791441328874948727,
+      "monotonic_ns": 715280771442,
+      "thread_id": 140393852380864,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791441328878159663,
+      "monotonic_ns": 715283981875,
+      "thread_id": 140393852380864,
+      "outcome": "returned",
+      "exception_type": null,
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": {
+      "execute": "10575549929758705920"
+    }
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "segments": [
+        {
+          "segment_id": "submit",
+          "role": "submission",
+          "span_name": "operation.submit",
+          "association": {
+            "kind": "attributes",
+            "match": {
+              "spanlife.operation_id": "op-0",
+              "spanlife.segment": "submit"
+            }
+          },
+          "ended_witness": 0,
+          "error_on_escape": true,
+          "exception_event": true,
+          "non_error_types": [
+            "CancelledError",
+            "GeneratorExit"
+          ],
+          "must_end_before_operation_entry": true
+        },
+        {
+          "segment_id": "execute",
+          "role": "execution",
+          "span_name": "operation.execute",
+          "association": {
+            "kind": "attributes",
+            "match": {
+              "spanlife.operation_id": "op-0",
+              "spanlife.segment": "execute"
+            }
+          },
+          "ended_witness": 0,
+          "error_on_escape": true,
+          "exception_event": true,
+          "non_error_types": [
+            "CancelledError",
+            "GeneratorExit"
+          ],
+          "exclude_queue": true,
+          "exclude_submission": true
+        }
+      ],
+      "relations": [
+        {
+          "from": "execute",
+          "to": "submit",
+          "kind": "link"
+        }
+      ],
+      "source": "explicit split-lifetime topology contract"
+    }
+  ],
+  "spans": [
+    {
+      "name": "operation.submit",
+      "span_id": "11998933931753786558",
+      "trace_id": "146663499113548176025346229287752688642",
+      "parent_id": "0",
+      "start_ns": 1791441328872484336,
+      "end_ns": 1791441328872516343,
+      "status": "UNSET",
+      "events": [],
+      "links": [],
+      "scope": "spanlife.application",
+      "attributes": {
+        "spanlife.operation_id": "op-0",
+        "spanlife.segment": "submit"
+      }
+    },
+    {
+      "name": "operation.execute",
+      "span_id": "10575549929758705920",
+      "trace_id": "21723709691266079316772087007283098986",
+      "parent_id": "0",
+      "start_ns": 1791441328874925359,
+      "end_ns": 1791441328878173846,
+      "status": "UNSET",
+      "events": [],
+      "links": [],
+      "scope": "spanlife.application",
+      "attributes": {
+        "spanlife.operation_id": "op-0",
+        "spanlife.segment": "execute"
+      }
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "operation.submit",
+      "11998933931753786558"
+    ],
+    [
+      "operation.execute",
+      "10575549929758705920"
+    ]
+  ],
+  "ended": [
+    [
+      "operation.submit",
+      "11998933931753786558"
+    ],
+    [
+      "operation.execute",
+      "10575549929758705920"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 755,
+    "median_offset_ns": 1791440613594178064,
+    "min_offset_ns": 1791440613594178010,
+    "max_offset_ns": 1791440613594178263
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 267,
+    "median_offset_ns": 1791440613594178064,
+    "min_offset_ns": 1791440613594177991,
+    "max_offset_ns": 1791440613594178134
+  },
+  "clock": {
+    "epsilon_ns": 1510,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "classification": "executable topology challenge",
+    "relation": "link",
+    "submission_span_present": true,
+    "execution_span_present": true
+  },
+  "execution": {
+    "status": "completed"
+  },
+  "ledger_check": {
+    "verdict": "fail",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "fail",
+        "segments": [
+          {
+            "segment_id": "submit",
+            "verdict": "pass"
+          },
+          {
+            "segment_id": "execute",
+            "verdict": "pass"
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "operation_id": "op-0",
+        "code": "MISSING_HANDOFF_RELATION",
+        "verdict": "fail",
+        "segment_id": "execute",
+        "relation_kind": "link",
+        "target_segment": "submit",
+        "observed_parent": "0",
+        "observed_links": []
+      }
+    ]
+  },
+  "direct_check": {
+    "verdict": "fail",
+    "failures": [
+      "op-0:execute->submit"
+    ],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  },
+  "expected": {
+    "verdict": "fail",
+    "codes": [
+      "MISSING_HANDOFF_RELATION"
+    ]
+  }
+}

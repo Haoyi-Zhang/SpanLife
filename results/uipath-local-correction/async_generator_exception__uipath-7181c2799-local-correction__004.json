@@ -1,0 +1,160 @@
+{
+  "schema": 2,
+  "case": "async_generator_exception",
+  "revision": "uipath-7181c2799-local-correction",
+  "repeat": 4,
+  "ledger": [
+    {
+      "operation_id": "op-0",
+      "kind": "enter",
+      "wall_ns": 1791117303051802393,
+      "monotonic_ns": 896665489312,
+      "thread_id": 139661115897728,
+      "outcome": null,
+      "exception_type": null,
+      "related_operation_id": null
+    },
+    {
+      "operation_id": "op-0",
+      "kind": "exit",
+      "wall_ns": 1791117303051849865,
+      "monotonic_ns": 896665536714,
+      "thread_id": 139661115897728,
+      "outcome": "raised",
+      "exception_type": "ValueError",
+      "related_operation_id": null
+    }
+  ],
+  "contexts": {
+    "op-0": "12795216079173980331"
+  },
+  "policies": [
+    {
+      "operation_id": "op-0",
+      "role": "execution",
+      "span_name": "uipath.async-generator-exception",
+      "span_ids": [
+        "12795216079173980331"
+      ],
+      "ended_witness": 1,
+      "error_on_escape": true,
+      "exception_event": true,
+      "non_error_types": [
+        "CancelledError",
+        "GeneratorExit"
+      ],
+      "source": "pinned public UiPath decorator; local execution convention",
+      "exclude_queue": false,
+      "expected_parent": "12547018273794538517",
+      "expected_context": "12795216079173980331"
+    }
+  ],
+  "spans": [
+    {
+      "name": "uipath.async-generator-exception",
+      "span_id": "12795216079173980331",
+      "trace_id": "216267977592187582727710756108343852391",
+      "parent_id": "12547018273794538517",
+      "start_ns": 1791117303051787340,
+      "end_ns": 1791117303052267275,
+      "status": "ERROR",
+      "events": [
+        "Yielded: 8911",
+        "exception"
+      ],
+      "scope": "spanlife_uipath_decorator_local_correction",
+      "attributes": {}
+    },
+    {
+      "name": "uipath-holdout-parent",
+      "span_id": "12547018273794538517",
+      "trace_id": "216267977592187582727710756108343852391",
+      "parent_id": "0",
+      "start_ns": 1791117303051447247,
+      "end_ns": 1791117303052454758,
+      "status": "UNSET",
+      "events": [],
+      "scope": "spanlife.application",
+      "attributes": {}
+    }
+  ],
+  "metrics": [],
+  "started": [
+    [
+      "uipath-holdout-parent",
+      "12547018273794538517"
+    ],
+    [
+      "uipath.async-generator-exception",
+      "12795216079173980331"
+    ]
+  ],
+  "ended": [
+    [
+      "uipath.async-generator-exception",
+      "12795216079173980331"
+    ],
+    [
+      "uipath-holdout-parent",
+      "12547018273794538517"
+    ]
+  ],
+  "drained": true,
+  "always_on": true,
+  "flushes": [
+    true
+  ],
+  "clock_before": {
+    "samples": 200,
+    "max_bracket_ns": 1162,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386313301,
+    "max_offset_ns": 1791116406386313852
+  },
+  "clock_after": {
+    "samples": 200,
+    "max_bracket_ns": 370,
+    "median_offset_ns": 1791116406386313321,
+    "min_offset_ns": 1791116406386313241,
+    "max_offset_ns": 1791116406386313466
+  },
+  "clock": {
+    "epsilon_ns": 2324,
+    "offset_drift_ns": 0,
+    "timing_eligible": true,
+    "cap_ns": 100000
+  },
+  "extra": {
+    "public_source": "UiPath/uipath-python@7181c279993fbca453b948cf767781282e1e6017:packages/uipath-core/src/uipath/core/tracing/decorators.py",
+    "source_blob": "b7204271a784b7fccce420c11c8c6a9db1d48837",
+    "variant": "local-correction",
+    "complete_package_executed": false,
+    "dependency_seams": [
+      "UiPathSpanUtils.get_parent_context",
+      "input/output attribute helpers"
+    ],
+    "mechanism": "async_generator"
+  },
+  "execution": {
+    "status": "completed"
+  },
+  "ledger_check": {
+    "verdict": "pass",
+    "operations": [
+      {
+        "operation_id": "op-0",
+        "verdict": "pass"
+      }
+    ],
+    "findings": []
+  },
+  "direct_check": {
+    "verdict": "pass",
+    "failures": [],
+    "inconclusive": []
+  },
+  "name_check": {
+    "verdict": "pass",
+    "failures": []
+  }
+}

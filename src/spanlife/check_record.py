@@ -21,6 +21,8 @@ def main() -> int:
         print(json.dumps(report, indent=2))
     else:
         print(format_text(report))
+    if not report["record_consistent"]:
+        return 3
     if report["verdict"] == "fail":
         return 1
     if report["verdict"] == "inconclusive" and args.fail_on_inconclusive:

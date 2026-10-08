@@ -38,7 +38,7 @@ Expected retained results include:
 
 `results/integrity-check.json` is the machine-readable verification record.
 
-The current suite contains 324 tests. Current tests and offline recomputation of
+The current suite contains 340 tests. Current tests and offline recomputation of
 retained records are distinct from new execution of all service experiments.
 `scripts/verify.py` also checks the companion manuscript in a sibling `paper/`
 directory; the standalone code repository uses the tests and record checks.
@@ -115,6 +115,11 @@ python -m spanlife.check_record \
 
 The text and JSON reports include the finding, operation and segment, suggested
 owner, bounded next action, recomputation consistency, and CI exit class.
+
+## License
+
+Original code is licensed under MIT; see `LICENSE`. Retained upstream sources
+keep their own notices and licenses.
 
 ## Provenance boundary
 

@@ -26,6 +26,7 @@ ROUTES: dict[str, dict[str, str]] = {
     "MISSES_SUBMISSION_START": {"owner": "instrumentation", "action": "start the submission segment before enqueue or scheduling"},
     "MISSES_SUBMISSION_END": {"owner": "instrumentation", "action": "end the submission segment after scheduling returns"},
     "MISSING_SUBMISSION_BOUNDARY": {"owner": "test-harness", "action": "record both submission boundaries before evaluating this role"},
+    "INVALID_SUBMISSION_BOUNDARY": {"owner": "test-harness", "action": "repair the order of submission boundaries"},
     "MISSING_QUEUE_BOUNDARY": {"owner": "test-harness", "action": "record a synchronized queue-release witness"},
     "INCLUDES_QUEUE_WAIT": {"owner": "instrumentation", "action": "start an execution-only segment after queue release"},
     "INCLUDES_SUBMISSION": {"owner": "instrumentation", "action": "separate submission and execution lifetimes"},
@@ -47,6 +48,7 @@ def build_ci_report(run: dict[str, Any]) -> dict[str, Any]:
         routed.append({**finding, **route})
     owners = Counter(row["owner"] for row in routed)
     stored = run.get("ledger_check")
+    consistent = stored is None or stored == result
     return {
         "schema": 1,
         "case": run.get("case"),
@@ -55,13 +57,15 @@ def build_ci_report(run: dict[str, Any]) -> dict[str, Any]:
         "finding_count": len(routed),
         "owners": dict(sorted(owners.items())),
         "findings": routed,
-        "record_consistent": stored is None or stored == result,
-        "ci_exit_code": 1 if result["verdict"] == "fail" else 2 if result["verdict"] == "inconclusive" else 0,
+        "record_consistent": consistent,
+        "ci_exit_code": 3 if not consistent else 1 if result["verdict"] == "fail" else 2 if result["verdict"] == "inconclusive" else 0,
     }
 
 
 def format_text(report: dict[str, Any]) -> str:
     lines = [f"SpanLife {report['verdict'].upper()}: {report.get('case')} @ {report.get('revision')}"]
+    if not report["record_consistent"]:
+        lines.append("RECORD_MISMATCH: stored judgment differs from the current evaluation.")
     if not report["findings"]:
         lines.append("No unsatisfied or unqualified obligations.")
         return "\n".join(lines)

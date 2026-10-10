@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 import json
 import os
@@ -15,6 +14,7 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from spanlife.topology_scenarios import EXPECTED, TOPOLOGY_CASES, run_topology_case
+from spanlife.topology_records import summarize_rows, trial_row
 
 
 def single(case: str, repeat: int, output_file: Path) -> int:
@@ -69,65 +69,12 @@ def orchestrate(output: Path, repeats: int, workers: int) -> int:
         data = json.loads(path.read_text())
         if data.get("execution", {}).get("status") != "completed":
             continue
-        expected_verdict, expected_codes = EXPECTED[case]
-        codes = {finding["code"] for finding in data["ledger_check"]["findings"]}
-        rows.append({
-            "case": case,
-            "repeat": repeat,
-            "expected_verdict": expected_verdict,
-            "expected_codes": list(expected_codes),
-            "actual": data["ledger_check"]["verdict"],
-            "codes": sorted(codes),
-            "direct": data["direct_check"]["verdict"],
-            "name": data["name_check"]["verdict"],
-            "clock_eligible": data["clock"]["timing_eligible"],
-            "raw": str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else str(path),
-            "operation_contracts": len(data.get("policies", [])),
-            "segment_contracts": sum(len(policy.get("segments", [policy])) for policy in data.get("policies", [])),
-        })
-
-    by_case = {}
-    for case in TOPOLOGY_CASES:
-        selected = [row for row in rows if row["case"] == case]
-        expected_verdict, expected_codes = EXPECTED[case]
-        by_case[case] = {
-            "trials": len(selected),
-            "expected_verdict": expected_verdict,
-            "expected_codes": list(expected_codes),
-            "verdicts": dict(Counter(row["actual"] for row in selected)),
-            "exact_verdicts": sum(row["actual"] == expected_verdict for row in selected),
-            "expected_codes_present": sum(set(expected_codes).issubset(set(row["codes"])) for row in selected),
-            "direct_disagreements": sum(row["actual"] != row["direct"] for row in selected),
-            "name_disagreements": sum(row["actual"] != row["name"] for row in selected),
-            "clock_ineligible": sum(not row["clock_eligible"] for row in selected),
-        }
+        raw = str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else str(path)
+        rows.append(trial_row(data, raw))
 
     summary = {
-        "schema": 1,
-        "cases": len(TOPOLOGY_CASES),
-        "fresh_process_trials": len(rows),
-        "runner_failures": len(failures),
-        "exact_expected_verdicts": sum(row["actual"] == row["expected_verdict"] for row in rows),
-        "expected_diagnostics_present": sum(set(row["expected_codes"]).issubset(set(row["codes"])) for row in rows),
-        "direct_disagreements": sum(row["actual"] != row["direct"] for row in rows),
-        "name_disagreements": sum(row["actual"] != row["name"] for row in rows),
-        "operation_contracts": sum(row["operation_contracts"] for row in rows),
-        "segment_contracts": sum(row["segment_contracts"] for row in rows),
-        "name_false_alarms_on_valid_correlation": sum(
-            row["case"] == "correlated_concurrent_valid" and row["actual"] == "pass" and row["name"] == "fail"
-            for row in rows
-        ),
-        "relation_faults_missed_by_name": sum(
-            row["case"] in {"split_missing_relation", "split_wrong_relation"}
-            and row["actual"] == "fail" and row["name"] == "pass"
-            for row in rows
-        ),
+        **summarize_rows(rows, len(failures)),
         "wall_s": time.time() - wall_start,
-        "by_case": by_case,
-        "classification": (
-            "Executable contract-topology and correlation challenge. Fault cases are controlled operators, "
-            "not upstream defect or prevalence claims."
-        ),
     }
     (output / "trials.json").write_text(json.dumps(rows, indent=2) + "\n")
     (output / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")

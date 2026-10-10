@@ -7,7 +7,9 @@ import hashlib
 import json
 import re
 import sys
+import types
 from collections import Counter
+from copy import deepcopy
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,6 +18,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from spanlife.baselines import direct_assertions, existence_and_name
 from spanlife.oracle import qualify
+from spanlife.topology_records import EXPECTED, TOPOLOGY_CASES, summarize_rows, trial_row
 
 
 def git_blob(data: bytes) -> str:
@@ -241,7 +244,78 @@ def check_native_mutation_matrix() -> dict:
 
 
 
+def _topology_archive_checkers() -> tuple:
+    """Load only the three pinned, pure topology-era modules, not live code.
+
+    The namespace has no package initializer or search path. Verify all source
+    hashes before executing any module; relative imports resolve only to the
+    explicitly loaded frozen contracts. These checkers are archival, never the
+    authority for current acceptance.
+    """
+    hashes = load_json(ROOT / "provenance/core-freeze.json")["topology_amendment"]["sha256"]
+    paths = {name: ROOT / f"provenance/evaluated-core/src/spanlife/{name}.py"
+             for name in ("contracts", "oracle", "baselines")}
+    sources = {name: path.read_bytes() for name, path in paths.items()}
+    for name, path in paths.items():
+        assert hashlib.sha256(sources[name]).hexdigest() == hashes[path.relative_to(ROOT).as_posix()], (
+            f"archival topology source changed: {path}")
+    namespace = "_spanlife_topology_archive"
+    package = types.ModuleType(namespace)
+    package.__path__ = []
+    sys.modules[namespace] = package
+    modules = {}
+    try:
+        for name, path in paths.items():
+            module = types.ModuleType(f"{namespace}.{name}")
+            module.__file__ = str(path)
+            module.__package__ = namespace
+            sys.modules[module.__name__] = module
+            # Execute the exact verified source bytes, not a cached .pyc or
+            # a second loader read of potentially different source.
+            exec(compile(sources[name], str(path), "exec"), module.__dict__)
+            modules[name] = module
+        return (modules["oracle"].qualify, modules["baselines"].direct_assertions,
+                modules["baselines"].existence_and_name)
+    finally:
+        for name in paths:
+            sys.modules.pop(f"{namespace}.{name}", None)
+        sys.modules.pop(namespace, None)
+
+
+def _check_current_topology_acceptance(run: dict, current: dict, direct: dict) -> None:
+    """Require current outcomes AND segment aggregation, not historical PASS."""
+    verdict, expected_codes = EXPECTED[run["case"]]
+    assert run["expected"] == {"verdict": verdict, "codes": list(expected_codes)}, run["case"]
+    assert current["verdict"] == direct["verdict"] == verdict, run["case"]
+    codes = {finding["code"] for finding in current["findings"]}
+    assert set(expected_codes).issubset(codes), (run["case"], expected_codes, codes)
+    if verdict == "pass":
+        assert not current["findings"], run["case"]
+    assert [op["operation_id"] for op in current["operations"]] == [
+        policy["operation_id"] for policy in run["policies"]], run["case"]
+
+    def aggregate(findings: list[dict], complete: bool = True) -> str:
+        return ("fail" if any(row["verdict"] == "fail" for row in findings) else
+                "inconclusive" if findings or not complete else "pass")
+
+    for policy, operation in zip(run["policies"], current["operations"]):
+        oid = policy["operation_id"]
+        local = [row for row in current["findings"] if row["operation_id"] == oid]
+        enter = [row for row in run["ledger"] if row["operation_id"] == oid and row["kind"] == "enter"]
+        exit_events = [row for row in run["ledger"] if row["operation_id"] == oid and row["kind"] == "exit"]
+        complete = (len(enter) == len(exit_events) == 1
+                    and exit_events[0]["monotonic_ns"] >= enter[0]["monotonic_ns"])
+        segments = [{"segment_id": segment["segment_id"],
+                     "verdict": aggregate([row for row in local
+                                           if row.get("segment_id") == segment["segment_id"]], complete)}
+                    for segment in policy["segments"]]
+        assert operation["segments"] == segments, (run["case"], operation, segments)
+        assert operation["verdict"] == aggregate(local), (run["case"], operation)
+    assert current["verdict"] == aggregate(current["findings"]), run["case"]
+
+
 def check_topology_challenge() -> dict:
+    """Exact archival replay plus bounded current reanalysis of the same traces."""
     directory = ROOT / "results/topology-challenge"
     manifest = load_json(directory / "execution-manifest.json")
     assert manifest["trials"] == 12
@@ -257,21 +331,51 @@ def check_topology_challenge() -> dict:
     assert summary["direct_disagreements"] == 0
     assert summary["name_false_alarms_on_valid_correlation"] == 1
     assert summary["relation_faults_missed_by_name"] == 2
-    raw = []
-    for path in sorted(directory.glob("*.json")):
-        if path.name in {"summary.json", "trials.json", "execution-manifest.json"}:
-            continue
+    assert summary["name_disagreements"] == 6
+    archive_qualify, archive_direct, archive_name = _topology_archive_checkers()
+    paths = {path.name: path for path in directory.glob("*.json")
+             if path.name not in {"summary.json", "trials.json", "execution-manifest.json"}}
+    expected_names = {f"{case}__000.json" for case in TOPOLOGY_CASES}
+    assert set(paths) == expected_names, (set(paths), expected_names)
+    process_keys = [(row["case"], row["repeat"]) for row in manifest["processes"]]
+    assert process_keys == [(case, 0) for case in TOPOLOGY_CASES], process_keys
+    assert all(row["returncode"] == 0 for row in manifest["processes"]), manifest
+    archive_rows, current_rows, changed_checks = [], [], []
+    for case in TOPOLOGY_CASES:
+        path = paths[f"{case}__000.json"]
         run = load_json(path)
+        assert (run["case"], run["repeat"]) == (case, 0), path
         assert run["execution"]["status"] == "completed", path
-        assert qualify(run) == run["ledger_check"], path
-        assert direct_assertions(run) == run["direct_check"], path
-        assert existence_and_name(run) == run["name_check"], path
-        expected = run["expected"]
-        assert run["ledger_check"]["verdict"] == expected["verdict"], path
-        codes = {finding["code"] for finding in run["ledger_check"]["findings"]}
-        assert set(expected["codes"]).issubset(codes), (path, expected, codes)
-        raw.append(run)
-    assert len(raw) == 12
+        assert archive_qualify(run) == run["ledger_check"], f"archival ledger mismatch: {path}"
+        assert archive_direct(run) == run["direct_check"], f"archival direct mismatch: {path}"
+        assert archive_name(run) == run["name_check"], f"archival name mismatch: {path}"
+        current = {**run, "ledger_check": qualify(run),
+                   "direct_check": direct_assertions(run), "name_check": existence_and_name(run)}
+        _check_current_topology_acceptance(run, current["ledger_check"], current["direct_check"])
+        # Exactly two known source-segment summaries changed. Compare the
+        # entire expected structure; no generic ignored keys or fallback to
+        # the old evaluator is permitted for current evidence.
+        expected_current = deepcopy(run["ledger_check"])
+        if case in {"split_missing_relation", "split_wrong_relation"}:
+            source = expected_current["operations"][0]["segments"][1]
+            assert source == {"segment_id": "execute", "verdict": "pass"}, path
+            source["verdict"] = "fail"
+            changed_checks.append({"case": case, "operation_id": "op-0",
+                                   "segment_id": "execute", "archival": "pass", "current": "fail"})
+        assert current["ledger_check"] == expected_current, f"unexpected current ledger change: {path}"
+        assert current["direct_check"] == run["direct_check"], f"current direct mismatch: {path}"
+        assert current["name_check"] == run["name_check"], f"current name mismatch: {path}"
+        raw = path.relative_to(ROOT).as_posix()
+        archive_rows.append(trial_row(run, raw))
+        current_rows.append(trial_row(current, raw))
+    assert rows == archive_rows, "archival topology trials do not match raw records"
+    archive_summary = summarize_rows(archive_rows, len(manifest["failures"]))
+    assert summary == {**archive_summary, "wall_s": manifest["wall_s"]}, "archival topology summary mismatch"
+    # No new measurements or wall times: derived current outputs are kept
+    # only in memory and checked separately against this bounded challenge.
+    assert current_rows == archive_rows, "current topology rollup changed"
+    current_summary = summarize_rows(current_rows, 0)
+    assert current_summary == archive_summary, "current topology summary changed"
     return {
         "fresh_process_trials": 12,
         "operation_contracts": 20,
@@ -279,6 +383,17 @@ def check_topology_challenge() -> dict:
         "exact_expected_verdicts": 12,
         "direct_disagreements": 0,
         "name_disagreements": summary["name_disagreements"],
+        "archival_replay": {"source_generation": "provenance/evaluated-core/src/spanlife",
+                            "exact_record_checks": len(archive_rows),
+                            "trials_and_summary_match_generator": True},
+        "current_reanalysis": {"source_generation": "src/spanlife",
+                               "retained_observations": len(current_rows),
+                               "new_runtime_trials": 0,
+                               "exact_expected_verdicts": current_summary["exact_expected_verdicts"],
+                               "expected_diagnostics_present": current_summary["expected_diagnostics_present"],
+                               "direct_disagreements": current_summary["direct_disagreements"],
+                               "derived_rows_and_summary_unchanged": True,
+                               "changed_record_checks": changed_checks},
     }
 
 def check_gate_ablation() -> dict:

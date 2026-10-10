@@ -21,38 +21,9 @@ from .baselines import direct_assertions, existence_and_name
 from .capture import Capture, current_parent
 from .ledger import Ledger, clock_sample, tolerance
 from .oracle import qualify
+from .topology_records import EXPECTED, TOPOLOGY_CASES
 
 TIMEOUT = 5.0
-
-TOPOLOGY_CASES = (
-    "split_link_valid",
-    "split_parent_valid",
-    "split_missing_relation",
-    "split_wrong_relation",
-    "split_submission_overlap",
-    "split_execution_early_end",
-    "split_execution_missing",
-    "split_submission_missing",
-    "correlated_concurrent_valid",
-    "correlated_missing_attribute",
-    "correlated_duplicate_attribute",
-    "correlated_swapped_attribute",
-)
-
-EXPECTED: dict[str, tuple[str, tuple[str, ...]]] = {
-    "split_link_valid": ("pass", ()),
-    "split_parent_valid": ("pass", ()),
-    "split_missing_relation": ("fail", ("MISSING_HANDOFF_RELATION",)),
-    "split_wrong_relation": ("fail", ("MISSING_HANDOFF_RELATION",)),
-    "split_submission_overlap": ("fail", ("SUBMISSION_OVERLAPS_EXECUTION",)),
-    "split_execution_early_end": ("fail", ("ENDS_BEFORE_EXIT",)),
-    "split_execution_missing": ("fail", ("MISSING_SPAN",)),
-    "split_submission_missing": ("fail", ("MISSING_SPAN",)),
-    "correlated_concurrent_valid": ("pass", ()),
-    "correlated_missing_attribute": ("fail", ("MISSING_SPAN",)),
-    "correlated_duplicate_attribute": ("inconclusive", ("AMBIGUOUS_ASSOCIATION",)),
-    "correlated_swapped_attribute": ("fail", ("STARTS_AFTER_ENTRY", "ENDS_BEFORE_EXIT")),
-}
 
 
 def _segment(segment_id: str, role: str, oid: str, *, strict_submission: bool = False) -> dict[str, Any]:

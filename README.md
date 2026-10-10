@@ -44,6 +44,28 @@ retained records are distinct from new execution of all service experiments.
 `scripts/verify.py` also checks the companion manuscript in a sibling `paper/`
 directory; the standalone code repository uses the tests and record checks.
 
+`python scripts/check_retained_records.py` checks records without running the
+service experiments. For the 12 topology records it reports two separate
+checks: exact archival replay using the hash-pinned topology-era checker and
+baselines, and current qualification of the same observations in memory.
+The retained raw JSON, stored judgments, process receipts, timings, trial rows,
+and summary are not rewritten. Shared pure row/summary functions are used by
+both the topology runner and verifier; the verifier checks their full outputs.
+
+Current relation findings affect the source segment's verdict. In the retained
+missing- and wrong-handoff cases, that changes only `execute` from `pass` to
+`fail`; both historical overall verdicts were already `fail`. The verifier
+requires these two precise changes, all other judgment fields to agree, and
+current valid controls, abstentions, diagnostics, and segment aggregation to
+meet their contracts. Current in-memory rollups retain 12 outcomes, 20 operation
+contracts, 28 segment contracts, and zero direct disagreements. This is
+reanalysis, not another 12 fresh processes or a new timing measurement.
+
+The single-record CI checker still compares stored judgments with current
+qualification exactly: these two historical JSONs report `RECORD_MISMATCH`
+and exit 3. Archival reproducibility does not make their old segment `pass` a
+current acceptance result. No new current JSON dataset is installed here.
+
 ## Fresh execution without overwriting retained data
 
 ```sh
@@ -140,4 +162,6 @@ keep their own notices and licenses.
 principal evaluation. `provenance/topology-contract-amendment.md` explains the
 post-evaluation extension, and `provenance/core-freeze.json` pins both source
 generations. The verifier recomputes old records through the preserved legacy
-path and the topology records through the amended path.
+path. Topology records replay exactly through the pinned evaluated snapshot
+and are separately reanalyzed through the current checker as described above;
+the frozen sources and their hashes remain historical evidence.

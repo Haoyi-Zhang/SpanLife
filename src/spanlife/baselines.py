@@ -34,6 +34,12 @@ def existence_and_name(run: dict) -> dict:
         return {"verdict": "inconclusive", "reason": "collection pending"}
     failures: list[str] = []
     for raw in run["policies"]:
+        if is_legacy_policy(raw):
+            result = _legacy_existence_and_name({**run, "policies": [raw]})
+            if result["verdict"] == "inconclusive":
+                return result
+            failures.extend(result["failures"])
+            continue
         policy = normalize_policy(raw)
         for segment in policy["segments"]:
             if segment["role"] == "unknown":
@@ -63,8 +69,10 @@ def _legacy_direct_assertions(run: dict) -> dict:
         execution_valid = b["monotonic_ns"] >= a["monotonic_ns"]
         if not execution_valid:
             uncertain.append(oid)
-        if "expected_context" in p:
-            if oid not in run.get("contexts", {}):
+        if p["role"] == "context-only" and p.get("expected_context") is None:
+            uncertain.append(oid)
+        if "expected_context" in p and (p["role"] != "context-only" or p["expected_context"] is not None):
+            if run.get("contexts", {}).get(oid) is None:
                 uncertain.append(oid)
             elif run["contexts"][oid] != p["expected_context"]:
                 failed.append(oid)
@@ -78,7 +86,9 @@ def _legacy_direct_assertions(run: dict) -> dict:
         if len(ids) > 1 or len(chosen) > 1:
             uncertain.append(oid); continue
         if not chosen:
-            if not run.get("drained") or not run.get("always_on") or p.get("ended_witness"):
+            witness = p.get("ended_witness")
+            if (not run.get("drained") or not run.get("always_on")
+                    or type(witness) is not int or witness != 0):
                 uncertain.append(oid)
             else:
                 failed.append(oid)
@@ -146,6 +156,11 @@ def _topology_direct_assertions(run: dict) -> dict:
     timing = run["clock"]["timing_eligible"]
 
     for raw in run["policies"]:
+        if is_legacy_policy(raw):
+            result = _legacy_direct_assertions({**run, "policies": [raw]})
+            failed.extend(result["failures"])
+            uncertain.extend(result["inconclusive"])
+            continue
         policy = normalize_policy(raw)
         oid = policy["operation_id"]
         ev = [row for row in run["ledger"] if row["operation_id"] == oid]
@@ -166,7 +181,9 @@ def _topology_direct_assertions(run: dict) -> dict:
             if role == "unknown":
                 uncertain.append(key)
                 continue
-            if "expected_context" in segment:
+            if role == "context-only" and segment.get("expected_context") is None:
+                uncertain.append(key)
+            if "expected_context" in segment and (role != "context-only" or segment["expected_context"] is not None):
                 observed = _context(run, oid, sid)
                 if observed is None:
                     uncertain.append(key)
@@ -182,7 +199,9 @@ def _topology_direct_assertions(run: dict) -> dict:
                 uncertain.append(key)
                 continue
             if not candidates:
-                if not run.get("drained") or not run.get("always_on") or segment.get("ended_witness"):
+                witness = segment.get("ended_witness")
+                if (not run.get("drained") or not run.get("always_on")
+                        or type(witness) is not int or witness != 0):
                     uncertain.append(key)
                 else:
                     failed.append(key)
@@ -233,9 +252,10 @@ def _topology_direct_assertions(run: dict) -> dict:
         for relation in policy.get("relations", []):
             source = selected.get(relation["from"])
             target = selected.get(relation["to"])
-            if source is None or target is None:
-                continue
             key = f"{oid}:{relation['from']}->{relation['to']}"
+            if source is None or target is None:
+                uncertain.append(key)
+                continue
             links = source.get("links")
             linked = any(target.get('trace_id') is not None
                          and link.get('trace_id') == target['trace_id']

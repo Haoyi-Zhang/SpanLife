@@ -13,7 +13,7 @@ from .contracts import is_legacy_policy, normalize_policy, validate_run
 
 
 def _qualify_legacy(run: dict[str, Any]) -> dict[str, Any]:
-    """Original schema-1 evaluator, retained byte-for-byte in its output shape."""
+    """Single-span evaluator with the original schema-1 output shape."""
     events = defaultdict(lambda: defaultdict(list))
     for event in run["ledger"]:
         events[event["operation_id"]][event["kind"]].append(event)
@@ -41,7 +41,9 @@ def _qualify_legacy(run: dict[str, Any]) -> dict[str, Any]:
             execution_valid = exit["monotonic_ns"] >= enter["monotonic_ns"]
             if not execution_valid:
                 finding(oid, "INVALID_LEDGER", "inconclusive")
-            if "expected_context" in policy:
+            if role == "context-only" and policy.get("expected_context") is None:
+                finding(oid, "MISSING_CONTEXT_EXPECTATION", "inconclusive")
+            if "expected_context" in policy and (role != "context-only" or policy["expected_context"] is not None):
                 observed = observed_contexts.get(oid)
                 if observed is None:
                     finding(oid, "MISSING_CONTEXT_OBSERVATION", "inconclusive")
@@ -58,7 +60,10 @@ def _qualify_legacy(run: dict[str, Any]) -> dict[str, Any]:
                 elif not selected:
                     if not run.get("drained") or not run.get("always_on"):
                         finding(oid, "COLLECTION_NOT_QUALIFIED", "inconclusive")
-                    elif policy.get("ended_witness", 0):
+                    elif (type(policy.get("ended_witness")) is not int
+                          or policy["ended_witness"] < 0):
+                        finding(oid, "END_WITNESS_UNQUALIFIED", "inconclusive")
+                    elif policy["ended_witness"] > 0:
                         finding(oid, "EXPORT_LOSS", "inconclusive")
                     else:
                         finding(oid, "MISSING_SPAN", "fail")
@@ -157,6 +162,13 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
         findings.append(row)
 
     for raw_policy in run["policies"]:
+        # Flat policies keep their original explicit-ID association semantics,
+        # irrespective of other policies in this record.
+        if is_legacy_policy(raw_policy):
+            result = _qualify_legacy({**run, "policies": [raw_policy]})
+            findings.extend(result["findings"])
+            operations.extend(result["operations"])
+            continue
         policy = normalize_policy(raw_policy)
         oid = policy["operation_id"]
         ev = events[oid]
@@ -176,11 +188,12 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
         for segment in policy["segments"]:
             segment_id = segment["segment_id"]
             role = segment["role"]
-            segment_start = len(findings)
             if role == "unknown":
                 finding(oid, segment_id, "UNDECLARED_INTENT", "inconclusive")
             elif operation_complete:
-                if "expected_context" in segment:
+                if role == "context-only" and segment.get("expected_context") is None:
+                    finding(oid, segment_id, "MISSING_CONTEXT_EXPECTATION", "inconclusive")
+                if "expected_context" in segment and (role != "context-only" or segment["expected_context"] is not None):
                     observed = _context_for(observed_contexts, oid, segment_id)
                     if observed is None:
                         finding(oid, segment_id, "MISSING_CONTEXT_OBSERVATION", "inconclusive")
@@ -197,7 +210,10 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
                     elif not selected:
                         if not run.get("drained") or not run.get("always_on"):
                             finding(oid, segment_id, "COLLECTION_NOT_QUALIFIED", "inconclusive")
-                        elif segment.get("ended_witness", 0):
+                        elif (type(segment.get("ended_witness")) is not int
+                              or segment["ended_witness"] < 0):
+                            finding(oid, segment_id, "END_WITNESS_UNQUALIFIED", "inconclusive")
+                        elif segment["ended_witness"] > 0:
                             finding(oid, segment_id, "EXPORT_LOSS", "inconclusive")
                         else:
                             finding(oid, segment_id, "MISSING_SPAN", "fail")
@@ -251,20 +267,15 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
                             elif span["parent_id"] != segment["expected_parent"]:
                                 finding(oid, segment_id, "PARENT_MISMATCH", "fail",
                                         observed=span["parent_id"], expected=segment["expected_parent"])
-            local_segment = findings[segment_start:]
-            # An empty local finding slice is not evidence of success when the
-            # operation prerequisite prevented (or limited) segment evaluation.
-            segment_verdict = ("fail" if any(row["verdict"] == "fail" for row in local_segment) else
-                               "inconclusive" if local_segment or not execution_valid else "pass")
-            segment_rows.append({"segment_id": segment_id, "verdict": segment_verdict})
-
-        # Relations are evaluated only when both endpoints are uniquely available.
+        # Unresolved declared relations abstain; context identity is not span evidence.
         for relation in policy.get("relations", []):
             source_id, target_id = relation["from"], relation["to"]
             source, target = selected_by_segment.get(source_id), selected_by_segment.get(target_id)
-            if source is None or target is None:
-                continue
             kind = relation["kind"]
+            if source is None or target is None:
+                finding(oid, source_id, "RELATION_EVIDENCE_MISSING", "inconclusive",
+                        relation_kind=kind, target_segment=target_id)
+                continue
             links = source.get("links")
             linked = False
             if links is not None:
@@ -308,6 +319,14 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
                         observed_links=[str(link.get("span_id")) for link in (links or [])])
 
         local = findings[initial:]
+        # Relation diagnostics belong to their source segment, so summarize
+        # only after all interval, context, and relation checks are complete.
+        for segment in policy["segments"]:
+            segment_id = segment["segment_id"]
+            local_segment = [row for row in local if row.get("segment_id") == segment_id]
+            segment_verdict = ("fail" if any(row["verdict"] == "fail" for row in local_segment) else
+                               "inconclusive" if local_segment or not execution_valid else "pass")
+            segment_rows.append({"segment_id": segment_id, "verdict": segment_verdict})
         verdict = ("fail" if any(row["verdict"] == "fail" for row in local) else
                    "inconclusive" if local else "pass")
         operations.append({"operation_id": oid, "verdict": verdict, "segments": segment_rows})

@@ -123,6 +123,7 @@ class ContractRepairTests(unittest.TestCase):
             run["policies"][0]["association"] = {
                 "kind": "attributes", "match": {"operation": "x"}}
             run["spans"][0]["attributes"]["operation"] = observed
+            run["policies"][0]["ended_witness"] = 0
             for candidate in (run, segmented(run)):
                 with self.subTest(observed=observed, segmented="segments" in candidate["policies"][0]):
                     result = self.assert_verdict(candidate, expected)
@@ -137,6 +138,7 @@ class ContractRepairTests(unittest.TestCase):
             run["policies"][0].pop("span_ids")
             run["policies"][0]["association"] = {"kind": "name"}
             run["spans"][0]["name"] = name
+            run["policies"][0]["ended_witness"] = 0
             for candidate in (run, segmented(run)):
                 with self.subTest(name=name, segmented="segments" in candidate["policies"][0]):
                     self.assert_verdict(candidate, expected)
@@ -351,4 +353,3 @@ class ContractRepairTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -32,7 +32,9 @@ def validate_run(run: dict[str, Any]) -> None:
 
     Empty observations remain legitimate evidence of an incomplete operation
     or missing span.  Empty contracts are not a successful qualification.
-    Detailed evidence prerequisites remain the evaluators' responsibility.
+    Detailed evidence prerequisites remain the evaluators' responsibility:
+    context-only policies without an expected identity abstain, and an absent
+    end-witness observation is not an observed zero.
     """
     if not isinstance(run, dict):
         raise ValueError("run must be an object")

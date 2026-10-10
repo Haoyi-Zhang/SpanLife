@@ -38,7 +38,8 @@ Expected retained results include:
 
 `results/integrity-check.json` is the machine-readable verification record.
 
-The current suite contains 340 tests. Current tests and offline recomputation of
+The earlier source-suite count was 340 tests; ten focused policy-evidence
+regressions are supplied separately. Source tests and offline recomputation of
 retained records are distinct from new execution of all service experiments.
 `scripts/verify.py` also checks the companion manuscript in a sibling `paper/`
 directory; the standalone code repository uses the tests and record checks.
@@ -103,6 +104,18 @@ A policy may retain the legacy fields or declare `segments` and `relations`:
 
 Exactly one span must satisfy each segment association before semantic checks
 run. Relations are evaluated only after both endpoints are uniquely associated.
+An unresolved declared relation contributes `RELATION_EVIDENCE_MISSING` and an
+inconclusive result to its source segment, including when an endpoint is
+context-only. An observed context identity alone is not span-relation evidence;
+without a declared span relation, matching context-only identity can still pass.
+Relation findings contribute to the source segment's final status. Legacy flat
+policies retain explicit `span_ids` selection in mixed records; name fallback
+belongs to normalized segments, not to unrelated flat policies. Context-only
+policies abstain without a declared `expected_context` or its observation.
+For an absent candidate, omitted `ended_witness` is unknown, explicit zero
+permits a missing-span failure after collection qualification, and a positive
+count indicates export loss. No span or clock qualification is required merely
+to check an observed context identity.
 
 ## CI report
 

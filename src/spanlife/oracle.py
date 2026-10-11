@@ -9,7 +9,32 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import Any
 
-from .contracts import is_legacy_policy, normalize_policy, validate_run
+from .contracts import is_legacy_policy, normalize_policy, ordered_bounds, validate_run
+
+
+def _error_evidence(policy: dict, exit_event: dict, span: dict) -> list[tuple[str, str]]:
+    """Qualify error scope before judging status or event evidence."""
+    if policy["role"] not in ("execution", "both") or not policy.get("error_on_escape"):
+        return []
+    if exit_event.get("outcome") not in ("returned", "raised"):
+        return [("EXIT_OUTCOME_UNQUALIFIED", "inconclusive")]
+    if exit_event["outcome"] == "returned":
+        return []
+    if exit_event.get("exception_type") in (None, "unknown"):
+        return [("EXCEPTION_TYPE_UNQUALIFIED", "inconclusive")]
+    if exit_event["exception_type"] in policy.get("non_error_types", []):
+        return []
+    findings = []
+    if span.get("status") in (None, "unknown"):
+        findings.append(("ERROR_STATUS_UNQUALIFIED", "inconclusive"))
+    elif span["status"] != "ERROR":
+        findings.append(("MISSING_ERROR_STATUS", "fail"))
+    if policy.get("exception_event"):
+        if span.get("events") is None:
+            findings.append(("EXCEPTION_EVENT_UNQUALIFIED", "inconclusive"))
+        elif "exception" not in span["events"]:
+            findings.append(("MISSING_EXCEPTION_EVENT", "fail"))
+    return findings
 
 
 def _qualify_legacy(run: dict[str, Any]) -> dict[str, Any]:
@@ -21,7 +46,7 @@ def _qualify_legacy(run: dict[str, Any]) -> dict[str, Any]:
     findings: list[dict[str, Any]] = []
     operations = []
     eps = run["clock"]["epsilon_ns"]
-    timing = run["clock"]["timing_eligible"]
+    timing = run["clock"]["timing_eligible"] and eps <= run["clock"].get("cap_ns", 100_000)
     observed_contexts = run.get("contexts", {})
 
     def finding(op: str, code: str, verdict: str, **detail: Any) -> None:
@@ -38,12 +63,12 @@ def _qualify_legacy(run: dict[str, Any]) -> dict[str, Any]:
             finding(oid, "INCOMPLETE_OPERATION", "inconclusive")
         else:
             enter, exit = ev["enter"][0], ev["exit"][0]
-            execution_valid = exit["monotonic_ns"] >= enter["monotonic_ns"]
+            execution_valid = ordered_bounds(enter, exit)
             if not execution_valid:
                 finding(oid, "INVALID_LEDGER", "inconclusive")
-            if role == "context-only" and policy.get("expected_context") is None:
+            if (role == "context-only" or "expected_context" in policy) and policy.get("expected_context") is None:
                 finding(oid, "MISSING_CONTEXT_EXPECTATION", "inconclusive")
-            if "expected_context" in policy and (role != "context-only" or policy["expected_context"] is not None):
+            if policy.get("expected_context") is not None:
                 observed = observed_contexts.get(oid)
                 if observed is None:
                     finding(oid, "MISSING_CONTEXT_OBSERVATION", "inconclusive")
@@ -69,7 +94,11 @@ def _qualify_legacy(run: dict[str, Any]) -> dict[str, Any]:
                         finding(oid, "MISSING_SPAN", "fail")
                 else:
                     span = selected[0]
-                    if timing:
+                    if span.get("start_ns") is None or span.get("end_ns") is None:
+                        finding(oid, "SPAN_TIME_UNQUALIFIED", "inconclusive")
+                    elif span["end_ns"] < span["start_ns"]:
+                        finding(oid, "INVALID_SPAN_INTERVAL", "inconclusive")
+                    elif timing:
                         if role in ("execution", "both") and execution_valid:
                             if span["start_ns"] > enter["wall_ns"] + eps:
                                 finding(oid, "STARTS_AFTER_ENTRY", "fail",
@@ -80,7 +109,7 @@ def _qualify_legacy(run: dict[str, Any]) -> dict[str, Any]:
                         if role in ("submission", "both"):
                             if len(ev["submit_enter"]) != 1 or len(ev["submit_exit"]) != 1:
                                 finding(oid, "MISSING_SUBMISSION_BOUNDARY", "inconclusive")
-                            elif ev["submit_exit"][0]["monotonic_ns"] < ev["submit_enter"][0]["monotonic_ns"]:
+                            elif not ordered_bounds(ev["submit_enter"][0], ev["submit_exit"][0]):
                                 finding(oid, "INVALID_SUBMISSION_BOUNDARY", "inconclusive")
                             else:
                                 if span["start_ns"] > ev["submit_enter"][0]["wall_ns"] + eps:
@@ -90,19 +119,19 @@ def _qualify_legacy(run: dict[str, Any]) -> dict[str, Any]:
                         if role == "execution" and policy.get("exclude_queue"):
                             if len(ev["queue_release"]) != 1:
                                 finding(oid, "MISSING_QUEUE_BOUNDARY", "inconclusive")
+                            elif not ordered_bounds(ev["queue_release"][0], enter):
+                                finding(oid, "INVALID_QUEUE_BOUNDARY", "inconclusive")
                             elif span["start_ns"] < ev["queue_release"][0]["wall_ns"] - eps:
                                 finding(oid, "INCLUDES_QUEUE_WAIT", "fail")
                     else:
                         finding(oid, "CLOCK_UNQUALIFIED", "inconclusive")
-                    if (execution_valid and role in ("execution", "both") and policy.get("error_on_escape")
-                            and exit["outcome"] == "raised"
-                            and exit["exception_type"] not in policy.get("non_error_types", [])):
-                        if span["status"] != "ERROR":
-                            finding(oid, "MISSING_ERROR_STATUS", "fail")
-                        if policy.get("exception_event") and "exception" not in span["events"]:
-                            finding(oid, "MISSING_EXCEPTION_EVENT", "fail")
+                    if execution_valid:
+                        for code, verdict in _error_evidence(policy, exit, span):
+                            finding(oid, code, verdict)
                     if "expected_parent" in policy:
-                        if span.get("parent_id") is None:
+                        if policy["expected_parent"] is None:
+                            finding(oid, "MISSING_PARENT_EXPECTATION", "inconclusive")
+                        elif span.get("parent_id") is None:
                             finding(oid, "RELATION_EVIDENCE_MISSING", "inconclusive")
                         elif span["parent_id"] != policy["expected_parent"]:
                             finding(oid, "PARENT_MISMATCH", "fail",
@@ -151,7 +180,7 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
     findings: list[dict[str, Any]] = []
     operations: list[dict[str, Any]] = []
     eps = run["clock"]["epsilon_ns"]
-    timing = run["clock"]["timing_eligible"]
+    timing = run["clock"]["timing_eligible"] and eps <= run["clock"].get("cap_ns", 100_000)
     observed_contexts = run.get("contexts", {})
 
     def finding(op: str, segment_id: str | None, code: str, verdict: str, **detail: Any) -> None:
@@ -179,10 +208,10 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
         operation_complete = len(ev["enter"]) == 1 and len(ev["exit"]) == 1
         enter = ev["enter"][0] if operation_complete else None
         exit_event = ev["exit"][0] if operation_complete else None
-        execution_valid = operation_complete and exit_event["monotonic_ns"] >= enter["monotonic_ns"]
+        execution_valid = operation_complete and ordered_bounds(enter, exit_event)
         if not operation_complete:
             finding(oid, None, "INCOMPLETE_OPERATION", "inconclusive")
-        elif exit_event["monotonic_ns"] < enter["monotonic_ns"]:
+        elif not execution_valid:
             finding(oid, None, "INVALID_LEDGER", "inconclusive")
 
         for segment in policy["segments"]:
@@ -191,9 +220,9 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
             if role == "unknown":
                 finding(oid, segment_id, "UNDECLARED_INTENT", "inconclusive")
             elif operation_complete:
-                if role == "context-only" and segment.get("expected_context") is None:
+                if (role == "context-only" or "expected_context" in segment) and segment.get("expected_context") is None:
                     finding(oid, segment_id, "MISSING_CONTEXT_EXPECTATION", "inconclusive")
-                if "expected_context" in segment and (role != "context-only" or segment["expected_context"] is not None):
+                if segment.get("expected_context") is not None:
                     observed = _context_for(observed_contexts, oid, segment_id)
                     if observed is None:
                         finding(oid, segment_id, "MISSING_CONTEXT_OBSERVATION", "inconclusive")
@@ -220,7 +249,11 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
                     else:
                         span = selected[0]
                         selected_by_segment[segment_id] = span
-                        if timing:
+                        if span.get("start_ns") is None or span.get("end_ns") is None:
+                            finding(oid, segment_id, "SPAN_TIME_UNQUALIFIED", "inconclusive")
+                        elif span["end_ns"] < span["start_ns"]:
+                            finding(oid, segment_id, "INVALID_SPAN_INTERVAL", "inconclusive")
+                        elif timing:
                             if role in ("execution", "both") and execution_valid:
                                 if span["start_ns"] > enter["wall_ns"] + eps:
                                     finding(oid, segment_id, "STARTS_AFTER_ENTRY", "fail",
@@ -231,7 +264,7 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
                             if role in ("submission", "both"):
                                 if len(ev["submit_enter"]) != 1 or len(ev["submit_exit"]) != 1:
                                     finding(oid, segment_id, "MISSING_SUBMISSION_BOUNDARY", "inconclusive")
-                                elif ev["submit_exit"][0]["monotonic_ns"] < ev["submit_enter"][0]["monotonic_ns"]:
+                                elif not ordered_bounds(ev["submit_enter"][0], ev["submit_exit"][0]):
                                     finding(oid, segment_id, "INVALID_SUBMISSION_BOUNDARY", "inconclusive")
                                 else:
                                     if span["start_ns"] > ev["submit_enter"][0]["wall_ns"] + eps:
@@ -241,11 +274,15 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
                             if role == "execution" and segment.get("exclude_queue"):
                                 if len(ev["queue_release"]) != 1:
                                     finding(oid, segment_id, "MISSING_QUEUE_BOUNDARY", "inconclusive")
+                                elif not ordered_bounds(ev["queue_release"][0], enter):
+                                    finding(oid, segment_id, "INVALID_QUEUE_BOUNDARY", "inconclusive")
                                 elif span["start_ns"] < ev["queue_release"][0]["wall_ns"] - eps:
                                     finding(oid, segment_id, "INCLUDES_QUEUE_WAIT", "fail")
                             if role == "execution" and segment.get("exclude_submission"):
-                                if len(ev["submit_exit"]) != 1:
+                                if len(ev["submit_enter"]) != 1 or len(ev["submit_exit"]) != 1:
                                     finding(oid, segment_id, "MISSING_SUBMISSION_BOUNDARY", "inconclusive")
+                                elif not ordered_bounds(ev["submit_enter"][0], ev["submit_exit"][0]):
+                                    finding(oid, segment_id, "INVALID_SUBMISSION_BOUNDARY", "inconclusive")
                                 elif span["start_ns"] < ev["submit_exit"][0]["wall_ns"] - eps:
                                     finding(oid, segment_id, "INCLUDES_SUBMISSION", "fail")
                             if execution_valid and segment.get("must_end_before_operation_entry"):
@@ -254,15 +291,13 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
                                             overlap_ns=span["end_ns"] - enter["wall_ns"])
                         else:
                             finding(oid, segment_id, "CLOCK_UNQUALIFIED", "inconclusive")
-                        if (execution_valid and role in ("execution", "both") and segment.get("error_on_escape")
-                                and exit_event["outcome"] == "raised"
-                                and exit_event["exception_type"] not in segment.get("non_error_types", [])):
-                            if span["status"] != "ERROR":
-                                finding(oid, segment_id, "MISSING_ERROR_STATUS", "fail")
-                            if segment.get("exception_event") and "exception" not in span["events"]:
-                                finding(oid, segment_id, "MISSING_EXCEPTION_EVENT", "fail")
+                        if execution_valid:
+                            for code, verdict in _error_evidence(segment, exit_event, span):
+                                finding(oid, segment_id, code, verdict)
                         if "expected_parent" in segment:
-                            if span.get("parent_id") is None:
+                            if segment["expected_parent"] is None:
+                                finding(oid, segment_id, "MISSING_PARENT_EXPECTATION", "inconclusive")
+                            elif span.get("parent_id") is None:
                                 finding(oid, segment_id, "RELATION_EVIDENCE_MISSING", "inconclusive")
                             elif span["parent_id"] != segment["expected_parent"]:
                                 finding(oid, segment_id, "PARENT_MISMATCH", "fail",
@@ -287,8 +322,9 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
                         and str(source.get('parent_id')) == str(target['span_id']))
             trace_missing = source.get('trace_id') is None or target.get('trace_id') is None
             parent_missing = source.get('parent_id') is None
-            link_trace_missing = any(str(link.get('span_id')) == str(target['span_id'])
-                                     and link.get('trace_id') is None for link in (links or []))
+            link_trace_missing = any(link.get('span_id') is None
+                                     or (str(link['span_id']) == str(target['span_id'])
+                                         and link.get('trace_id') is None) for link in (links or []))
             if ((kind == 'parent' and (trace_missing or parent_missing))
                     or (kind == 'link' and not linked and (target.get('trace_id') is None or link_trace_missing))
                     or (kind == 'parent-or-link' and not (parented or linked)

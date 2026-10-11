@@ -10,6 +10,39 @@ from __future__ import annotations
 from .contracts import is_legacy_policy, normalize_policy, validate_run
 
 
+def _ordered(first: dict, last: dict) -> bool:
+    # Independent boundary implementation; no oracle predicate imports.
+    for field in ("wall_ns", "monotonic_ns"):
+        if type(first.get(field)) is not int or type(last.get(field)) is not int:
+            return False
+        if first[field] > last[field]:
+            return False
+    return True
+
+
+def _error_checks(policy: dict, exit_event: dict, span: dict) -> tuple[list[bool], bool]:
+    if policy["role"] not in ("execution", "both") or not policy.get("error_on_escape"):
+        return [], False
+    outcome = exit_event.get("outcome")
+    if outcome == "returned":
+        return [], False
+    if outcome != "raised" or exit_event.get("exception_type") in (None, "unknown"):
+        return [], True
+    if exit_event["exception_type"] in policy.get("non_error_types", []):
+        return [], False
+    checks, unknown = [], False
+    if span.get("status") in (None, "unknown"):
+        unknown = True
+    else:
+        checks.append(span["status"] == "ERROR")
+    if policy.get("exception_event"):
+        if span.get("events") is None:
+            unknown = True
+        else:
+            checks.append("exception" in span["events"])
+    return checks, unknown
+
+
 def _legacy_existence_and_name(run: dict) -> dict:
     if not run.get("drained"):
         return {"verdict": "inconclusive", "reason": "collection pending"}
@@ -66,12 +99,12 @@ def _legacy_direct_assertions(run: dict) -> dict:
         if p["role"] == "unknown" or len(lookup["enter"]) != 1 or len(lookup["exit"]) != 1:
             uncertain.append(oid); continue
         a, b = lookup["enter"][0], lookup["exit"][0]
-        execution_valid = b["monotonic_ns"] >= a["monotonic_ns"]
+        execution_valid = _ordered(a, b)
         if not execution_valid:
             uncertain.append(oid)
-        if p["role"] == "context-only" and p.get("expected_context") is None:
+        if (p["role"] == "context-only" or "expected_context" in p) and p.get("expected_context") is None:
             uncertain.append(oid)
-        if "expected_context" in p and (p["role"] != "context-only" or p["expected_context"] is not None):
+        if p.get("expected_context") is not None:
             if run.get("contexts", {}).get(oid) is None:
                 uncertain.append(oid)
             elif run["contexts"][oid] != p["expected_context"]:
@@ -95,32 +128,35 @@ def _legacy_direct_assertions(run: dict) -> dict:
             continue
         s = chosen[0]
         checks = []
-        if run["clock"]["timing_eligible"]:
+        if (s.get("start_ns") is None or s.get("end_ns") is None
+                or s["start_ns"] > s["end_ns"]):
+            uncertain.append(oid)
+        elif run["clock"]["timing_eligible"] and eps <= run["clock"].get("cap_ns", 100_000):
             if p["role"] in ("execution", "both") and execution_valid:
                 checks.extend([s["start_ns"] <= a["wall_ns"] + eps,
                                s["end_ns"] >= b["wall_ns"] - eps])
             if p["role"] in ("submission", "both"):
                 if len(lookup["submit_enter"]) != 1 or len(lookup["submit_exit"]) != 1:
                     uncertain.append(oid)
-                elif lookup["submit_exit"][0]["monotonic_ns"] < lookup["submit_enter"][0]["monotonic_ns"]:
+                elif not _ordered(lookup["submit_enter"][0], lookup["submit_exit"][0]):
                     uncertain.append(oid)
                 else:
                     checks.extend([s["start_ns"] <= lookup["submit_enter"][0]["wall_ns"] + eps,
                                    s["end_ns"] >= lookup["submit_exit"][0]["wall_ns"] - eps])
             if p["role"] == "execution" and p.get("exclude_queue"):
-                if len(lookup["queue_release"]) != 1:
+                if len(lookup["queue_release"]) != 1 or not _ordered(lookup["queue_release"][0], a):
                     uncertain.append(oid)
                 else:
                     checks.append(s["start_ns"] >= lookup["queue_release"][0]["wall_ns"] - eps)
         else:
             uncertain.append(oid)
-        if (execution_valid and p["role"] in ("execution", "both") and p.get("error_on_escape")
-                and b["outcome"] == "raised" and b["exception_type"] not in p.get("non_error_types", [])):
-            checks.append(s["status"] == "ERROR")
-            if p.get("exception_event"):
-                checks.append("exception" in s["events"])
+        if execution_valid:
+            error_checks, unknown_error = _error_checks(p, b, s)
+            checks.extend(error_checks)
+            if unknown_error:
+                uncertain.append(oid)
         if "expected_parent" in p:
-            if s.get("parent_id") is None:
+            if p["expected_parent"] is None or s.get("parent_id") is None:
                 uncertain.append(oid)
             else:
                 checks.append(s["parent_id"] == p["expected_parent"])
@@ -153,7 +189,7 @@ def _topology_direct_assertions(run: dict) -> dict:
     failed: list[str] = []
     uncertain: list[str] = []
     eps = run["clock"]["epsilon_ns"]
-    timing = run["clock"]["timing_eligible"]
+    timing = run["clock"]["timing_eligible"] and eps <= run["clock"].get("cap_ns", 100_000)
 
     for raw in run["policies"]:
         if is_legacy_policy(raw):
@@ -170,7 +206,7 @@ def _topology_direct_assertions(run: dict) -> dict:
             uncertain.append(oid)
             continue
         enter, exit_event = lookup["enter"][0], lookup["exit"][0]
-        execution_valid = exit_event["monotonic_ns"] >= enter["monotonic_ns"]
+        execution_valid = _ordered(enter, exit_event)
         if not execution_valid:
             uncertain.append(oid)
         selected: dict[str, dict] = {}
@@ -181,9 +217,9 @@ def _topology_direct_assertions(run: dict) -> dict:
             if role == "unknown":
                 uncertain.append(key)
                 continue
-            if role == "context-only" and segment.get("expected_context") is None:
+            if (role == "context-only" or "expected_context" in segment) and segment.get("expected_context") is None:
                 uncertain.append(key)
-            if "expected_context" in segment and (role != "context-only" or segment["expected_context"] is not None):
+            if segment.get("expected_context") is not None:
                 observed = _context(run, oid, sid)
                 if observed is None:
                     uncertain.append(key)
@@ -209,25 +245,29 @@ def _topology_direct_assertions(run: dict) -> dict:
             span = candidates[0]
             selected[sid] = span
             checks: list[bool] = []
-            if timing:
+            if (span.get("start_ns") is None or span.get("end_ns") is None
+                    or span["start_ns"] > span["end_ns"]):
+                uncertain.append(key)
+            elif timing:
                 if role in ("execution", "both") and execution_valid:
                     checks.extend([span["start_ns"] <= enter["wall_ns"] + eps,
                                    span["end_ns"] >= exit_event["wall_ns"] - eps])
                 if role in ("submission", "both"):
                     if len(lookup["submit_enter"]) != 1 or len(lookup["submit_exit"]) != 1:
                         uncertain.append(key)
-                    elif lookup["submit_exit"][0]["monotonic_ns"] < lookup["submit_enter"][0]["monotonic_ns"]:
+                    elif not _ordered(lookup["submit_enter"][0], lookup["submit_exit"][0]):
                         uncertain.append(key)
                     else:
                         checks.extend([span["start_ns"] <= lookup["submit_enter"][0]["wall_ns"] + eps,
                                        span["end_ns"] >= lookup["submit_exit"][0]["wall_ns"] - eps])
                 if role == "execution" and segment.get("exclude_queue"):
-                    if len(lookup["queue_release"]) != 1:
+                    if len(lookup["queue_release"]) != 1 or not _ordered(lookup["queue_release"][0], enter):
                         uncertain.append(key)
                     else:
                         checks.append(span["start_ns"] >= lookup["queue_release"][0]["wall_ns"] - eps)
                 if role == "execution" and segment.get("exclude_submission"):
-                    if len(lookup["submit_exit"]) != 1:
+                    if (len(lookup["submit_enter"]) != 1 or len(lookup["submit_exit"]) != 1
+                            or not _ordered(lookup["submit_enter"][0], lookup["submit_exit"][0])):
                         uncertain.append(key)
                     else:
                         checks.append(span["start_ns"] >= lookup["submit_exit"][0]["wall_ns"] - eps)
@@ -235,14 +275,13 @@ def _topology_direct_assertions(run: dict) -> dict:
                     checks.append(span["end_ns"] <= enter["wall_ns"] + eps)
             else:
                 uncertain.append(key)
-            if (execution_valid and role in ("execution", "both") and segment.get("error_on_escape")
-                    and exit_event["outcome"] == "raised"
-                    and exit_event["exception_type"] not in segment.get("non_error_types", [])):
-                checks.append(span["status"] == "ERROR")
-                if segment.get("exception_event"):
-                    checks.append("exception" in span["events"])
+            if execution_valid:
+                error_checks, unknown_error = _error_checks(segment, exit_event, span)
+                checks.extend(error_checks)
+                if unknown_error:
+                    uncertain.append(key)
             if "expected_parent" in segment:
-                if span.get("parent_id") is None:
+                if segment["expected_parent"] is None or span.get("parent_id") is None:
                     uncertain.append(key)
                 else:
                     checks.append(span["parent_id"] == segment["expected_parent"])
@@ -265,8 +304,9 @@ def _topology_direct_assertions(run: dict) -> dict:
                         and str(source.get('parent_id')) == str(target['span_id']))
             trace_missing = source.get('trace_id') is None or target.get('trace_id') is None
             parent_missing = source.get('parent_id') is None
-            link_trace_missing = any(str(link.get('span_id')) == str(target['span_id'])
-                                     and link.get('trace_id') is None for link in (links or []))
+            link_trace_missing = any(link.get('span_id') is None
+                                     or (str(link['span_id']) == str(target['span_id'])
+                                         and link.get('trace_id') is None) for link in (links or []))
             if ((relation['kind'] == 'parent' and (trace_missing or parent_missing))
                     or (relation['kind'] == 'link' and not linked
                         and (target.get('trace_id') is None or link_trace_missing))

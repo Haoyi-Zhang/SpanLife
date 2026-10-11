@@ -46,7 +46,7 @@ Expected retained results include:
 * 40 Speaches, 100 UiPath confirmation, and 100 UiPath correction processes;
 * 360 serialized transformations, 300 role counterfactuals, 120 evidence-gate
   ablations, and 90 process-level cost samples;
-* the recorded unit suite and 70 cited bibliography records; and
+* the recorded unit suite and 69 cited bibliography records; and
 * affected 0.44b0/0.65b0 and fixed 0.66b0 release lineage.
 
 `results/integrity-check.json` is the machine-readable verification record.
@@ -163,6 +163,42 @@ python -m spanlife.check_record \
 
 The text and JSON reports include the finding, operation and segment, suggested
 owner, bounded next action, recomputation consistency, and CI exit class.
+
+### External-record admission and partial evidence
+
+Malformed record or contract fields are rejected with `INVALID_RECORD` and
+CLI exit 2, without a semantic judgment. Timestamps must be integer nanoseconds;
+floats (including NaN/infinity), booleans, and strings are not timestamps.
+Omitted or null timestamp observations are instead unresolved evidence.
+Interval checks require complete, ordered wall and monotonic operation bounds,
+ordered span bounds, and `epsilon_ns <= cap_ns`; records without `cap_ns` use
+the protocol's 100,000 ns default. The external producer remains responsible
+for its calibration and declared cap.
+
+An execution/both policy with `error_on_escape` needs a known exit outcome and,
+if raised, a known exception type to resolve `non_error_types`. Missing/null or
+`unknown` outcome/type evidence cannot silently satisfy that obligation.
+Missing/null or `unknown` status and missing/null event capture abstain when
+required; an observed `UNSET`/`OK` status or empty event list can fail a qualified
+escaping-error policy. Qualified independent violations retain fail priority.
+Null expected context/parent identities are unknown expectations, and an
+incomplete link identity is not proof of a missing handoff.
+
+The bounded offline subset can run without a tracing SDK:
+
+```sh
+python -m pytest -q tests/test_oracle.py tests/test_p119_contract_repair.py \
+  tests/test_policy_evidence_regressions.py tests/test_external_qualification.py \
+  tests/test_uipath_close_order.py
+```
+
+On CPython 3.12.14 with pytest 9.0.2, this subset passes 513 tests and 440
+subtests. It is not the complete native/service suite. The UiPath ordering test
+executes the hash-pinned public function and the retained local replacement
+with a recording-only tracer seam: ten public early closes return before inner
+cleanup finishes, and ten corrected closes finish cleanup before span end.
+Those are in-process semantic checks, not new SDK measurements, fresh-process
+study trials, complete-package execution, or maintainer validation.
 
 ## License
 

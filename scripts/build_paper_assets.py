@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Data-only tables/plots. Run summarize.py first."""
 from pathlib import Path
-import csv,json,collections
+import argparse,csv,json,collections,shutil,subprocess,sys
 R=Path(__file__).resolve().parents[1]
-P=R.parent/'paper';G=P/'generated';F=P/'figures';F.mkdir(exist_ok=True)
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--font-root',type=Path)
+args=parser.parse_args()
+P=R.parent/'paper';G=P/'generated';F=P/'figures'
+G.mkdir(parents=True,exist_ok=True);F.mkdir(parents=True,exist_ok=True)
 rows=list(csv.DictReader((R/'results/summary/case-configurations.csv').open()))
 index={(x['case'],x['revision']):x for x in rows}
 def trip(cases,rev,tool='ledger'):
@@ -34,23 +38,16 @@ t='\\begin{tabular}{llrrr}\n\\toprule\nPath & Configuration & Median & IQR & Ran
 for w in ('direct','to_thread'):
  for m,lab in [('none','None'),('hook','Hooks'),('hook_sdk','Hooks + SDK')]:
   c=next(c for c in cs if c['workload']==w and c['mode']==m)
-  t+=('Direct' if w=='direct' else '\\texttt{to\\_thread}')+' & '+lab+' & '+f"{float(c['median']):.2f}"+' & '+f"{float(c['q1']):.2f}--{float(c['q3']):.2f}"+' & '+f"{float(c['minimum']):.2f}--{float(c['maximum']):.2f}"+'\\\\\n'
+  t+=('Direct' if w=='direct' else 'Thread transfer')+' & '+lab+' & '+f"{float(c['median']):.2f}"+' & '+f"{float(c['q1']):.2f}--{float(c['q3']):.2f}"+' & '+f"{float(c['minimum']):.2f}--{float(c['maximum']):.2f}"+'\\\\\n'
 t+='\\bottomrule\n\\end{tabular}\n';(G/'cost-table.tex').write_text(t)
 # Actual queue-case repeat 1, independently normalized to invocation entry.
 tr=list(csv.DictReader((R/'results/summary/operation-timing.csv').open()))
 a=next(x for x in tr if x['case']=='queue' and x['revision']=='affected' and x['repeat']=='1')
 b=next(x for x in tr if x['case']=='queue' and x['revision']=='fixed' and x['repeat']=='1')
-max_x=max(float(a['exit_ms']),float(b['exit_ms']))*1.08
-s=r'''\begin{tikzpicture}
-\begin{axis}[width=0.92\columnwidth,height=4.4cm,xmin=0,xmax=MAXX,
- ymin=0.4,ymax=4.6,ytick={1,2,3,4},yticklabels={Fixed callback,Fixed span,Affected callback,Affected span},
- xlabel={Milliseconds from invocation entry},tick label style={font=\scriptsize},
- label style={font=\small},axis y line=left,y axis line style={draw=none},ytick style={draw=none},axis x line=bottom,enlarge x limits=false]
-'''.replace('MAXX',str(max_x))
-for row,ys in [(a,(4,3)),(b,(2,1))]:
- for start,end,y,style in [(row['span_start_ms'],row['span_end_ms'],ys[0],'line width=1.3pt'),(row['entry_ms'],row['exit_ms'],ys[1],'line width=2.8pt,densely dashed')]:
-  s+=f'\\addplot[{style},mark=|] coordinates {{({start},{y}) ({end},{y})}};\n'
-s+='\\end{axis}\n\\end{tikzpicture}\n';(F/'timeline.tex').write_text(s)
+trace_intervals=[]
+for row,span_y,op_y,label in [(a,4,3,'Affected'),(b,2,1,'Fixed')]:
+ trace_intervals.append(dict(figure='timeline',row=span_y,label=label+' span',start=row['span_start_ms'],end=row['span_end_ms']))
+ trace_intervals.append(dict(figure='timeline',row=op_y,label=label+' callback',start=row['entry_ms'],end=row['exit_ms']))
 # Two independent figures, no decorative redraw: observed cost distributions.
 for w in ('direct','to_thread'):
  s=r'''\begin{tikzpicture}
@@ -200,7 +197,7 @@ paired=list(csv.DictReader((R/'results/summary/cost-paired-differences-us.csv').
 def paired_row(workload,comparison):
     return next(x for x in paired if x['workload']==workload and x['comparison']==comparison)
 t='\\begin{tabular}{lrr}\n\\toprule\nPath & Hooks $-$ none & SDK increment\\\\\n\\midrule\n'
-for workload,label in [('direct','Direct'),('to_thread','\\texttt{to\\_thread}')]:
+for workload,label in [('direct','Direct'),('to_thread','Thread transfer')]:
     hook=paired_row(workload,'hook-minus-none'); sdk=paired_row(workload,'sdk-increment')
     hook_text=f"{float(hook['median']):.2f} [{float(hook['ci95_low']):.2f}, {float(hook['ci95_high']):.2f}]"
     sdk_text=f"{float(sdk['median']):.2f} [{float(sdk['ci95_low']):.2f}, {float(sdk['ci95_high']):.2f}]"
@@ -222,21 +219,26 @@ def one_uipath(directory):
             'span_end':(span['end_ns']-enter)/1000}
 public=one_uipath('results/uipath-holdout')
 corrected=one_uipath('results/uipath-local-correction')
-xmin=min(public['span_start'],corrected['span_start'])-8
-xmax=max(public['op_end'],corrected['op_end'],public['span_end'],corrected['span_end'])+8
-s=r'''\begin{tikzpicture}
-\begin{axis}[width=.98\columnwidth,height=4.3cm,xmin=XMIN,xmax=XMAX,
- ymin=.4,ymax=4.6,ytick={1,2,3,4},
- yticklabels={Corrected operation,Corrected span,Public operation,Public span},
- xlabel={Microseconds from operation entry},tick label style={font=\scriptsize},
- label style={font=\small},axis y line=left,y axis line style={draw=none},
- ytick style={draw=none},axis x line=bottom,enlarge x limits=false]
-'''.replace('XMIN',str(xmin)).replace('XMAX',str(xmax))
-for row,span_y,op_y in [(public,4,3),(corrected,2,1)]:
-    s+=f"\\addplot[line width=1.4pt,mark=|] coordinates {{({row['span_start']},{span_y}) ({row['span_end']},{span_y})}};\n"
-    s+=f"\\addplot[line width=2.8pt,densely dashed,mark=|] coordinates {{({row['op_start']},{op_y}) ({row['op_end']},{op_y})}};\n"
-s+='\\end{axis}\n\\end{tikzpicture}\n'
-(F/'uipath-early-close.tex').write_text(s)
+for row,span_y,op_y,label in [(public,4,3,'Public'),(corrected,2,1,'Corrected')]:
+    trace_intervals.append(dict(figure='uipath',row=span_y,label=label+' span',start=row['span_start'],end=row['span_end']))
+    trace_intervals.append(dict(figure='uipath',row=op_y,label=label+' operation',start=row['op_start'],end=row['op_end']))
+with (F/'trace_intervals.csv').open('w',newline='',encoding='utf-8') as stream:
+    writer=csv.DictWriter(stream,fieldnames=['figure','row','label','start','end'])
+    writer.writeheader();writer.writerows(trace_intervals)
+for name,width,height in [('timeline','0.92','4.4'),('uipath-early-close','0.98','4.3')]:
+    (F/(name+'.tex')).write_text('% Timing data: trace_intervals.csv.\n'+
+        f'\\includegraphics[width={width}\\columnwidth,height={height}cm]{{figures/{name}.pdf}}\n',encoding='utf-8')
+font_root=args.font_root
+if font_root is None:
+    kpsewhich=shutil.which('kpsewhich')
+    if kpsewhich is None:
+        parser.error('TeX fonts are required: pass --font-root /path/to/texmf-dist/fonts.')
+    afm=subprocess.check_output([kpsewhich,'utmr8a.afm'],text=True).strip()
+    if not afm:
+        parser.error('Times font metrics are not installed in the selected TeX environment.')
+    font_root=Path(afm).parents[3]
+subprocess.run([sys.executable,str(R/'scripts/render_traces.py'),
+                '--figure-dir',str(F),'--font-root',str(font_root)],check=True)
 
 # Conceptual workflow.  All text is semantic; no numerical claim is encoded.
 workflow=r'''\begin{tikzpicture}[

@@ -10,6 +10,19 @@ AnyIO 4.13.0, HTTPX 0.28.1, and wrapt 2.2.1. The exact Python closure is in
 All experiments are local and CPU-only. They require no credentials, live
 service, model inference, GPU, paid API, production load, or remote collector.
 
+The paper's timing figures are generated from retained observations with
+Python and ReportLab. Install `requirements-figures.txt` and use the Times
+AFM/PFB fonts supplied by TeX Live. `scripts/build_paper_assets.py` regenerates
+the tables, interval CSV, vector PDFs, and LaTeX figure wrappers together:
+
+```sh
+python -m pip install -r requirements-figures.txt
+python scripts/build_paper_assets.py --font-root /path/to/texmf-dist/fonts
+```
+
+Without `--font-root`, the script locates the font directory with `kpsewhich`.
+This regenerates presentation assets, not new experimental measurements.
+
 ## Verify retained evidence
 
 ```sh

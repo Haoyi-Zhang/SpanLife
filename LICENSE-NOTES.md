@@ -21,7 +21,3 @@ The supplied IEEEtran class and IEEE bibliography style retain their original
 headers and are unmodified. Installed SDK/framework packages are not
 redistributed as wheels; package versions and lawful installation commands are
 documented.
-
-The original SpanLife code, data, and manuscript do not carry an additional
-reuse license. Their publication does not change that status. Third-party
-components retain the licenses listed above.

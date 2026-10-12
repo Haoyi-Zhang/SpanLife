@@ -21,6 +21,8 @@ def _ordered(first: dict, last: dict) -> bool:
 
 
 def _error_checks(policy: dict, exit_event: dict, span: dict) -> tuple[list[bool], bool]:
+    # Callers establish unique boundaries and a unique collected candidate.
+    # Only error scope and observed fields qualify these non-timing assertions.
     if policy["role"] not in ("execution", "both") or not policy.get("error_on_escape"):
         return [], False
     outcome = exit_event.get("outcome")
@@ -150,11 +152,10 @@ def _legacy_direct_assertions(run: dict) -> dict:
                     checks.append(s["start_ns"] >= lookup["queue_release"][0]["wall_ns"] - eps)
         else:
             uncertain.append(oid)
-        if execution_valid:
-            error_checks, unknown_error = _error_checks(p, b, s)
-            checks.extend(error_checks)
-            if unknown_error:
-                uncertain.append(oid)
+        error_checks, unknown_error = _error_checks(p, b, s)
+        checks.extend(error_checks)
+        if unknown_error:
+            uncertain.append(oid)
         if "expected_parent" in p:
             if p["expected_parent"] is None or s.get("parent_id") is None:
                 uncertain.append(oid)
@@ -275,11 +276,10 @@ def _topology_direct_assertions(run: dict) -> dict:
                     checks.append(span["end_ns"] <= enter["wall_ns"] + eps)
             else:
                 uncertain.append(key)
-            if execution_valid:
-                error_checks, unknown_error = _error_checks(segment, exit_event, span)
-                checks.extend(error_checks)
-                if unknown_error:
-                    uncertain.append(key)
+            error_checks, unknown_error = _error_checks(segment, exit_event, span)
+            checks.extend(error_checks)
+            if unknown_error:
+                uncertain.append(key)
             if "expected_parent" in segment:
                 if segment["expected_parent"] is None or span.get("parent_id") is None:
                     uncertain.append(key)

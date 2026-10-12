@@ -13,7 +13,11 @@ from .contracts import is_legacy_policy, normalize_policy, ordered_bounds, valid
 
 
 def _error_evidence(policy: dict, exit_event: dict, span: dict) -> list[tuple[str, str]]:
-    """Qualify error scope before judging status or event evidence."""
+    """Judge error fields after unique boundaries, association, and collection.
+
+    Timestamp order qualifies intervals, not an observed outcome or error field.
+    Unknown outcome, exception scope, status, and event capture still abstain.
+    """
     if policy["role"] not in ("execution", "both") or not policy.get("error_on_escape"):
         return []
     if exit_event.get("outcome") not in ("returned", "raised"):
@@ -125,9 +129,10 @@ def _qualify_legacy(run: dict[str, Any]) -> dict[str, Any]:
                                 finding(oid, "INCLUDES_QUEUE_WAIT", "fail")
                     else:
                         finding(oid, "CLOCK_UNQUALIFIED", "inconclusive")
-                    if execution_valid:
-                        for code, verdict in _error_evidence(policy, exit, span):
-                            finding(oid, code, verdict)
+                    # This branch already has unique operation boundaries and
+                    # one associated, collected span; errors need no clock order.
+                    for code, verdict in _error_evidence(policy, exit, span):
+                        finding(oid, code, verdict)
                     if "expected_parent" in policy:
                         if policy["expected_parent"] is None:
                             finding(oid, "MISSING_PARENT_EXPECTATION", "inconclusive")
@@ -291,9 +296,10 @@ def _qualify_topology(run: dict[str, Any]) -> dict[str, Any]:
                                             overlap_ns=span["end_ns"] - enter["wall_ns"])
                         else:
                             finding(oid, segment_id, "CLOCK_UNQUALIFIED", "inconclusive")
-                        if execution_valid:
-                            for code, verdict in _error_evidence(segment, exit_event, span):
-                                finding(oid, segment_id, code, verdict)
+                        # Interval abstention does not hide qualified error
+                        # evidence on this uniquely associated collected span.
+                        for code, verdict in _error_evidence(segment, exit_event, span):
+                            finding(oid, segment_id, code, verdict)
                         if "expected_parent" in segment:
                             if segment["expected_parent"] is None:
                                 finding(oid, segment_id, "MISSING_PARENT_EXPECTATION", "inconclusive")

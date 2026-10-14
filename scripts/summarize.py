@@ -14,6 +14,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'src'))
 from spanlife.oracle import qualify
+from cost_records import load_cost_records
 
 UNCERTAIN = {'batch_pending','export_drop','unknown_intent'}
 EXPECTED_FAIL = {('success','affected'), ('queue','affected'), ('handled_inside','affected'),
@@ -53,7 +54,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--trial-dir', action='append', type=Path,
                     help='Repeat for multiple raw directories; defaults to retained evaluation and corrected holdout')
-    ap.add_argument('--cost-dir', type=Path, default=ROOT/'results/costs')
+    ap.add_argument('--cost-dir', type=Path, default=ROOT/'results/costs-local')
     ap.add_argument('--output', type=Path, default=ROOT/'results/summary')
     ap.add_argument('--no-paper', action='store_true', help='Do not replace retained manuscript inputs')
     args = ap.parse_args()
@@ -124,7 +125,7 @@ def main():
        'sensitivity':sensitivity,
        'failed_attempts':[{'path':r['_path'],'case':r['case'],'error':r['execution']['error']} for r in rejected]}
     if (args.cost_dir/'costs.json').exists():
-        costs=json.loads((args.cost_dir/'costs.json').read_text())['samples'];cg=defaultdict(list)
+        costs=load_cost_records(args.cost_dir);cg=defaultdict(list)
         for c in costs:cg[c['workload'],c['mode']].append(c['ns_per_operation']/1000)
         cr=[dict(workload=w,mode=m,**dist(v)) for (w,m),v in sorted(cg.items())]
         csv_write(output/'cost-summary-us.csv',cr)

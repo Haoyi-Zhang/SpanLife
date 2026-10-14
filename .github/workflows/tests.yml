@@ -34,3 +34,8 @@ jobs:
         run: |
           python -m pytest -q
           python scripts/check_retained_records.py
+      - name: Test optimized execution and recorded-input gates
+        shell: bash
+        run: |
+          python -O -m pytest -q
+          python -O scripts/check_retained_records.py

@@ -48,17 +48,8 @@ trace_intervals=[]
 for row,span_y,op_y,label in [(a,4,3,'Affected'),(b,2,1,'Fixed')]:
  trace_intervals.append(dict(figure='timeline',row=span_y,label=label+' span',start=row['span_start_ms'],end=row['span_end_ms']))
  trace_intervals.append(dict(figure='timeline',row=op_y,label=label+' callback',start=row['entry_ms'],end=row['exit_ms']))
-# Two independent figures, no decorative redraw: observed cost distributions.
-for w in ('direct','to_thread'):
- s=r'''\begin{tikzpicture}
-\begin{axis}[width=\columnwidth,height=4.5cm,boxplot/draw direction=y,
- xtick={1,2,3},xticklabels={None,Hooks,Hooks + SDK},ylabel={Microseconds / operation},
- tick label style={font=\scriptsize},label style={font=\small},xmin=0.5,xmax=3.5]
-'''
- for m in ('none','hook','hook_sdk'):
-  c=next(c for c in cs if c['workload']==w and c['mode']==m)
-  s+='\\addplot+[boxplot prepared={lower whisker='+c['minimum']+',lower quartile='+c['q1']+',median='+c['median']+',upper quartile='+c['q3']+',upper whisker='+c['maximum']+'},mark=none] coordinates {};\n'
- s+='\\end{axis}\n\\end{tikzpicture}\n';(F/f'cost-{w}.tex').write_text(s)
+# Cost distributions are rendered below after resolving the same Times fonts
+# used by the timing figures.  Their five-number summaries remain unchanged.
 
 # Mutation challenge: collapse the 18 one-field transformations into mechanism
 # families.  Each member still remains individually replayable in results/.
@@ -238,6 +229,9 @@ if font_root is None:
         parser.error('Times font metrics are not installed in the selected TeX environment.')
     font_root=Path(afm).parents[3]
 subprocess.run([sys.executable,str(R/'scripts/render_traces.py'),
+                '--figure-dir',str(F),'--font-root',str(font_root)],check=True)
+subprocess.run([sys.executable,str(R/'scripts/render_costs.py'),
+                '--cost-csv',str(R/'results/summary/cost-summary-us.csv'),
                 '--figure-dir',str(F),'--font-root',str(font_root)],check=True)
 
 # Conceptual workflow.  All text is semantic; no numerical claim is encoded.

@@ -2,10 +2,17 @@
 
 ## Environment
 
-The retained executions used Linux, Python 3.13.5, OpenTelemetry API/SDK 1.42.1,
+The lifecycle executions used Linux, Python 3.13.5, OpenTelemetry API/SDK 1.42.1,
 OpenTelemetry semantic conventions 0.63b1, FastAPI 0.128.2, Starlette 0.50.0,
 AnyIO 4.13.0, HTTPX 0.28.1, and wrapt 2.2.1. The exact Python closure is in
 `requirements.txt`; host details are in `provenance/environment.json`.
+
+The paper's local cost campaign uses Windows 11, CPython 3.12.14, an Intel
+Core i7-12700KF, and OpenTelemetry API/SDK 1.42.1. Its 90 fresh-process samples
+and measured environment are in `results/costs-local`. The original Linux
+cost observations remain in `results/costs`; the two environments are not
+pooled. Summary generation selects `costs-local` by default and accepts an
+explicit `--cost-dir` for a separate campaign.
 
 All experiments are local and CPU-only. They require no credentials, live
 service, model inference, GPU, paid API, production load, or remote collector.
@@ -51,8 +58,9 @@ Expected retained results include:
 
 `results/integrity-check.json` is the machine-readable verification record.
 
-The earlier source-suite count was 340 tests; ten focused policy-evidence
-regressions are supplied separately. Source tests and offline recomputation of
+The source suite contains 599 collected tests, including the focused
+policy-evidence, operation-execution, and cost-record regressions. Source
+tests and offline recomputation of
 retained records are distinct from new execution of all service experiments.
 `scripts/verify.py` also checks the companion manuscript in a sibling `paper/`
 directory; the standalone code repository uses the tests and record checks.
@@ -95,6 +103,35 @@ python scripts/run_uipath_holdout.py \
 ```
 
 Runners refuse to overwrite a directory containing an execution manifest.
+
+The cost driver calls every warm-up and measured operation unconditionally,
+checks the arithmetic result explicitly, and checks the ledger event count
+after timing. These checks remain active under Python optimization. The
+SDK-free operation controls can be run with either interpreter configuration:
+
+```sh
+PYTHONPATH=src python -B -m unittest discover -s tests -p test_benchmark_operation_execution.py
+PYTHONPATH=src python -B -O -m unittest discover -s tests -p test_benchmark_operation_execution.py
+```
+
+Each invocation tests both ordinary and optimized child processes. These
+execution and rejection controls are separate from the 90 measured local
+SDK samples. The campaign launches fresh interpreters without forwarding a
+parent's command-line `-O`; an inherited `PYTHONOPTIMIZE` setting does apply
+to those children. The measured local campaign used ordinary execution.
+
+```sh
+python scripts/benchmark.py --output results/reproduced-costs --blocks 15 --n 1000 --warmup 200
+python scripts/summarize.py --cost-dir results/reproduced-costs --output results/reproduced-summary --no-paper
+```
+
+The cost reader checks complete block pairing, typed operation denominators,
+ledger and SDK span counts, and elapsed-time consistency before aggregation.
+Its malformed-record controls run with the following command, also under `-O`:
+
+```sh
+python -m unittest discover -s tests -p test_cost_records.py
+```
 
 ## Multi-segment contract sketch
 

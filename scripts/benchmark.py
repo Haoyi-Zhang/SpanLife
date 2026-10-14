@@ -35,13 +35,19 @@ def sample(mode: str, workload: str, n: int, warmup: int) -> dict:
             target = inst.wrap_to_thread_func(work)
     async def dispatch(count):
         for _ in range(count):
-            assert await asyncio.to_thread(work) == 120
+            value = await asyncio.to_thread(work)
+            if value != 120:
+                raise RuntimeError('benchmark operation returned an unexpected result')
     if workload == 'direct':
         for _ in range(warmup):
-            assert target() == 120
+            value = target()
+            if value != 120:
+                raise RuntimeError('benchmark operation returned an unexpected result')
         start = time.perf_counter_ns()
         for _ in range(n):
-            assert target() == 120
+            value = target()
+            if value != 120:
+                raise RuntimeError('benchmark operation returned an unexpected result')
         elapsed = time.perf_counter_ns() - start
     else:
         async def timed():
@@ -51,9 +57,13 @@ def sample(mode: str, workload: str, n: int, warmup: int) -> dict:
             await dispatch(n)
             return time.perf_counter_ns() - start
         elapsed = asyncio.run(timed())
+    ledger_events = len(ledger.snapshot())
+    expected_events = 0 if mode == 'none' else 2 * (n + warmup)
+    if ledger_events != expected_events:
+        raise RuntimeError(f'benchmark ledger count {ledger_events} != {expected_events}')
     result = {'mode': mode, 'workload': workload, 'operations': n, 'warmup': warmup,
               'elapsed_ns': elapsed, 'ns_per_operation': elapsed / n,
-              'ledger_events': len(ledger.snapshot()), 'pid': os.getpid(),
+              'ledger_events': ledger_events, 'pid': os.getpid(),
               'automatic_spans': len(capture.spans()) if capture else 0}
     if inst:
         inst.uninstrument()

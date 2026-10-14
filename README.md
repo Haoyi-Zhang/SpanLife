@@ -237,6 +237,15 @@ cleanup finishes, and ten corrected closes finish cleanup before span end.
 Those are in-process semantic checks, not new SDK measurements, fresh-process
 study trials, complete-package execution, or maintainer validation.
 
+## Render retained timing illustrations
+
+Install `requirements-figures.txt`, then run
+`python scripts/render_paper_figures.py --source plot_inputs/trace_intervals.csv --output-dir figures --font-root /path/to/texmf-dist/fonts`.
+The two embedded-font vector plots select one retained pair each; they are
+illustrations rather than aggregate timing estimates. The renderer preserves
+negative pre-entry times and does not run the SDK or replace study records.
+Its five route checks are included in the ordinary test suite.
+
 ## License
 
 Original code is licensed under MIT; see `LICENSE`. Retained upstream sources

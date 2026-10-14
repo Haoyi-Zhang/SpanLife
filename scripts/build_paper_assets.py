@@ -195,6 +195,7 @@ for workload,label in [('direct','Direct'),('to_thread','Thread transfer')]:
     t+=f"{label} & {hook_text} & {sdk_text}\\\\\n"
 t+='\\bottomrule\n\\end{tabular}\n'
 (G/'cost-paired-table.tex').write_text(t)
+subprocess.run([sys.executable, str(R/'scripts/render_cost_table.py')], check=True)
 
 # Data-derived timeline for the independently confirmed UiPath early-close
 # observation and the local correction, normalized to operation entry.

@@ -84,8 +84,8 @@ agree on all processes; the name baseline misses 69 qualified failures.
 
 ### Literature, authors, and page audit
 
-The bibliography now has 68 audited and cited entries, including an official
-citation for the disclosed ChatGPT assistance. The non-anonymous author block
+The bibliography at this recorded audit contained 68 audited and cited entries,
+including an official citation for the disclosed ChatGPT assistance. The non-anonymous author block
 contains the three user-supplied authors, affiliations, and email addresses. The
 paper remains exactly 10 main pages plus 2 reference-only pages, with no layout
 modification.

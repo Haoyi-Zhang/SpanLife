@@ -14,12 +14,22 @@ FIELD = re.compile(r"^\s*([A-Za-z][A-Za-z0-9_-]*)\s*=\s*\{(.*?)\}\s*,?\s*$", re.
 def parse_bib(text: str) -> dict[str, dict]:
     out = {}
     for typ, key, body in ENTRY.findall(text):
+        if typ.casefold() == 'ieeetranbstctl':
+            continue
         key = key.strip()
-        assert key not in out, f"duplicate BibTeX key: {key}"
+        if key in out:
+            raise ValueError(f"duplicate BibTeX key: {key}")
         fields = {name.lower(): re.sub(r"\s+", " ", value.strip()) for name, value in FIELD.findall(body)}
         out[key] = {"type": typ.lower(), "fields": fields,
                     "record_sha256": hashlib.sha256((f"@{typ}{{{key},{body}").encode()).hexdigest()}
     return out
+
+def require_bibliographic_fields(key: str, fields: dict) -> None:
+    missing = {name for name in ('author', 'title', 'year') if not fields.get(name, '').strip()}
+    if missing:
+        raise ValueError(f"{key}: missing bibliographic fields {sorted(missing)}")
+    if not re.fullmatch(r"(?:19|20)\d{2}", fields['year']):
+        raise ValueError(f"{key}: invalid bibliographic year")
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -44,8 +54,7 @@ def main() -> None:
     category_counts = Counter()
     for key, entry in entries.items():
         f = entry['fields']
-        assert {'author','title','year'} <= set(f), (key, f.keys())
-        assert re.fullmatch(r"(?:19|20)\d{2}", f['year']), (key, f['year'])
+        require_bibliographic_fields(key, f)
         record = audit_map[key]
         category_counts[record['category']] += 1
         verified_on = record.get('verified_on','')

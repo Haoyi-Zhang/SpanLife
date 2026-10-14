@@ -599,7 +599,12 @@ def check_costs() -> int:
 
 def check_references() -> dict:
     bib_text = (PROJECT / "paper/references.bib").read_text()
-    bib_keys = set(re.findall(r"^@[A-Za-z]+\{([^,]+),", bib_text, flags=re.M))
+    bib_rows = [key.strip() for typ, key in
+                re.findall(r"^@([A-Za-z]+)\{([^,]+),", bib_text, flags=re.M)
+                if typ.casefold() != 'ieeetranbstctl']
+    bib_keys = set(bib_rows)
+    if len(bib_rows) != len(bib_keys):
+        raise AssertionError('duplicate BibTeX keys')
     tex = (PROJECT / "paper/main.tex").read_text()
     cite_keys: set[str] = set()
     for match in re.finditer(r"\\cite\{([^}]+)\}", tex):

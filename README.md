@@ -32,8 +32,29 @@ This regenerates presentation assets, not new experimental measurements.
 
 ## Verify retained evidence
 
+Run from this `artifact/` directory. The bounded SDK-free pytest subset below
+can use Python 3.12 with `python -m pip install pytest==9.0.2`; `pytest.ini`
+adds `src` and `vendor` on every platform. Native/service replay additionally
+requires `python -m pip install -r requirements.txt` in the declared environment.
+Those frozen Linux/Python 3.13.5 dependency versions and results are not replaced
+by a Windows offline check.
+
+For the direct `scripts/` and `python -m spanlife.check_record` commands, set the
+source path explicitly. On POSIX:
+
 ```sh
 export PYTHONPATH="$PWD/src:$PWD/vendor"
+```
+
+On Windows PowerShell:
+
+```powershell
+$env:PYTHONPATH = "$PWD/src;$PWD/vendor"
+```
+
+Then:
+
+```sh
 python scripts/verify_release_lineage.py
 python scripts/audit_references.py
 python scripts/verify.py

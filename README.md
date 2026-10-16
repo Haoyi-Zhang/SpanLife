@@ -260,6 +260,13 @@ study trials, complete-package execution, or maintainer validation.
 
 ## Render retained timing illustrations
 
+The workflow is a separate direct Matplotlib vector with embedded fonts.
+In the project bundle, `paper/build.py` regenerates it before compilation:
+
+```sh
+python plots/draw_workflow.py --output-dir ../paper/figures
+```
+
 Install `requirements-figures.txt`, then run
 `python scripts/render_paper_figures.py --source plot_inputs/trace_intervals.csv --output-dir figures --font-root /path/to/texmf-dist/fonts`.
 The two embedded-font vector plots select one retained pair each; they are

@@ -74,7 +74,7 @@ Expected retained results include:
 * 40 Speaches, 100 UiPath confirmation, and 100 UiPath correction processes;
 * 360 serialized transformations, 300 role counterfactuals, 120 evidence-gate
   ablations, and 90 process-level cost samples;
-* the recorded unit suite and 69 cited bibliography records; and
+* the recorded unit suite and 70 current cited bibliography records; and
 * affected 0.44b0/0.65b0 and fixed 0.66b0 release lineage.
 
 `results/integrity-check.json` is the machine-readable verification record.

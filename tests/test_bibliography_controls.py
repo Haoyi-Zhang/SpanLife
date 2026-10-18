@@ -8,7 +8,7 @@ spec = importlib.util.spec_from_file_location('spanlife_bibliography', SOURCE)
 audit = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(audit)
 
-ENTRY = '@misc{source,\n author={OpenAI},\n title={Introducing Codex},\n year={2025}\n}\n'
+ENTRY = '@misc{source,\n author={Fixture Author},\n title={Example Record},\n year={2025}\n}\n'
 
 class BibliographyControlTests(unittest.TestCase):
     def test_ieee_style_control_is_not_a_reference(self):
@@ -21,8 +21,8 @@ class BibliographyControlTests(unittest.TestCase):
             audit.parse_bib(ENTRY + ENTRY)
 
     def test_missing_or_blank_real_title_remains_invalid(self):
-        for fields in ({'author': 'OpenAI', 'year': '2025'},
-                       {'author': 'OpenAI', 'title': ' ', 'year': '2025'}):
+        for fields in ({'author': 'Fixture Author', 'year': '2025'},
+                       {'author': 'Fixture Author', 'title': ' ', 'year': '2025'}):
             with self.subTest(fields=fields):
                 with self.assertRaisesRegex(ValueError, 'title'):
                     audit.require_bibliographic_fields('source', fields)

@@ -92,11 +92,25 @@ def workflow(out):
     d.box('policy',4.25,5.3,8.15,.95,'Lifetime topology: execution, submission, combined\nor context-only segments; declared handoff relations',size=8)
     d.box('ledger',2.1,3.95,3.85,1.35,'Independent operation ledger\nsubmission; entry/exit;\noutcome; context',size=7.8)
     d.box('capture',6.4,3.95,3.85,1.35,'Telemetry capture\ncandidates; parent/link;\nintervals; status/events;\nend/export witnesses',size=7.8)
-    d.box('gates',4.25,2.65,8.15,1.05,'Qualify evidence per predicate\nCandidates: drained, always-on capture\nIntervals: additionally eligible clocks',size=8)
+    d.box('gates',4.25,2.6,8.15,1.05,'Qualify evidence per predicate\nCandidates: drained, always-on capture\nIntervals: additionally eligible clocks',size=8)
     d.box('predicates',4.25,1.4,8.15,.85,'Evaluate eligible lifetime/topology and context predicates\nA qualified discrepancy takes priority over missing evidence',size=7.8)
     for n,x,lab in [('pass',1.43,'PASS\nall obligations met'),('fail',4.25,'FAIL\nqualified discrepancy'),('inc',7.07,'INCONCLUSIVE\nunresolved obligation')]:
         d.box(n,x,.35,2.65,.62,lab,size=7.1)
-    for a,b in EDGES:d.edge(a,b)
+    for a,b in EDGES:
+        if a == 'policy':
+            # Two aligned ports keep the declaration paths out of the inter-box gap.
+            x=d.nodes[b][0]
+            d.arrow((x,d.point(a,'s')[1]),d.point(b,'n'))
+        elif b == 'gates':
+            # Preserve the two inputs as separate vertical entries into qualification.
+            x=d.nodes[a][0]
+            d.arrow(d.point(a,'s'),(x,d.point(b,'n')[1]))
+        elif a == 'predicates':
+            # A right-angle fan-out leaves arrowheads clear of the outcome labels.
+            x=d.nodes[b][0]
+            d.arrow(d.point(a,'s'),d.point(b,'n'),via=((4.25,.82),(x,.82)))
+        else:
+            d.edge(a,b)
     d.save(out,'workflow')
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output-dir',type=Path,required=True)

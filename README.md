@@ -288,3 +288,7 @@ generations. The verifier recomputes old records through the preserved legacy
 path. Topology records replay exactly through the pinned evaluated snapshot
 and are separately reanalyzed through the current checker as described above;
 the frozen sources and their hashes remain historical evidence.
+
+## Portable path notation
+
+Published execution records use `<PYTHON_ROOT>`, `<NODE_ROOT>`, `<RUNTIME_ROOT>` and `<PROJECTS_ROOT>` for machine-local installation and workspace prefixes. These are path aliases, not literal directories; substitute the corresponding local roots when replaying a command. Recorded interpreter and dependency versions, inputs, measurements and outcomes are unchanged. File inventories bind the published portable serializations; any `recorded_` identity denotes the pre-normalization bytes.

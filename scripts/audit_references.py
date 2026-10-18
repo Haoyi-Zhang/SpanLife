@@ -73,7 +73,7 @@ def main() -> None:
         if record['category'] in ('primary-source','official-documentation'):
             assert any(host in record['source_url'] for host in (
                 'github.com','pypi.org','python.org','docs.python.org','opentelemetry.io','w3.org',
-                'anyio.readthedocs.io','starlette.io','fastapi.tiangolo.com','tracetest.io','kubeshop.github.io','openai.com')) or key in {'tracetest','tracetestconfig'}, (key, record['source_url'])
+                'anyio.readthedocs.io','starlette.io','fastapi.tiangolo.com','tracetest.io','kubeshop.github.io')) or key in {'tracetest','tracetestconfig'}, (key, record['source_url'])
     doi_values = [ident for _, ident in identifiers if ident.startswith('doi:')]
     dup_doi = [ident for ident,c in Counter(doi_values).items() if c>1]
     assert not dup_doi, dup_doi

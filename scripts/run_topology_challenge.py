@@ -13,11 +13,11 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from spanlife.topology_scenarios import EXPECTED, TOPOLOGY_CASES, run_topology_case
-from spanlife.topology_records import summarize_rows, trial_row
+from spanlife.topology_records import EXPECTED, TOPOLOGY_CASES, summarize_rows, trial_row
 
 
 def single(case: str, repeat: int, output_file: Path) -> int:
+    from spanlife.topology_scenarios import run_topology_case
     run = run_topology_case(case, repeat)
     expected_verdict, expected_codes = EXPECTED[case]
     run["expected"] = {"verdict": expected_verdict, "codes": list(expected_codes)}
@@ -29,6 +29,8 @@ def single(case: str, repeat: int, output_file: Path) -> int:
 
 
 def orchestrate(output: Path, repeats: int, workers: int) -> int:
+    if repeats < 1:
+        raise ValueError('repeats must be positive')
     output = output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     if (output / "execution-manifest.json").exists():
@@ -83,7 +85,13 @@ def orchestrate(output: Path, repeats: int, workers: int) -> int:
                     "trials": len(jobs), "wall_s": summary["wall_s"]}, indent=2) + "\n"
     )
     print(json.dumps(summary, indent=2))
-    return 1 if failures or summary["direct_disagreements"] else 0
+    # Agreement between implementations does not establish the expected verdict.
+    # Require one completed observation and the declared diagnostics for every job.
+    accepted = (not failures and len(rows) == len(jobs)
+                and summary["direct_disagreements"] == 0
+                and summary["exact_expected_verdicts"] == len(jobs)
+                and summary["expected_diagnostics_present"] == len(jobs))
+    return 0 if accepted else 1
 
 
 def main() -> int:

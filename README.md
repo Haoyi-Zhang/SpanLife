@@ -1,5 +1,17 @@
 # SpanLife artifact
 
+The topology runner requires every planned observation to complete and satisfy
+its predeclared verdict and diagnostic codes. Two implementations agreeing on
+the same wrong answer is a failing campaign.
+
+`results/current-offline-validation.json` separates exact archival replay from
+current reanalysis of retained observations; it runs no new SDK trials. The
+current CLI report for the retained missing-handoff case is in
+`results/ci-examples/current-reanalysis.json`: it preserves the scientific
+failure and reports record mismatch with exit code 3. The older report and raw
+observation remain unchanged. To write a new offline report without replacing
+an older one, use `python -B scripts/verify.py --output <new-output.json>`.
+
 ## Environment
 
 The lifecycle executions used Linux, Python 3.13.5, OpenTelemetry API/SDK 1.42.1,

@@ -630,6 +630,12 @@ def check_references() -> dict:
 
 
 def main() -> None:
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', type=Path,
+                        default=ROOT / 'results/integrity-check.json',
+                        help='write the current offline reanalysis to a separate output when preserving a retained report')
+    args = parser.parse_args()
     upstream = load_json(ROOT / "provenance/upstream-files.json")
     verified_upstream = []
     for path, expected in upstream.items():
@@ -668,7 +674,8 @@ def main() -> None:
         "cost_samples": check_costs(),
         "references": check_references(),
     }
-    out = ROOT / "results/integrity-check.json"
+    out = args.output
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
     print(json.dumps(result, indent=2, sort_keys=True))
 

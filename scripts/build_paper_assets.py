@@ -235,34 +235,9 @@ subprocess.run([sys.executable,str(R/'scripts/render_costs.py'),
                 '--cost-csv',str(R/'results/summary/cost-summary-us.csv'),
                 '--figure-dir',str(F),'--font-root',str(font_root)],check=True)
 
-# Conceptual workflow.  All text is semantic; no numerical claim is encoded.
-workflow=r'''\begin{tikzpicture}[
-  node distance=3.0mm and 4.0mm,
-  box/.style={draw,rounded corners=1.5pt,fill=black!3,align=center,
-              minimum height=8mm,inner sep=3pt,font=\scriptsize},
-  gate/.style={box,fill=black!8},
-  verdict/.style={box,fill=black!12},
-  arr/.style={-{Latex[length=2mm]},line width=.55pt}
-]
-\node[box,text width=.42\columnwidth] (ledger) {Independent operation ledger\\submission; entry/exit; outcome; context};
-\node[box,text width=.42\columnwidth,right=of ledger] (capture) {Telemetry capture\\candidate spans; parent/link edges; interval; status/events; end/export witnesses};
-\node[box,text width=.88\columnwidth,above=of $(ledger.north)!0.5!(capture.north)$] (policy) {Lifetime topology: one or more execution, submission, combined, or context-only segments; declared handoff relations};
-\node[gate,text width=.88\columnwidth,below=of $(ledger.south)!0.5!(capture.south)$] (gates) {Evidence gates: completed operation $\rightarrow$ deterministic correlation $\rightarrow$ qualified collection $\rightarrow$ eligible clock};
-\node[box,text width=.88\columnwidth,below=of gates] (predicates) {Evaluate declared segment intervals, queue/error/context obligations, and parent/link topology};
-\node[verdict,text width=.27\columnwidth,below left=of predicates] (pass) {PASS\\retain regression};
-\node[verdict,text width=.27\columnwidth,below=of predicates] (fail) {FAIL\\narrow correction};
-\node[verdict,text width=.27\columnwidth,below right=of predicates] (inc) {INCONCLUSIVE\\repair evidence};
-\draw[arr] (policy) -- (ledger);
-\draw[arr] (policy) -- (capture);
-\draw[arr] (ledger) -- (gates);
-\draw[arr] (capture) -- (gates);
-\draw[arr] (gates) -- (predicates);
-\draw[arr] (predicates) -- (pass);
-\draw[arr] (predicates) -- (fail);
-\draw[arr] (predicates) -- (inc);
-\end{tikzpicture}
-'''
-(F/'workflow.tex').write_text(workflow)
+# Conceptual workflow uses the current Python vector renderer and PDF wrapper.
+from workflow_assets import write_workflow_assets
+write_workflow_assets(F)
 
 print('Generated UiPath, native-sensitivity, gate-ablation, paired-cost, and workflow assets.')
 

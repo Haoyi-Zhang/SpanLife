@@ -29,18 +29,14 @@ explicit `--cost-dir` for a separate campaign.
 All experiments are local and CPU-only. They require no credentials, live
 service, model inference, GPU, paid API, production load, or remote collector.
 
-The paper's timing figures are generated from retained observations with
-Python and ReportLab. Install `requirements-figures.txt` and use the Times
-AFM/PFB fonts supplied by TeX Live. `scripts/build_paper_assets.py` regenerates
-the tables, interval CSV, vector PDFs, and LaTeX figure wrappers together:
+The paper's timing illustrations are generated from retained observations with Python and ReportLab. The workflow is drawn directly with Matplotlib. Install `requirements-figures.txt` and use the Times AFM/PFB fonts supplied by TeX Live. `scripts/build_paper_assets.py` regenerates the tables, interval CSV, vector PDFs and matching LaTeX inclusion wrappers together:
 
 ```sh
 python -m pip install -r requirements-figures.txt
 python scripts/build_paper_assets.py --font-root /path/to/texmf-dist/fonts
 ```
 
-Without `--font-root`, the script locates the font directory with `kpsewhich`.
-This regenerates presentation assets, not new experimental measurements.
+Without `--font-root`, the script locates the font directory with `kpsewhich`. Its workflow route uses `scripts/workflow_assets.py` to run `plots/draw_workflow.py` and install the current PDF wrapper only after successful rendering. No TikZ source is written over that wrapper. This regenerates presentation assets, not experimental measurements.
 
 ## Verify retained evidence
 

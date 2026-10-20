@@ -36,7 +36,17 @@ python -m pip install -r requirements-figures.txt
 python scripts/build_paper_assets.py --font-root /path/to/texmf-dist/fonts
 ```
 
-Without `--font-root`, the script locates the font directory with `kpsewhich`. Its workflow route uses `scripts/workflow_assets.py` to run `plots/draw_workflow.py` and install the current PDF wrapper only after successful rendering. No TikZ source is written over that wrapper. This regenerates presentation assets, not experimental measurements.
+Without `--font-root`, the script locates the font directory with `kpsewhich`.
+Fonts and input files are checked before generation. All tables, PDFs, CSV and
+wrappers are generated in an isolated tree before publication; an ordinary
+publication failure rolls back replaced files and removes newly installed files.
+If rollback itself fails, the error reports a retained recovery-backup directory
+outside the disposable build tree. This is not a crash-safe transaction.
+Use `--paper-dir <directory>` to select a separate output. The workflow helper
+stages its PDF and wrapper together and preserves both old files on renderer
+failure. No TikZ source is written over that wrapper. This regenerates
+presentation assets, not experimental measurements. The topology table requires
+the supplied summary to match trial rows and rejects direct-check disagreement.
 
 ## Verify retained evidence
 
@@ -82,17 +92,20 @@ Expected retained results include:
 * 40 Speaches, 100 UiPath confirmation, and 100 UiPath correction processes;
 * 360 serialized transformations, 300 role counterfactuals, 120 evidence-gate
   ablations, and 90 process-level cost samples;
-* the recorded unit suite and 70 current cited bibliography records; and
+* the recorded unit suite and 69 current cited bibliography records; and
 * affected 0.44b0/0.65b0 and fixed 0.66b0 release lineage.
 
 `results/integrity-check.json` is the machine-readable verification record.
 
-The source suite contains 599 collected tests, including the focused
-policy-evidence, operation-execution, and cost-record regressions. Source
+The source suite includes focused policy-evidence, operation-execution,
+cost-record, raw-record validation, and failure-preserving asset regressions. Source
 tests and offline recomputation of
 retained records are distinct from new execution of all service experiments.
 `scripts/verify.py` also checks the companion manuscript in a sibling `paper/`
 directory; the standalone code repository uses the tests and record checks.
+Native-matrix verification reads the exact expected raw suite/operator/method
+coverage, compares complete raw rows with `rows.json`, and recomputes the full
+summary using the producer's aggregation. Historical result files are not rewritten.
 
 `python scripts/check_retained_records.py` checks records without running the
 service experiments. For the 12 topology records it reports two separate
@@ -132,6 +145,9 @@ python scripts/run_uipath_holdout.py \
 ```
 
 Runners refuse to overwrite a directory containing an execution manifest.
+The topology runner reserves that manifest before launching children, retains
+process receipts for nonzero exits, timeouts and missing/malformed records,
+and excludes failed or invalid records from scored rows.
 
 The cost driver calls every warm-up and measured operation unconditionally,
 checks the arithmetic result explicitly, and checks the ledger event count
@@ -269,10 +285,13 @@ study trials, complete-package execution, or maintainer validation.
 ## Render retained timing illustrations
 
 The workflow is a separate direct Matplotlib vector with embedded fonts.
-In the project bundle, `paper/build.py` regenerates it before compilation:
+In the project bundle, `paper/build.py` regenerates it before compilation.
+TeX engines are checked first; workflow generation and compilation occur in an
+isolated work tree. The workflow PDF/wrapper and manuscript PDF are published
+together only after the build and log checks succeed.
 
 ```sh
-python plots/draw_workflow.py --output-dir ../paper/figures
+python scripts/workflow_assets.py --output-dir ../paper/figures
 ```
 
 Install `requirements-figures.txt`, then run

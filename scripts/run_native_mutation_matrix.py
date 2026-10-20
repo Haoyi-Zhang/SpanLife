@@ -37,8 +37,8 @@ PERTURBATIONS = (
 SUITES = ("legacy", "updated")
 
 
-def suite_methods(suite: str) -> list[str]:
-    path = ROOT / "tests/native" / f"test_to_thread_{suite}.py"
+def suite_methods(suite: str, root: Path = ROOT) -> list[str]:
+    path = root / "tests/native" / f"test_to_thread_{suite}.py"
     tree = ast.parse(path.read_text(), filename=str(path))
     return [
         node.name
@@ -78,6 +78,53 @@ def child(suite: str, perturbation: str, method: str) -> dict:
         "failures": [text for _, text in result.failures],
         "errors": [text for _, text in result.errors],
         "skipped": [reason for _, reason in result.skipped],
+    }
+
+
+def summarize_native_rows(rows: list[dict], methods: dict[str, list[str]]) -> dict:
+    """The producer aggregation, shared with verification; no process execution."""
+    infrastructure = [row for row in rows if row.get("infrastructure_error")]
+    by_suite: dict[str, dict] = {}
+    for suite in SUITES:
+        matrix: dict[str, dict] = {}
+        for perturbation in PERTURBATIONS:
+            selected = [
+                row
+                for row in rows
+                if row["suite"] == suite and row["perturbation"] == perturbation
+            ]
+            failing_methods = [row["method"] for row in selected if not row["passed"]]
+            matrix[perturbation] = {
+                "methods": len(selected),
+                "passed_methods": sum(row["passed"] for row in selected),
+                "failing_methods": failing_methods,
+                "detected": bool(failing_methods),
+                "failures": sum(bool(row.get("failures")) for row in selected),
+                "errors": sum(bool(row.get("errors")) for row in selected),
+            }
+        by_suite[suite] = {
+            "methods": methods[suite],
+            "detected_perturbations": sum(
+                item["detected"] for item in matrix.values()
+            ),
+            "matrix": matrix,
+        }
+
+    return {
+        "schema": 1,
+        "base_revision": "fixed OpenTelemetry source e008b0e315b7d0a219c43e7ded1dc02e5abbeb69",
+        "test_sources": {
+            "legacy": "unchanged upstream pre-fix methods (2)",
+            "updated": "unchanged upstream post-fix methods (7)",
+        },
+        "perturbations": list(PERTURBATIONS),
+        "fresh_process_methods": len(rows),
+        "infrastructure_errors": len(infrastructure),
+        "by_suite": by_suite,
+        "classification": (
+            "Bounded test-sensitivity matrix over synthetic executable operators; "
+            "not repository-wide mutation testing or defect prevalence."
+        ),
     }
 
 
@@ -160,53 +207,11 @@ def orchestrate(output: Path, workers: int) -> int:
     with ThreadPoolExecutor(max_workers=workers) as pool:
         rows = list(pool.map(run_one, jobs))
 
-    infrastructure = [row for row in rows if row.get("infrastructure_error")]
-    by_suite: dict[str, dict] = {}
-    for suite in SUITES:
-        matrix: dict[str, dict] = {}
-        for perturbation in PERTURBATIONS:
-            selected = [
-                row
-                for row in rows
-                if row["suite"] == suite and row["perturbation"] == perturbation
-            ]
-            failing_methods = [row["method"] for row in selected if not row["passed"]]
-            matrix[perturbation] = {
-                "methods": len(selected),
-                "passed_methods": sum(row["passed"] for row in selected),
-                "failing_methods": failing_methods,
-                "detected": bool(failing_methods),
-                "failures": sum(bool(row.get("failures")) for row in selected),
-                "errors": sum(bool(row.get("errors")) for row in selected),
-            }
-        by_suite[suite] = {
-            "methods": methods[suite],
-            "detected_perturbations": sum(
-                item["detected"] for item in matrix.values()
-            ),
-            "matrix": matrix,
-        }
-
-    summary = {
-        "schema": 1,
-        "base_revision": "fixed OpenTelemetry source e008b0e315b7d0a219c43e7ded1dc02e5abbeb69",
-        "test_sources": {
-            "legacy": "unchanged upstream pre-fix methods (2)",
-            "updated": "unchanged upstream post-fix methods (7)",
-        },
-        "perturbations": list(PERTURBATIONS),
-        "fresh_process_methods": len(rows),
-        "infrastructure_errors": len(infrastructure),
-        "by_suite": by_suite,
-        "classification": (
-            "Bounded test-sensitivity matrix over synthetic executable operators; "
-            "not repository-wide mutation testing or defect prevalence."
-        ),
-    }
+    summary = summarize_native_rows(rows, methods)
     (output / "rows.json").write_text(json.dumps(rows, indent=2) + "\n")
     (output / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary, indent=2))
-    return int(bool(infrastructure))
+    return int(bool(summary['infrastructure_errors']))
 
 
 def main() -> int:

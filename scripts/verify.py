@@ -21,6 +21,7 @@ from spanlife.baselines import direct_assertions, existence_and_name
 from spanlife.oracle import qualify
 from spanlife.topology_records import EXPECTED, TOPOLOGY_CASES, summarize_rows, trial_row
 from cost_records import load_cost_records
+from run_native_mutation_matrix import PERTURBATIONS, SUITES, suite_methods, summarize_native_rows
 
 
 def git_blob(data: bytes) -> str:
@@ -297,7 +298,36 @@ def check_uipath() -> dict:
 
 
 def check_native_mutation_matrix() -> dict:
-    summary = load_json(ROOT / "results/native-mutation-matrix/summary.json")
+    directory = ROOT / 'results/native-mutation-matrix'
+    methods = {suite: suite_methods(suite, ROOT) for suite in SUITES}
+    jobs = [(suite, perturbation, method) for suite in SUITES
+            for perturbation in PERTURBATIONS for method in methods[suite]]
+    expected = {f'{suite}__{perturbation}__{method}.json' for suite, perturbation, method in jobs}
+    raw_paths = {path.name: path for path in directory.glob('*.json')
+                 if path.name not in {'summary.json', 'rows.json'}}
+    if set(raw_paths) != expected:
+        raise AssertionError(('native raw coverage mismatch', set(raw_paths) - expected,
+                              expected - set(raw_paths)))
+    raw_rows = []
+    for suite, perturbation, method in jobs:
+        path = raw_paths[f'{suite}__{perturbation}__{method}.json']
+        row = load_json(path)
+        if not isinstance(row, dict) or (row.get('suite'), row.get('perturbation'), row.get('method')) != (suite, perturbation, method):
+            raise AssertionError(f'native raw identity mismatch: {path}')
+        if (type(row.get('passed')) is not bool or type(row.get('tests_run')) is not int
+                or row['tests_run'] != 1 or row.get('infrastructure_error')):
+            raise AssertionError(f'invalid native execution: {path}')
+        for field in ('failures', 'errors', 'skipped'):
+            if not isinstance(row.get(field), list) or not all(isinstance(text, str) for text in row[field]):
+                raise AssertionError(f'invalid native {field}: {path}')
+        if row['errors'] or row['passed'] != (not row['failures'] and not row['errors']):
+            raise AssertionError(f'inconsistent native outcome: {path}')
+        raw_rows.append(row)
+    if load_json(directory / 'rows.json') != raw_rows:
+        raise AssertionError('native rows differ from raw records')
+    summary = summarize_native_rows(raw_rows, methods)
+    if load_json(directory / 'summary.json') != summary:
+        raise AssertionError('native summary differs from producer aggregation')
     if not (summary["fresh_process_methods"] == 90):
         raise AssertionError()
     if not (summary["infrastructure_errors"] == 0):
@@ -313,14 +343,8 @@ def check_native_mutation_matrix() -> dict:
     legacy = summary["by_suite"]["legacy"]["matrix"]
     if not ({k for k, v in legacy.items() if v["detected"]} == {"no_span", "duplicate_span"}):
         raise AssertionError()
-    raw = [p for p in (ROOT / "results/native-mutation-matrix").glob("*.json") if p.name not in {"summary.json", "rows.json"}]
-    if not (len(raw) == 90):
-        raise AssertionError(len(raw))
-    rows = load_json(ROOT / "results/native-mutation-matrix/rows.json")
-    if not (len(rows) == 90):
-        raise AssertionError()
-    if not (all(r["tests_run"] == 1 and not r["errors"] for r in rows)):
-        raise AssertionError()
+    if len(raw_rows) != 90:
+        raise AssertionError(len(raw_rows))
     return {
         "fresh_process_methods": 90,
         "legacy_detected_operators": 2,

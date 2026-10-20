@@ -16,8 +16,11 @@ class WorkflowAssetsTests(unittest.TestCase):
             def draw(command,check):
                 self.assertTrue(check)
                 self.assertEqual(command[1],str(assets.ROOT/'plots/draw_workflow.py'))
-                self.assertEqual(command[2:],['--output-dir',str(out)])
-                (out/'workflow.pdf').write_bytes(b'%PDF-owned-test-fixture')
+                staged=Path(command[3])
+                self.assertEqual(command[2],'--output-dir')
+                self.assertNotEqual(staged,out)
+                self.assertEqual(staged.parent,out.resolve().parent)
+                (staged/'workflow.pdf').write_bytes(b'%PDF-owned-test-fixture')
             with patch.object(assets.subprocess,'run',side_effect=draw):
                 assets.write_workflow_assets(out)
             self.assertEqual((out/'workflow.tex').read_text(),assets.WRAPPER)

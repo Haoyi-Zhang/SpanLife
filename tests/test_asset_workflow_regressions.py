@@ -387,7 +387,7 @@ class BuilderTransactionTests(Scratch):
 @unittest.skipUnless((ROOT.parent / 'paper/build.py').is_file(), 'companion paper builder not present')
 class PaperBuildConsumerTests(Scratch):
     def setUp(self):
-        spec = importlib.util.spec_from_file_location('p119_paper_build_under_test', ROOT.parent / 'paper/build.py')
+        spec = importlib.util.spec_from_file_location('companion_paper_build_under_test', ROOT.parent / 'paper/build.py')
         self.module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.module)
         _, self.paper = self.paper_fixture()

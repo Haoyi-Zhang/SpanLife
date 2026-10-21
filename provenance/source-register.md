@@ -93,7 +93,9 @@ Tracetest.
 
 ## Research literature audit
 
-`reference-audit.json` contains 70 cited records verified through 2026-10-04:
+The retrieval summary dated 2026-10-04 recorded 70 cited records in the categories
+below. The current cited inventory is the 69 records in `reference-audit.json`;
+these historical category counts are not its current denominator:
 
 * 37 peer-reviewed research entries using publisher or official venue metadata;
 * 18 official specifications/documentation entries;

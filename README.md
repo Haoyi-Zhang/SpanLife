@@ -6,11 +6,13 @@ the same wrong answer is a failing campaign.
 
 `results/current-offline-validation.json` separates exact archival replay from
 current reanalysis of retained observations; it runs no new SDK trials. The
-current CLI report for the retained missing-handoff case is in
+current-compatible raw CI inputs are in `results/ci-examples/current-raw/`, with
+pass, fail, and inconclusive examples derived from recorded observations. The
+historical missing-handoff compatibility diagnostic remains in
 `results/ci-examples/current-reanalysis.json`: it preserves the scientific
-failure and reports record mismatch with exit code 3. The older report and raw
-observation remain unchanged. To write a new offline report without replacing
-an older one, use `python -B scripts/verify.py --output <new-output.json>`.
+failure and reports record mismatch with exit code 3. The older reports and raw
+observations remain unchanged. To write a new offline verification report without
+replacing an older one, use `python -B scripts/verify.py --output <new-output.json>`.
 
 ## Environment
 
@@ -127,7 +129,8 @@ reanalysis, not another 12 fresh processes or a new timing measurement.
 The single-record CI checker still compares stored judgments with current
 qualification exactly: these two historical JSONs report `RECORD_MISMATCH`
 and exit 3. Archival reproducibility does not make their old segment `pass` a
-current acceptance result. No new current JSON dataset is installed here.
+current acceptance result. The current CI examples below are derived inputs,
+not a new execution dataset.
 
 ## Fresh execution without overwriting retained data
 
@@ -236,15 +239,67 @@ to check an observed context identity.
 
 ## CI report
 
+Use the current raw inputs for ordinary CI examples:
+
 ```sh
 python -m spanlife.check_record \
-  results/topology-challenge/split_link_valid__000.json
+  results/ci-examples/current-raw/pass.json
+# exit 0: PASS
+python -m spanlife.check_record \
+  results/ci-examples/current-raw/fail.json --format json
+# exit 1: FAIL, MISSING_HANDOFF_RELATION; execute segment fails
+python -m spanlife.check_record \
+  results/ci-examples/current-raw/inconclusive.json --format json --fail-on-inconclusive
+# exit 2: INCONCLUSIVE, AMBIGUOUS_ASSOCIATION
+```
+
+These are **current reanalysis of recorded observations**, not new SDK
+executions. Their respective sources are
+`results/topology-challenge/split_link_valid__000.json`,
+`results/topology-challenge/split_missing_relation__000.json`, and
+`results/topology-challenge/correlated_duplicate_attribute__000.json`.
+Only `ledger_check` is recomputed with the current oracle; the added `reanalysis`
+field identifies the source, updated field, and zero new runtime trials.
+All other fields, including policies, observations, calibration, revision,
+execution status, and baseline judgments, are copied from the historical record.
+The missing-handoff example remains an overall failure; its current `execute`
+segment is also `fail`.
+
+To derive another raw input without changing the source, choose a new output
+file in an existing directory (the producer refuses to overwrite any file):
+
+```sh
+python -B scripts/reanalyze_record.py \
+  results/topology-challenge/split_missing_relation__000.json \
+  --output results/ci-examples/my-record.json
+```
+
+The producer's successful exit means the derived file was written, not that its
+observations passed qualification. Run `spanlife.check_record` on that output
+to obtain the semantic exit code. Without `--fail-on-inconclusive`, inconclusive
+records exit 0 even though the report's `ci_exit_code` remains 2.
+
+For the historical compatibility diagnostic, check the original raw record:
+
+```sh
 python -m spanlife.check_record \
   results/topology-challenge/split_missing_relation__000.json --format json
+# exit 3: FAIL with record_consistent=false (RECORD_MISMATCH in text format)
 ```
+
+This diagnostic and `results/ci-examples/current-reanalysis.json` retain the
+stored-versus-current difference; no mismatch check is bypassed. The existing
+`results/ci-examples/{pass,fail,inconclusive}.json` files are report outputs,
+and `current-reanalysis.json` wraps a report; none is a raw checker input.
 
 The text and JSON reports include the finding, operation and segment, suggested
 owner, bounded next action, recomputation consistency, and CI exit class.
+
+The SDK-free example and historical-boundary tests can be run directly:
+
+```sh
+python -B -m pytest -q tests/test_current_ci_examples.py tests/test_retained_topology.py
+```
 
 ### External-record admission and partial evidence
 

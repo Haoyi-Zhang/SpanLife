@@ -131,7 +131,7 @@ def generate_assets(root, paper, font_root):
     # Cost distributions are rendered below after resolving the same Times fonts
     # used by the timing figures.  Their five-number summaries remain unchanged.
 
-    # Mutation challenge: collapse the 18 one-field transformations into mechanism
+    # Mutation challenge: collapse the 18 targeted record transformations into mechanism
     # families.  Each member still remains individually replayable in results/.
     mutation=json.loads((R/'results/mutation-challenge/summary.json').read_text())
     mutation_groups=[
@@ -154,7 +154,7 @@ def generate_assets(root, paper, font_root):
     executable=json.loads((R/'results/executable-perturbations/summary.json').read_text())
     t='\\begin{tabular}{p{.25\\columnwidth}rrrrr}\n\\toprule\nChallenge & Kinds & Judgments & Exact verdict & Exact code & Name misses\\\\\n\\midrule\n'
     t+=f"Executable perturbations & {executable['perturbations']} & {executable['fresh_process_trials']} & {executable['exact_expected_verdicts']}/{executable['fresh_process_trials']} & {executable['expected_diagnostic_present']}/{executable['fresh_process_trials']} & {executable['name_misses_with_ledger_fail']}\\\\\n"
-    t+=f"Serialized one-field transformations & {mutation['mutations']} & {mutation['derived_trials']} & {mutation['exact_expected_verdicts']}/{mutation['derived_trials']} & {mutation['exact_expected_diagnostics']}/{mutation['derived_trials']} & {mutation['name_misses_with_ledger_fail']}\\\\\n"
+    t+=f"Targeted record transformations & {mutation['mutations']} & {mutation['derived_trials']} & {mutation['exact_expected_verdicts']}/{mutation['derived_trials']} & {mutation['exact_expected_diagnostics']}/{mutation['derived_trials']} & {mutation['name_misses_with_ledger_fail']}\\\\\n"
     t+='\\bottomrule\n\\end{tabular}\n'
     (G/'challenge-table.tex').write_text(t)
 

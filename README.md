@@ -99,6 +99,16 @@ Expected retained results include:
 
 `results/integrity-check.json` is the machine-readable verification record.
 
+The 18 serialized challenge kinds are targeted record transformations, including
+valid controls and mechanism-specific changes that can affect multiple evidence
+fields. For example, `missing_span` removes a span and changes its end witness;
+`collection_unqualified` also clears the drain flag, and `duplicate_association`
+adds both a span and its association ID. The historical "one-field" wording in
+`provenance/evaluation-amendment.md` is retained as recorded, not as a description
+of every transformation. Original raw records, classification labels, expected
+diagnostics, judgments, and summary values are unchanged; current generator
+documentation and generated presentation labels use the targeted-record term.
+
 The source suite includes focused policy-evidence, operation-execution,
 cost-record, raw-record validation, and failure-preserving asset regressions. Source
 tests and offline recomputation of

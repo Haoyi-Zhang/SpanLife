@@ -2,8 +2,9 @@
 """Challenge the frozen checker with independent mutations of real captured traces.
 
 Mutations are test-oracle validation inputs, not upstream defects.  The script
-starts from retained, successful SDK observations and changes one evidence field
-at a time.  It checks exact diagnostic codes and preserves every derived input.
+starts from retained, successful SDK observations and applies mechanism-specific
+record transformations, some changing multiple evidence fields.  It checks exact
+diagnostic codes and preserves every derived input.
 """
 from __future__ import annotations
 from collections import Counter, defaultdict

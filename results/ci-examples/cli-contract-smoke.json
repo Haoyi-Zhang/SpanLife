@@ -1,0 +1,125 @@
+{
+  "kind": "SDK-free CLI integration contract",
+  "started_utc": "2026-10-23T13:34:18.800928+00:00",
+  "finished_utc": "2026-10-23T13:34:19.035827+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "new_sdk_or_service_trials": 0,
+  "source_and_input_bindings": {
+    "results/ci-examples/current-raw/fail.json": "d767dd9b4a5873b35b15420c048e5e09f47d314dea8cdeed845586db5de485df",
+    "results/ci-examples/current-raw/inconclusive.json": "acaa65ee4a8542e2d679a68baab2b8abda5151920aa97b25ccefa693b934a507",
+    "results/ci-examples/current-raw/pass.json": "9c0c344b77ea77fc9e8bec23888833a11828b43890bdc2fe6436b40dd2e63aae",
+    "results/topology-challenge/split_missing_relation__000.json": "20beeeb0d52af013e52133a7b5faacb3b07cdedb6b7a2a8b7e3850d1754fba4b",
+    "scripts/ci_contract_smoke.py": "cbb74f73ae2a64969e47ad7a1c9930b5ade13dc865d2f310cf50d4b8be7e115b",
+    "src/spanlife/__init__.py": "51d3f25942d5c0537bfe6ac2bf4782b232512402dffe85d8a30ee30a1740db7f",
+    "src/spanlife/check_record.py": "32eb5e83e21b3fcec040391d2e709ea19f0fbe02797ead78897adc83bd1bc7a3",
+    "src/spanlife/contracts.py": "d27a7a5b3a29413b11e346130d8296dde87c0c1293a50e1fe5e59661754b0540",
+    "src/spanlife/oracle.py": "07f7e38d8b90278d18c3f903f4b9b9aa6f0dda008e336ef28bd9c0c524327f49",
+    "src/spanlife/report.py": "22304fa3b20bb51ac79e54b30dc3ad52a43a1587657f6036aa8093002de25b77",
+    "src/spanlife/topology_records.py": "3707767aba7303914ff878b178e899fa1f201bc52159432db13bb339bd2ded95"
+  },
+  "cases": [
+    {
+      "record": "results/ci-examples/current-raw/pass.json",
+      "exit_code": 0,
+      "report": {
+        "schema": 1,
+        "case": "split_link_valid",
+        "revision": "topology-contract",
+        "verdict": "pass",
+        "finding_count": 0,
+        "owners": {},
+        "findings": [],
+        "record_consistent": true,
+        "ci_exit_code": 0
+      }
+    },
+    {
+      "record": "results/ci-examples/current-raw/fail.json",
+      "exit_code": 1,
+      "report": {
+        "schema": 1,
+        "case": "split_missing_relation",
+        "revision": "topology-contract",
+        "verdict": "fail",
+        "finding_count": 1,
+        "owners": {
+          "propagation": 1
+        },
+        "findings": [
+          {
+            "operation_id": "op-0",
+            "code": "MISSING_HANDOFF_RELATION",
+            "verdict": "fail",
+            "segment_id": "execute",
+            "relation_kind": "link",
+            "target_segment": "submit",
+            "observed_parent": "0",
+            "observed_links": [],
+            "owner": "propagation",
+            "action": "preserve the declared parent or link across the asynchronous handoff"
+          }
+        ],
+        "record_consistent": true,
+        "ci_exit_code": 1
+      }
+    },
+    {
+      "record": "results/ci-examples/current-raw/inconclusive.json",
+      "exit_code": 2,
+      "report": {
+        "schema": 1,
+        "case": "correlated_duplicate_attribute",
+        "revision": "topology-contract",
+        "verdict": "inconclusive",
+        "finding_count": 1,
+        "owners": {
+          "instrumentation": 1
+        },
+        "findings": [
+          {
+            "operation_id": "op-0",
+            "code": "AMBIGUOUS_ASSOCIATION",
+            "verdict": "inconclusive",
+            "segment_id": "execute",
+            "candidate_count": 2,
+            "owner": "instrumentation",
+            "action": "add a stable operation correlation attribute or explicit span id"
+          }
+        ],
+        "record_consistent": true,
+        "ci_exit_code": 2
+      }
+    },
+    {
+      "record": "results/topology-challenge/split_missing_relation__000.json",
+      "exit_code": 3,
+      "report": {
+        "schema": 1,
+        "case": "split_missing_relation",
+        "revision": "topology-contract",
+        "verdict": "fail",
+        "finding_count": 1,
+        "owners": {
+          "propagation": 1
+        },
+        "findings": [
+          {
+            "operation_id": "op-0",
+            "code": "MISSING_HANDOFF_RELATION",
+            "verdict": "fail",
+            "segment_id": "execute",
+            "relation_kind": "link",
+            "target_segment": "submit",
+            "observed_parent": "0",
+            "observed_links": [],
+            "owner": "propagation",
+            "action": "preserve the declared parent or link across the asynchronous handoff"
+          }
+        ],
+        "record_consistent": false,
+        "ci_exit_code": 3
+      }
+    }
+  ],
+  "all_exit_contracts_satisfied": true
+}

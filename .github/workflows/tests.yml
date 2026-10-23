@@ -41,3 +41,5 @@ jobs:
           set -euo pipefail
           python -O -m pytest -q
           python -O scripts/check_retained_records.py
+      - name: Exercise CLI integration exit contracts without an SDK
+        run: python -B -S scripts/ci_contract_smoke.py

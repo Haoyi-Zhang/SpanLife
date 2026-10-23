@@ -249,6 +249,24 @@ to check an observed context identity.
 
 ## CI report
 
+Run the complete SDK-free adapter example from this directory:
+
+```sh
+python -B -S scripts/ci_contract_smoke.py
+```
+
+It invokes the real CLI in four isolated interpreters: a current passing
+record exits 0, a current semantic failure exits 1, strict inconclusive exits
+2, and the retained historical missing-handoff record exits 3 for stored/current
+disagreement. The wrapper checks both exit status and semantic JSON; success
+means these adapter contracts held, not that the failing service record passed.
+The same command is an explicit step in the supplied Windows/Linux workflow.
+The recorded execution is `results/ci-examples/cli-contract-smoke.json`; it
+binds the four inputs and current checker sources, with zero new SDK/service
+trials. Use `--output <new-file.json>` to retain a separate run without replacing
+that record. This demonstrates executable CI routing, not measured human
+integration effort or field deployment.
+
 Use the current raw inputs for ordinary CI examples:
 
 ```sh

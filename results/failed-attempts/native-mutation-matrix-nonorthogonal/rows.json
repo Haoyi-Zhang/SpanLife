@@ -66,7 +66,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_legacy.py\", line 44, in test_to_thread\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_legacy.py\", line 44, in test_to_thread\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
     ],
     "errors": [],
     "skipped": []
@@ -78,7 +78,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_legacy.py\", line 70, in test_to_thread_partial_func\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_legacy.py\", line 70, in test_to_thread_partial_func\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
     ],
     "errors": [],
     "skipped": []
@@ -90,7 +90,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_legacy.py\", line 44, in test_to_thread\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_legacy.py\", line 44, in test_to_thread\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n"
     ],
     "errors": [],
     "skipped": []
@@ -102,7 +102,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_legacy.py\", line 70, in test_to_thread_partial_func\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_legacy.py\", line 70, in test_to_thread_partial_func\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n"
     ],
     "errors": [],
     "skipped": []
@@ -224,7 +224,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 76, in test_to_thread_duration_covers_execution\n    self.assertGreaterEqual(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        (span.end_time - span.start_time) / 10**9,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        SLEEP_SECONDS * 0.9,\n        ^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: 0.00019264 not greater than or equal to 0.045000000000000005\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 76, in test_to_thread_duration_covers_execution\n    self.assertGreaterEqual(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        (span.end_time - span.start_time) / 10**9,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        SLEEP_SECONDS * 0.9,\n        ^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: 0.00019264 not greater than or equal to 0.045000000000000005\n"
     ],
     "errors": [],
     "skipped": []
@@ -236,7 +236,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 99, in test_to_thread_exception\n    self.assertEqual(span.status.status_code, StatusCode.ERROR)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.UNSET: 0> != <StatusCode.ERROR: 2>\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 99, in test_to_thread_exception\n    self.assertEqual(span.status.status_code, StatusCode.ERROR)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.UNSET: 0> != <StatusCode.ERROR: 2>\n"
     ],
     "errors": [],
     "skipped": []
@@ -248,7 +248,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 118, in test_to_thread_timeout_state\n    self.assertEqual(span.status.status_code, StatusCode.ERROR)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.UNSET: 0> != <StatusCode.ERROR: 2>\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 118, in test_to_thread_timeout_state\n    self.assertEqual(span.status.status_code, StatusCode.ERROR)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.UNSET: 0> != <StatusCode.ERROR: 2>\n"
     ],
     "errors": [],
     "skipped": []
@@ -260,7 +260,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 144, in test_to_thread_cancelled_state\n    self.assertEqual(metric.data.data_points[0].attributes[\"state\"], \"cancelled\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'finished' != 'cancelled'\n- finished\n+ cancelled\n\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 144, in test_to_thread_cancelled_state\n    self.assertEqual(metric.data.data_points[0].attributes[\"state\"], \"cancelled\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'finished' != 'cancelled'\n- finished\n+ cancelled\n\n"
     ],
     "errors": [],
     "skipped": []
@@ -302,7 +302,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 76, in test_to_thread_duration_covers_execution\n    self.assertGreaterEqual(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        (span.end_time - span.start_time) / 10**9,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        SLEEP_SECONDS * 0.9,\n        ^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: 0.000209467 not greater than or equal to 0.045000000000000005\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 76, in test_to_thread_duration_covers_execution\n    self.assertGreaterEqual(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        (span.end_time - span.start_time) / 10**9,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        SLEEP_SECONDS * 0.9,\n        ^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: 0.000209467 not greater than or equal to 0.045000000000000005\n"
     ],
     "errors": [],
     "skipped": []
@@ -314,7 +314,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 96, in test_to_thread_exception\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 96, in test_to_thread_exception\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -326,7 +326,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 116, in test_to_thread_timeout_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 116, in test_to_thread_timeout_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -338,7 +338,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 135, in test_to_thread_cancelled_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 135, in test_to_thread_cancelled_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -410,7 +410,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 138, in test_to_thread_cancelled_state\n    self.assertEqual(span.status.status_code, StatusCode.UNSET)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.ERROR: 2> != <StatusCode.UNSET: 0>\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 138, in test_to_thread_cancelled_state\n    self.assertEqual(span.status.status_code, StatusCode.UNSET)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.ERROR: 2> != <StatusCode.UNSET: 0>\n"
     ],
     "errors": [],
     "skipped": []
@@ -442,7 +442,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 53, in test_to_thread\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 53, in test_to_thread\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
     ],
     "errors": [],
     "skipped": []
@@ -454,7 +454,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 71, in test_to_thread_duration_covers_execution\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 71, in test_to_thread_duration_covers_execution\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -466,7 +466,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 96, in test_to_thread_exception\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 96, in test_to_thread_exception\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -478,7 +478,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 116, in test_to_thread_timeout_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 116, in test_to_thread_timeout_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -490,7 +490,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 135, in test_to_thread_cancelled_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 135, in test_to_thread_cancelled_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -502,7 +502,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 157, in test_to_thread_repeated_calls\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 2\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 157, in test_to_thread_repeated_calls\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 0 != 2\n"
     ],
     "errors": [],
     "skipped": []
@@ -514,7 +514,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 177, in test_to_thread_partial_func\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 177, in test_to_thread_partial_func\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
     ],
     "errors": [],
     "skipped": []
@@ -526,7 +526,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 53, in test_to_thread\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 53, in test_to_thread\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n"
     ],
     "errors": [],
     "skipped": []
@@ -538,7 +538,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 71, in test_to_thread_duration_covers_execution\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 71, in test_to_thread_duration_covers_execution\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -550,7 +550,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 96, in test_to_thread_exception\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 96, in test_to_thread_exception\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -562,7 +562,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 116, in test_to_thread_timeout_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 116, in test_to_thread_timeout_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -574,7 +574,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 135, in test_to_thread_cancelled_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 135, in test_to_thread_cancelled_state\n    self.assertEqual(len(spans), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -586,7 +586,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 157, in test_to_thread_repeated_calls\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 4 != 2\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 157, in test_to_thread_repeated_calls\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 4 != 2\n"
     ],
     "errors": [],
     "skipped": []
@@ -598,7 +598,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 177, in test_to_thread_partial_func\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 177, in test_to_thread_partial_func\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n"
     ],
     "errors": [],
     "skipped": []
@@ -650,7 +650,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 138, in test_to_thread_cancelled_state\n    self.assertEqual(span.status.status_code, StatusCode.UNSET)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.ERROR: 2> != <StatusCode.UNSET: 0>\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 138, in test_to_thread_cancelled_state\n    self.assertEqual(span.status.status_code, StatusCode.UNSET)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.ERROR: 2> != <StatusCode.UNSET: 0>\n"
     ],
     "errors": [],
     "skipped": []
@@ -702,7 +702,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 99, in test_to_thread_exception\n    self.assertEqual(span.status.status_code, StatusCode.ERROR)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.UNSET: 0> != <StatusCode.ERROR: 2>\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 99, in test_to_thread_exception\n    self.assertEqual(span.status.status_code, StatusCode.ERROR)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.UNSET: 0> != <StatusCode.ERROR: 2>\n"
     ],
     "errors": [],
     "skipped": []
@@ -714,7 +714,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 118, in test_to_thread_timeout_state\n    self.assertEqual(span.status.status_code, StatusCode.ERROR)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.UNSET: 0> != <StatusCode.ERROR: 2>\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 118, in test_to_thread_timeout_state\n    self.assertEqual(span.status.status_code, StatusCode.ERROR)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.UNSET: 0> != <StatusCode.ERROR: 2>\n"
     ],
     "errors": [],
     "skipped": []
@@ -726,7 +726,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 139, in test_to_thread_cancelled_state\n    self.assertEqual(len(span.events), 0)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 1 != 0\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 139, in test_to_thread_cancelled_state\n    self.assertEqual(len(span.events), 0)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 1 != 0\n"
     ],
     "errors": [],
     "skipped": []
@@ -778,7 +778,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 100, in test_to_thread_exception\n    self.assertEqual(len(span.events), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 100, in test_to_thread_exception\n    self.assertEqual(len(span.events), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -790,7 +790,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 119, in test_to_thread_timeout_state\n    self.assertEqual(len(span.events), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 119, in test_to_thread_timeout_state\n    self.assertEqual(len(span.events), 1)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 != 1\n"
     ],
     "errors": [],
     "skipped": []
@@ -882,7 +882,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 157, in test_to_thread_repeated_calls\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 157, in test_to_thread_repeated_calls\n    self.assertEqual(len(spans), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nAssertionError: 1 != 2\n"
     ],
     "errors": [],
     "skipped": []
@@ -944,7 +944,7 @@
     "passed": false,
     "tests_run": 1,
     "failures": [
-      "Traceback (most recent call last):\n  File \"/mnt/data/spanlife-work/spanlife/artifact/tests/native/test_to_thread_updated.py\", line 138, in test_to_thread_cancelled_state\n    self.assertEqual(span.status.status_code, StatusCode.UNSET)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.ERROR: 2> != <StatusCode.UNSET: 0>\n"
+      "Traceback (most recent call last):\n  File \"artifact/tests/native/test_to_thread_updated.py\", line 138, in test_to_thread_cancelled_state\n    self.assertEqual(span.status.status_code, StatusCode.UNSET)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <StatusCode.ERROR: 2> != <StatusCode.UNSET: 0>\n"
     ],
     "errors": [],
     "skipped": []
